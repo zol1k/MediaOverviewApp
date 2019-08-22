@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmDBApp", "FilmDBApp\FilmDBApp.csproj", "{6EED0290-D833-4C31-A7EB-B61DCE7B56E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EED0290-D833-4C31-A7EB-B61DCE7B56E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EED0290-D833-4C31-A7EB-B61DCE7B56E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EED0290-D833-4C31-A7EB-B61DCE7B56E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EED0290-D833-4C31-A7EB-B61DCE7B56E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01685B5F-47A5-4E9B-A76A-08E3230D7995}
+	EndGlobalSection
+EndGlobal
