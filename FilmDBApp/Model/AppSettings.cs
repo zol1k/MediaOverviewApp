@@ -18,8 +18,8 @@ namespace WpfApp1.Model
         private static XDocument XDoc;
         private static XElement XGenresNode;
         private static string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
-        private FileInfo _generalFilmFolder;
-        private FileInfo _generalSerialFolder;
+        private FileInfo _generalFilmsFolder;
+        private FileInfo _generalSerialsFolder;
 
         #endregion
 
@@ -34,12 +34,12 @@ namespace WpfApp1.Model
 
         public string GeneralFilmsFolderFilePath
         {
-            get => _generalFilmFolder.FullName;
+            get => _generalFilmsFolder != null ? _generalFilmsFolder.FullName : "Not Found";
         }
 
         public string GeneralSerialsFolderFilePath
         {
-            get => _generalSerialFolder.FullName;
+            get => _generalSerialsFolder != null ? _generalSerialsFolder.FullName : "Not Found";
         }
 
         #endregion
@@ -59,15 +59,25 @@ namespace WpfApp1.Model
             GetGenresFromConfigFile();
         }
 
-       
+
 
 
         public void GetFilmAndSerialFileInfoFromConfigFile()
         {
-            _generalFilmFolder = new FileInfo(XDoc.Root.Element("settings").Element("FilmsSettings")
-                .Attribute("PathToFolder").Value);
-            _generalSerialFolder = new FileInfo(XDoc.Root.Element("settings").Element("SerialsSettings")
-                .Attribute("PathToFolder").Value);
+            string filmsFolderPath = XDoc.Root.Element("settings").Element("FilmsSettings")
+                .Attribute("PathToFolder").Value;
+            string serialsFolderPath = XDoc.Root.Element("settings").Element("SerialsSettings")
+                .Attribute("PathToFolder").Value;
+
+            if (File.Exists(filmsFolderPath))
+            {
+                _generalFilmsFolder = new FileInfo(filmsFolderPath);
+            }
+
+            if (File.Exists(serialsFolderPath))
+            {
+                _generalSerialsFolder = new FileInfo(serialsFolderPath);
+            }
         }
 
         private void GetGenresFromConfigFile()
@@ -84,7 +94,7 @@ namespace WpfApp1.Model
         public void AddNewGenre()
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "C:\\Users";
+            dialog.InitialDirectory = _generalFilmsFolder != null ? _generalFilmsFolder.FullName : "C:\\Users";
             dialog.IsFolderPicker = true;
             dialog.Multiselect = true;
 
@@ -97,6 +107,36 @@ namespace WpfApp1.Model
 
             WriteGenresIntoXMLDocument();
         }
+
+        public void AddPathToFilmsFolder()
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = "C:\\Users";
+            dialog.IsFolderPicker = true;
+            dialog.Multiselect = false;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                //MessageBox.Show("You selected: " + dialog.FileName);
+                if (File.Exists(dialog.FileName))
+                    _generalFilmsFolder = new FileInfo(dialog.FileName);
+            }
+        }
+        public void AddPathToSerialsFolder()
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = "C:\\Users";
+            dialog.IsFolderPicker = true;
+            dialog.Multiselect = false;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                //MessageBox.Show("You selected: " + dialog.FileName);
+                if (File.Exists(dialog.FileName))
+                    _generalSerialsFolder = new FileInfo(dialog.FileName);
+            }
+        }
+
         public void WriteGenresIntoXMLDocument()
         {
             XGenresNode.RemoveAll();

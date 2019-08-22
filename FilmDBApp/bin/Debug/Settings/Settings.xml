@@ -7,7 +7,6 @@
         <Genre GenreName="Videos" PathToGenreFolder="C:\Users\Public\Videos" />
       </Genres>
     </FilmsSettings>
-    <SerialsSettings PathToFolder="SfolderPath">
-	</SerialsSettings>
+    <SerialsSettings PathToFolder="SfolderPath"></SerialsSettings>
   </settings>
 </root>

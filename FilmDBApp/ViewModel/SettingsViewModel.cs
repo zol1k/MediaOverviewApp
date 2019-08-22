@@ -106,12 +106,12 @@ namespace WpfApp1
 
         private void ChangeFilmsFolderButton_Click(object obj)
         {
-            throw new NotImplementedException();
+            settings.AddPathToFilmsFolder();
         }
 
         private void ChangeSerialsFolderButton_Click(object obj)
         {
-            throw new NotImplementedException();
+            settings.AddPathToSerialsFolder();
         }
 
         private void RemoveSelectedGenresButton_Click(object obj)
