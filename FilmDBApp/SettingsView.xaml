@@ -38,8 +38,8 @@
             <Grid Margin="0,0,0,0">
                 <Label Content="Film node" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Label Content="Serial node" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,26,0,0"/>
-                <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,2,0,0" TextWrapping="Wrap" Text="{Binding FilmsFolderFilePath, Mode=OneWay}" VerticalAlignment="Top" Width="73"/>
-                <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,30,0,0" TextWrapping="Wrap" Text="{Binding SerialsFolderFilePath, Mode=OneWay}" VerticalAlignment="Top" Width="73"/>
+                <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,2,0,0" TextWrapping="Wrap" Text="{Binding Settings.GeneralFilmsFolderPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="73"/>
+                <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,30,0,0" TextWrapping="Wrap" Text="{Binding SerialsFolderFilePath, Mode=TwoWay}" VerticalAlignment="Top" Width="73"/>
                 <Button Content="..." Command="{Binding ChangeFilmsFolderFilePathCommand}" HorizontalAlignment="Left" Margin="152,2,0,0" VerticalAlignment="Top" Width="20"/>
                 <Button Content="..." Command="{Binding ChangeSerialsFolderFilePathCommand}" HorizontalAlignment="Left" Margin="152,30,0,0" VerticalAlignment="Top" Width="20"/>
             </Grid>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <settings>
-    <FilmsSettings PathToFolder="FfolderPath">
+    <FilmsSettings PathToFolder="C:\Users\Default">
       <Genres>
         <Genre GenreName="Default" PathToGenreFolder="C:\Users\Default" />
         <Genre GenreName="Videos" PathToGenreFolder="C:\Users\Public\Videos" />

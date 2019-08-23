@@ -11,7 +11,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace WpfApp1.Model
 {
-    class AppSettings
+    class AppSettings : ObservableObject
     {
         #region Fields
 
@@ -20,6 +20,7 @@ namespace WpfApp1.Model
         private static string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
         private FileInfo _generalFilmsFolder;
         private FileInfo _generalSerialsFolder;
+        private string _generalFilmsFolderPath;
 
         #endregion
 
@@ -32,14 +33,30 @@ namespace WpfApp1.Model
             get => GenreCollection.GenreList;
         }
 
-        public string GeneralFilmsFolderFilePath
+        public FileInfo GeneralFilmsFolder
         {
-            get => _generalFilmsFolder != null ? _generalFilmsFolder.FullName : "Not Found";
+            get => _generalFilmsFolder;
+            set
+            {
+                _generalFilmsFolder = value;
+                GeneralFilmsFolderPath = _generalFilmsFolder.FullName;
+            }
+        }
+        public string GeneralFilmsFolderPath {
+            get => _generalFilmsFolderPath;
+            set {
+                _generalFilmsFolderPath = value;
+                OnPropertyChanged("GeneralFilmsFolderPath");
+            }
         }
 
-        public string GeneralSerialsFolderFilePath
+        public FileInfo GeneralSerialsFolder
         {
-            get => _generalSerialsFolder != null ? _generalSerialsFolder.FullName : "Not Found";
+            get => _generalSerialsFolder;
+            set
+            {
+                OnPropertyChanged("GeneralSerialsFolder");
+            }
         }
 
         #endregion
@@ -69,12 +86,12 @@ namespace WpfApp1.Model
             string serialsFolderPath = XDoc.Root.Element("settings").Element("SerialsSettings")
                 .Attribute("PathToFolder").Value;
 
-            if (File.Exists(filmsFolderPath))
+            if (Directory.Exists(filmsFolderPath))
             {
-                _generalFilmsFolder = new FileInfo(filmsFolderPath);
+                GeneralFilmsFolder = new FileInfo(filmsFolderPath);
             }
 
-            if (File.Exists(serialsFolderPath))
+            if (Directory.Exists(serialsFolderPath))
             {
                 _generalSerialsFolder = new FileInfo(serialsFolderPath);
             }
@@ -118,8 +135,8 @@ namespace WpfApp1.Model
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 //MessageBox.Show("You selected: " + dialog.FileName);
-                if (File.Exists(dialog.FileName))
-                    _generalFilmsFolder = new FileInfo(dialog.FileName);
+                if (Directory.Exists(dialog.FileName))
+                    GeneralFilmsFolder = new FileInfo(dialog.FileName);
             }
         }
         public void AddPathToSerialsFolder()

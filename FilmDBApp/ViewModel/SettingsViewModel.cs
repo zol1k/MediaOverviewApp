@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp1.Model;
@@ -29,11 +30,7 @@ namespace WpfApp1
             get { return _listOfGenres; }
         }
 
-        public string FilmsFolderFilePath{ get => settings.GeneralFilmsFolderFilePath; }
-        public string SerialsFolderFilePath{ get => settings.GeneralSerialsFolderFilePath; }
-
-
-
+        public AppSettings Settings { get => settings;}
 
         public string Name
         {
@@ -106,7 +103,9 @@ namespace WpfApp1
 
         private void ChangeFilmsFolderButton_Click(object obj)
         {
-            settings.AddPathToFilmsFolder();
+            string name = Settings.GeneralFilmsFolder.FullName;
+            Settings.AddPathToFilmsFolder();
+            name = Settings.GeneralFilmsFolder.FullName;
         }
 
         private void ChangeSerialsFolderButton_Click(object obj)
