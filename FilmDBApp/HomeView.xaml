@@ -6,10 +6,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800">
     <Grid HorizontalAlignment="Left" Height="800" VerticalAlignment="Top" Width="800" Background="White">
-        <ListView HorizontalAlignment="Left" Height="309" Margin="10,10,0,0" VerticalAlignment="Top" Width="153" ItemsSource="{Binding ListOfGenres}">
+        <ListView HorizontalAlignment="Left" Height="309" Margin="10,10,0,0" VerticalAlignment="Top" Width="162" ItemsSource="{Binding ListOfGenres}" SelectedItem="{Binding SelectedGenre}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Genre" DisplayMemberBinding="{Binding GenreName}" Width="153"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <GroupBox Header="GroupBox" HorizontalAlignment="Left" Height="239" Margin="10,324,0,0" VerticalAlignment="Top" Width="162"/>
+        <ListView HorizontalAlignment="Left" Height="457" Margin="177,10,0,0" VerticalAlignment="Top" Width="613" SelectedItem="{Binding SelectedFilm}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="FileName" DisplayMemberBinding="{Binding FileName}" Width="300"/>
+                    <GridViewColumn Header="Film name EN" DisplayMemberBinding="{Binding FilmNameEN}" Width="200"/>
+                    <GridViewColumn Header="Film name Cz/SK" DisplayMemberBinding="{Binding FilmNameCZSK}" Width="200"/>
+                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding FilmYear}" Width="150"/>
+                    <GridViewColumn Header="Extension" DisplayMemberBinding="{Binding FileExtension}" Width="150"/>
                 </GridView>
             </ListView.View>
         </ListView>

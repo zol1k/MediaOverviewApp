@@ -34,14 +34,14 @@
                 <Button Content="Delete selected" HorizontalAlignment="Left" Margin="4,264,0,0" VerticalAlignment="Top" Command="{Binding RemoveSelectedGenresCommand}" Width="88"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header=" Change your Film / Serial folder" HorizontalAlignment="Left" Height="77" VerticalAlignment="Top" Width="197" Margin="10,10,0,0">
+        <GroupBox Header=" Change your Film / Serial folder" HorizontalAlignment="Left" Height="77" VerticalAlignment="Top" Width="382" Margin="10,10,0,0">
             <Grid Margin="0,0,0,0">
                 <Label Content="Film node" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Label Content="Serial node" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,26,0,0"/>
-                <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,2,0,0" TextWrapping="Wrap" Text="{Binding Settings.GeneralFilmsFolderPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="73"/>
-                <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,30,0,0" TextWrapping="Wrap" Text="{Binding SerialsFolderFilePath, Mode=TwoWay}" VerticalAlignment="Top" Width="73"/>
-                <Button Content="..." Command="{Binding ChangeFilmsFolderFilePathCommand}" HorizontalAlignment="Left" Margin="152,2,0,0" VerticalAlignment="Top" Width="20"/>
-                <Button Content="..." Command="{Binding ChangeSerialsFolderFilePathCommand}" HorizontalAlignment="Left" Margin="152,30,0,0" VerticalAlignment="Top" Width="20"/>
+                <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,2,0,0" TextWrapping="Wrap" Text="{Binding Settings.GeneralFilmsFolder.FullName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="261"/>
+                <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,30,0,0" TextWrapping="Wrap" Text="{Binding Settings.GeneralSerialsFolder.FullName, Mode=OneWay}" VerticalAlignment="Top" Width="261"/>
+                <Button Content="..." Command="{Binding ChangeFilmsFolderFilePathCommand}" HorizontalAlignment="Left" Margin="340,2,0,0" VerticalAlignment="Top" Width="20"/>
+                <Button Content="..." Command="{Binding ChangeSerialsFolderFilePathCommand}" HorizontalAlignment="Left" Margin="340,30,0,0" VerticalAlignment="Top" Width="20"/>
             </Grid>
         </GroupBox>
 

@@ -103,9 +103,7 @@ namespace WpfApp1
 
         private void ChangeFilmsFolderButton_Click(object obj)
         {
-            string name = Settings.GeneralFilmsFolder.FullName;
             Settings.AddPathToFilmsFolder();
-            name = Settings.GeneralFilmsFolder.FullName;
         }
 
         private void ChangeSerialsFolderButton_Click(object obj)
@@ -120,7 +118,7 @@ namespace WpfApp1
 
         private void SaveSettingsButton_Click(object obj)
         {
-            settings.WriteGenresIntoXMLDocument();
+            settings.SaveSettings();
         }
 
         #endregion

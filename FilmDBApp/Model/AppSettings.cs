@@ -11,22 +11,22 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace WpfApp1.Model
 {
-    class AppSettings : ObservableObject
+    class AppSettings : ObservableObject, ICollectXMLData
     {
         #region Fields
 
         private static XDocument XDoc;
         private static XElement XGenresNode;
         private static string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
+        private GenreCollection _genreCollection;
         private FileInfo _generalFilmsFolder;
         private FileInfo _generalSerialsFolder;
-        private string _generalFilmsFolderPath;
 
         #endregion
 
         #region Properties / Commands
 
-        public GenreCollection GenreCollection { get; set; }
+        public GenreCollection GenreCollection { get => _genreCollection; set =>_genreCollection = value; }
 
         public ObservableCollection<Genre> ListOfGenres
         {
@@ -39,14 +39,7 @@ namespace WpfApp1.Model
             set
             {
                 _generalFilmsFolder = value;
-                GeneralFilmsFolderPath = _generalFilmsFolder.FullName;
-            }
-        }
-        public string GeneralFilmsFolderPath {
-            get => _generalFilmsFolderPath;
-            set {
-                _generalFilmsFolderPath = value;
-                OnPropertyChanged("GeneralFilmsFolderPath");
+                OnPropertyChanged("GeneralFilmsFolder");
             }
         }
 
@@ -55,6 +48,7 @@ namespace WpfApp1.Model
             get => _generalSerialsFolder;
             set
             {
+                _generalSerialsFolder = value;
                 OnPropertyChanged("GeneralSerialsFolder");
             }
         }
@@ -67,7 +61,7 @@ namespace WpfApp1.Model
             //DefineStructureOfDocument();
             XDoc = XDocument.Load(settingsFilePath);
             XGenresNode = XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres");
-            GenreCollection = new GenreCollection();
+            _genreCollection = new GenreCollection();
 
             // Retrieve folder path for 
             GetFilmAndSerialFileInfoFromConfigFile();
@@ -93,7 +87,7 @@ namespace WpfApp1.Model
 
             if (Directory.Exists(serialsFolderPath))
             {
-                _generalSerialsFolder = new FileInfo(serialsFolderPath);
+                GeneralSerialsFolder = new FileInfo(serialsFolderPath);
             }
         }
 
@@ -122,7 +116,7 @@ namespace WpfApp1.Model
                     GenreCollection.AddNewGenre(new Genre(new FileInfo(filename)));
             }
 
-            WriteGenresIntoXMLDocument();
+            UpdateGenresInXmlDocument();
         }
 
         public void AddPathToFilmsFolder()
@@ -149,25 +143,60 @@ namespace WpfApp1.Model
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 //MessageBox.Show("You selected: " + dialog.FileName);
-                if (File.Exists(dialog.FileName))
-                    _generalSerialsFolder = new FileInfo(dialog.FileName);
+                if (Directory.Exists(dialog.FileName))
+                    GeneralSerialsFolder = new FileInfo(dialog.FileName);
             }
         }
 
-        public void WriteGenresIntoXMLDocument()
+
+        /*
+         * Update Genre data in XML document. Remove all existing ones, and fill them with new data
+         */
+        private void UpdateGenresInXmlDocument()
         {
+
             XGenresNode.RemoveAll();
 
+            //Loop through selected folders and save their <FolderName>,<FolderPath>
             foreach (var genre in GenreCollection.GenreList)
             {
-                XGenresNode.Add(new XElement("Genre",
+                XGenresNode.Add(
+                    new XElement("Genre",
                     new XAttribute("GenreName", genre.GenreName),
-                    new XAttribute("PathToGenreFolder", genre.PathToGenreDirectory)));
+                    new XAttribute("PathToGenreFolder", genre.PathToGenreDirectory)
+                    )
+                );
             }
-            XDoc.Save(settingsFilePath);
+           
         }
 
+        /*
+         * Update values of main node folder paths
+         */
+        private void UpdateGeneralFolderPathsInXmlDocument()
+        {
+            XAttribute xmlFilmsFolderPath = XDoc.Root.Element("settings").Element("FilmsSettings")
+                .Attribute("PathToFolder");
+            XAttribute xmlSerialsFolderPath = XDoc.Root.Element("settings").Element("SerialsSettings")
+                .Attribute("PathToFolder");
 
+            // If GeneralFilmsFolder is Null => ""
+            xmlFilmsFolderPath.Value = (GeneralFilmsFolder == null) ? "" : GeneralFilmsFolder.FullName;
+           
+            // If GeneralSerialsFolder is Null => ""
+            xmlSerialsFolderPath.Value = (GeneralSerialsFolder == null) ? "" : GeneralSerialsFolder.FullName;
+        }
+
+        /*
+         * Save genre, folder paths informations
+         */
+
+        public void SaveSettings()
+        {
+            UpdateGeneralFolderPathsInXmlDocument();
+            UpdateGenresInXmlDocument();
+            XDoc.Save(settingsFilePath);
+        }
 
     }
 }

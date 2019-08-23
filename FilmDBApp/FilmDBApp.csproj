@@ -64,17 +64,19 @@
     <Compile Include="HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ObesrvableObject.cs" />
+    <Compile Include="Helpers\ObservableObject.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Model\AppSettings.cs" />
-    <Compile Include="Model\DocumentList.cs" />
+    <Compile Include="Helpers\ICollectXMLData.cs" />
+    <Compile Include="Model\ApplicationDataList.cs" />
     <Compile Include="Model\Genre.cs" />
     <Compile Include="Model\GenreCollection.cs" />
     <Compile Include="SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ApplicationViewModel.cs" />
-    <Compile Include="Model\IPageViewModel.cs" />
+    <Compile Include="Helpers\IPageViewModel.cs" />
+    <Compile Include="Model\Film.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ApplicationView.xaml.cs">

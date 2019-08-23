@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace WpfApp1.Model
 {
-    class GenreCollection:ObservableObject
+    public class GenreCollection:ObservableObject
     {
         #region Fields
 

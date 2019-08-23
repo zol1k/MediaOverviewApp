@@ -7,7 +7,9 @@ namespace WpfApp1
 {
     internal class HomeViewModel : ObservableObject, IPageViewModel
     {
-        private DocumentList documentList;
+        private Genre _selectedGenre;
+        private Film _selectedFilm;
+        private ApplicationDataList _applicationDataList;
         private ObservableCollection<Genre> _listOfGenres;
         public ObservableCollection<Genre> ListOfGenres
         {
@@ -20,10 +22,42 @@ namespace WpfApp1
                 return "HomePage";
             }
         }
+
+        
+        public Genre SelectedGenre
+        {
+            get => _selectedGenre;
+            set
+            {
+                if (value != null)
+                {
+                    _selectedGenre = value;
+                    OnPropertyChanged("SelectedGenre");
+                }
+            }
+        }
+
+        public Film SelectedFilm
+        {
+            get => _selectedFilm;
+            set
+            {
+                if (value != null)
+                {
+                    _selectedFilm = value;
+                    // value.RetrieveImdbInfo();
+                    OnPropertyChanged("SelectedFilm");
+                }
+            }
+        }
+
+
+
+
         public HomeViewModel()
         {
-            documentList = new DocumentList();
-            _listOfGenres = documentList.ListOfGenres;
+            _applicationDataList = new ApplicationDataList();
+            _listOfGenres = _applicationDataList.ListOfGenres;
         }
     }
 }
