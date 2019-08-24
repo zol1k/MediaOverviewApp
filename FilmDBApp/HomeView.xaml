@@ -4,27 +4,55 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="800">
-    <Grid HorizontalAlignment="Left" Height="800" VerticalAlignment="Top" Width="800" Background="White">
-        <ListView HorizontalAlignment="Left" Height="309" Margin="10,10,0,0" VerticalAlignment="Top" Width="162" ItemsSource="{Binding ListOfGenres}" SelectedItem="{Binding SelectedGenre}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Genre" DisplayMemberBinding="{Binding GenreName}" Width="153"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <GroupBox Header="GroupBox" HorizontalAlignment="Left" Height="239" Margin="10,324,0,0" VerticalAlignment="Top" Width="162"/>
-        <ListView HorizontalAlignment="Left" Height="457" Margin="177,10,0,0" VerticalAlignment="Top" Width="613" SelectedItem="{Binding SelectedFilm}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="FileName" DisplayMemberBinding="{Binding FileName}" Width="300"/>
-                    <GridViewColumn Header="Film name EN" DisplayMemberBinding="{Binding FilmNameEN}" Width="200"/>
-                    <GridViewColumn Header="Film name Cz/SK" DisplayMemberBinding="{Binding FilmNameCZSK}" Width="200"/>
-                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding FilmYear}" Width="150"/>
-                    <GridViewColumn Header="Extension" DisplayMemberBinding="{Binding FileExtension}" Width="150"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+             d:DesignHeight="800" d:DesignWidth="800" Width="1194" Height="734">
+    <DockPanel >
+        <Grid Background="White" Margin="10,0,0,0">
+            <ListView HorizontalAlignment="Left" Height="309" Margin="10,10,0,0" VerticalAlignment="Top" Width="162" ItemsSource="{Binding ListOfGenres}" SelectedItem="{Binding SelectedGenre}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Genre" DisplayMemberBinding="{Binding GenreName}" Width="153"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <GroupBox Header="GroupBox" HorizontalAlignment="Left" Height="239" Margin="10,324,0,0" VerticalAlignment="Top" Width="162"/>
+            <ListView ItemsSource="{Binding SelectedGenre.ListOfFilms}" HorizontalAlignment="Left" Height="484" Margin="177,10,0,0" VerticalAlignment="Top" Width="997" SelectedItem="{Binding SelectedFilm}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="FileName" DisplayMemberBinding="{Binding FileName}" Width="300"/>
+                        <GridViewColumn Header="Film name EN" DisplayMemberBinding="{Binding FilmNameEn}" Width="200"/>
+                        <GridViewColumn Header="Film name Cz/SK" DisplayMemberBinding="{Binding FilmNameCzsk}" Width="200"/>
+                        <GridViewColumn Header="Year" DisplayMemberBinding="{Binding FilmYear}" Width="150"/>
+                        <GridViewColumn Header="Extension" DisplayMemberBinding="{Binding FileExtension}" Width="150"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <GroupBox x:Name="Rename_Film" Header="Options" Margin="179,499,0,0" VerticalAlignment="Top" HorizontalAlignment="left" Height="165" >
+                <DockPanel>
+                    <Grid Height="166">
+                        <TextBox Text="{Binding SelectedFilm.FileName, Mode=OneWay}"  IsReadOnly="True" Margin="0,7,2,136" FontSize="11" />
+                        <Label x:Name="FilmDetail_Name_CZ_" Content="Film name (En)" Margin="-2,35,235,104"/>
+                        <TextBox TextWrapping="Wrap" Margin="115,38,2,104" Text="{Binding FilmNameEnToChangeTextBoxValue , Mode=TwoWay}" />
+                        <Label x:Name="FilmDetail_Name_EN_" Content="Film name (Cz/Sk)" Margin="-2,62,0,79" HorizontalAlignment="Left" Width="117"/>
+                        <TextBox TextWrapping="Wrap" Margin="115,64,2,79" Text="{Binding FilmNameCzskToChangeTextBoxValue}"/>
+                        <Label x:Name="FilmDetail_Year" Content="Released" HorizontalAlignment="Left" Width="117" Margin="-2,87,0,55"/>
+                        <TextBox TextWrapping="Wrap" Text="{Binding FilmYearToChangeTextBoxValue}" Margin="115,89,88,55"/>
+                        <Button x:Name="RenameFilmFileName" Content="RENAME" Margin="238,89,2,53" Command="{Binding ExecuteFilmRenameButtonCommand}"/>
+                        <Label Content="Move To ..." HorizontalAlignment="Left" Margin="-2,116,0,0" VerticalAlignment="Top" Width="77" Height="26" />
+                        <Button x:Name="MoveFilmIntoSelectedGenre" Content="MOVE" Margin="238,116,2,24" Command="{Binding ExecuteFilmMoveButtonCommand}"  />
+                        <ComboBox Margin="115,116,88,24" ItemsSource="{Binding ListOfGenres}" SelectedIndex="1" SelectedItem="{Binding GenreToMoveSelectedFilm}"  >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Run Text="{Binding GenreName, Mode=OneWay}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
+                </DockPanel>
+            </GroupBox>
 
-    </Grid>
+        </Grid>
+
+    </DockPanel>
 </UserControl>

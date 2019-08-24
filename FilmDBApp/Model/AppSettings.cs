@@ -18,7 +18,7 @@ namespace WpfApp1.Model
         private static XDocument XDoc;
         private static XElement XGenresNode;
         private static string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
-        private GenreCollection _genreCollection;
+        private CollectionOfGenres _collectionOfGenres;
         private FileInfo _generalFilmsFolder;
         private FileInfo _generalSerialsFolder;
 
@@ -26,11 +26,11 @@ namespace WpfApp1.Model
 
         #region Properties / Commands
 
-        public GenreCollection GenreCollection { get => _genreCollection; set =>_genreCollection = value; }
+        public CollectionOfGenres CollectionOfGenres { get => _collectionOfGenres; set =>_collectionOfGenres = value; }
 
         public ObservableCollection<Genre> ListOfGenres
         {
-            get => GenreCollection.GenreList;
+            get => CollectionOfGenres.GenreList;
         }
 
         public FileInfo GeneralFilmsFolder
@@ -61,7 +61,7 @@ namespace WpfApp1.Model
             //DefineStructureOfDocument();
             XDoc = XDocument.Load(settingsFilePath);
             XGenresNode = XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres");
-            _genreCollection = new GenreCollection();
+            _collectionOfGenres = new CollectionOfGenres();
 
             // Retrieve folder path for 
             GetFilmAndSerialFileInfoFromConfigFile();
@@ -93,12 +93,12 @@ namespace WpfApp1.Model
 
         private void GetGenresFromConfigFile()
         {
-            GenreCollection.ClearAll();
+            CollectionOfGenres.ClearAll();
             string genrePath = "";
             foreach (XElement el in XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
             {
                 genrePath = el.Attribute("PathToGenreFolder").Value;
-                GenreCollection.AddNewGenre(new Genre(new FileInfo(genrePath)));
+                CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(genrePath)));
             }
         }
 
@@ -113,7 +113,7 @@ namespace WpfApp1.Model
             {
                 //MessageBox.Show("You selected: " + dialog.FileName);
                 foreach (string filename in dialog.FileNames.ToArray())
-                    GenreCollection.AddNewGenre(new Genre(new FileInfo(filename)));
+                    CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(filename)));
             }
 
             UpdateGenresInXmlDocument();
@@ -158,7 +158,7 @@ namespace WpfApp1.Model
             XGenresNode.RemoveAll();
 
             //Loop through selected folders and save their <FolderName>,<FolderPath>
-            foreach (var genre in GenreCollection.GenreList)
+            foreach (var genre in CollectionOfGenres.GenreList)
             {
                 XGenresNode.Add(
                     new XElement("Genre",

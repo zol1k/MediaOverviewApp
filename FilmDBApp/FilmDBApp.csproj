@@ -70,7 +70,9 @@
     <Compile Include="Helpers\ICollectXMLData.cs" />
     <Compile Include="Model\ApplicationDataList.cs" />
     <Compile Include="Model\Genre.cs" />
-    <Compile Include="Model\GenreCollection.cs" />
+    <Compile Include="Model\CollectionOfFilms.cs" />
+    <Compile Include="Model\CollectionOfGenres.cs" />
+    <Compile Include="Model\ActionSet.cs" />
     <Compile Include="SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>

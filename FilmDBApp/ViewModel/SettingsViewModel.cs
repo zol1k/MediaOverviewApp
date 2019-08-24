@@ -113,7 +113,7 @@ namespace WpfApp1
 
         private void RemoveSelectedGenresButton_Click(object obj)
         {
-            settings.GenreCollection.RemoveToBeDeletedFromGenreList();
+            settings.CollectionOfGenres.RemoveToBeDeletedFromGenreList();
         }
 
         private void SaveSettingsButton_Click(object obj)

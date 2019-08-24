@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace WpfApp1.Model
 {
-    public class GenreCollection:ObservableObject
+    public class CollectionOfGenres:ObservableObject
     {
         #region Fields
 
@@ -26,10 +26,12 @@ namespace WpfApp1.Model
 
 
         #endregion
-        public GenreCollection()
+
+        public CollectionOfGenres()
         {
             _genreList = new ObservableCollection<Genre>();
         }
+
 
         #region Methods
         public void AddNewGenre(Genre genre)
