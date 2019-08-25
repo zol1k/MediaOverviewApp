@@ -12,7 +12,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace WpfApp1.Model
 {
-    class AppSettings : ObservableObject, ICollectXMLData
+    class AppSettings : ObservableObject
     {
         #region Fields
 
@@ -113,10 +113,12 @@ namespace WpfApp1.Model
 
         public void AddNewGenre()
         {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = _generalFilmsFolder != null ? _generalFilmsFolder.FullName : "C:\\Users";
-            dialog.IsFolderPicker = true;
-            dialog.Multiselect = true;
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog
+            {
+                InitialDirectory = _generalFilmsFolder != null ? _generalFilmsFolder.FullName : "C:\\Users",
+                IsFolderPicker = true,
+                Multiselect = true
+            };
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
@@ -130,10 +132,12 @@ namespace WpfApp1.Model
 
         public void AddPathToFilmsFolder()
         {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "C:\\Users";
-            dialog.IsFolderPicker = true;
-            dialog.Multiselect = false;
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog
+            {
+                InitialDirectory = "C:\\Users",
+                IsFolderPicker = true,
+                Multiselect = false
+            };
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
@@ -144,10 +148,12 @@ namespace WpfApp1.Model
         }
         public void AddPathToSerialsFolder()
         {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "C:\\Users";
-            dialog.IsFolderPicker = true;
-            dialog.Multiselect = false;
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog
+            {
+                InitialDirectory = "C:\\Users",
+                IsFolderPicker = true,
+                Multiselect = false
+            };
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {

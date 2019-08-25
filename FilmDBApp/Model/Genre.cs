@@ -14,8 +14,8 @@ namespace WpfApp1.Model
     {
         #region Fields
 
-        private string _genreName;
-        private string _pathToGenreDirectory;
+        private readonly string _genreName;
+        private readonly string _pathToGenreDirectory;
         private CollectionOfFilms _collectionOfFilms;
 
 

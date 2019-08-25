@@ -13,14 +13,12 @@ namespace WpfApp1
         #region Fields
 
 
-        private string _fileExtension;
-        private string _filePath;
         private string _filmNameCzsk;
         private string _filmNameEn;
         private string _filmYear;
         private string _fileName;
-        private FileInfo _filmFileInfo;
-        private bool _isDirectory;
+        private readonly FileInfo _filmFileInfo;
+        private readonly bool _isDirectory;
 
         #endregion
 
@@ -59,8 +57,9 @@ namespace WpfApp1
                 {
                     return ActionSet.FormatSize(FilmFileInfo.Length);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
+                    string error = ex.Message;
                     return "";
                 }
             }
@@ -136,6 +135,7 @@ namespace WpfApp1
                 }
                 catch (FormatException ex)
                 {
+                    string error = ex.Message;
                     FilmNameEn = FileName;
                 }
             }
@@ -150,8 +150,9 @@ namespace WpfApp1
                 {
                     FilmYear = Regex.Match(FileName, @"\(([^)]*)\)").Groups[1].Value;
                 }
-                catch (FormatException ex)
+                catch (Exception ex)
                 {
+                    string error = ex.Message;
                     FilmNameEn = FileName;
                 }
             }
@@ -162,9 +163,9 @@ namespace WpfApp1
 
         public void ChangeFileName(string newFilmName, string newCzFilmName, string newYear)
         {
-            newFilmName = newFilmName == null ? "" : newFilmName;
-            newCzFilmName = newCzFilmName == null ? "" : newCzFilmName;
-            newYear = newYear == null ? "" : newYear;
+            newFilmName = newFilmName ?? ""; // if null then ""
+            newCzFilmName = newCzFilmName ?? "";
+            newYear = newYear ?? "";
 
 
             var newFilename = "";

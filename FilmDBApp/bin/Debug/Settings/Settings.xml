@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <settings>
+	<AppSettings>
+		<ImdbInfo ImdbURLApi="&apikey=9757f013"></ImdbInfo>
+	</AppSettings>
     <FilmsSettings PathToFolder="L:\1. Films">
       <Genres>
         <Genre GenreName="1.animovane" PathToGenreFolder="L:\1. Films\1.animovane" />

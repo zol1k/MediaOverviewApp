@@ -19,7 +19,6 @@ namespace WpfApp1
         private AppSettings _settings;
         private CollectionOfGenres _collectionOfGenres;
 
-        private string _filmNameToChangeTextBoxValue;
         private string _filmNameEnToChangeTextBoxValue;
         private string _filmNameCzskToChangeTextBoxValue;
         private string _filmYearToChangeTextBoxValue;
