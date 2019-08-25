@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmDBApp.Model;
@@ -9,11 +10,26 @@ namespace WpfApp1
 {
     internal class HomeViewModel : ObservableObject, IPageViewModel
     {
+        #region Fields
+
         private Genre _selectedGenre;
-        private Genre _genreToMoveSelectedFilm;
+        private Genre _newGenreForSelectedFilm;
         private Film _selectedFilm;
         private ApplicationDataList _applicationDataList;
         private ObservableCollection<Genre> _listOfGenres;
+
+        private string _filmNameToChangeTextBoxValue;
+        private string _filmNameEnToChangeTextBoxValue;
+        private string _filmNameCzskToChangeTextBoxValue;
+        private string _filmYearToChangeTextBoxValue;
+
+        private ICommand _executeFilmRenameButtonCommand;
+        private ICommand _executeFilmMoveButtonCommand;
+
+        #endregion
+
+        #region Properties / Commands
+
         public ObservableCollection<Genre> ListOfGenres
         {
             get { return _listOfGenres; }
@@ -34,18 +50,19 @@ namespace WpfApp1
                 {
                     _selectedGenre = value;
                     OnPropertyChanged("SelectedGenre");
+                    SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
                 }
             }
         }
-        public Genre GenreToMoveSelectedFilm
+        public Genre NewGenreForSelectedFilm
         {
-            get => _genreToMoveSelectedFilm;
+            get => _newGenreForSelectedFilm;
             set
             {
                 if (value != null)
                 {
-                    _genreToMoveSelectedFilm = value;
-                    OnPropertyChanged("GenreToMoveSelectedFilm");
+                    _newGenreForSelectedFilm = value;
+                    OnPropertyChanged("NewGenreForSelectedFilm");
                 }
             }
         }
@@ -61,16 +78,12 @@ namespace WpfApp1
                     FilmNameEnToChangeTextBoxValue = value.FilmNameEn;
                     FilmNameCzskToChangeTextBoxValue = value.FilmNameCzsk;
                     FilmYearToChangeTextBoxValue = value.FilmYear;
-                    // value.RetrieveImdbInfo();
+                    value.RetrieveImdbInfo();
                     OnPropertyChanged("SelectedFilm");
                 }
             }
         }
 
-        private string _filmNameToChangeTextBoxValue;
-        private string _filmNameEnToChangeTextBoxValue;
-        private string _filmNameCzskToChangeTextBoxValue;
-        private string _filmYearToChangeTextBoxValue;
 
         public string FilmNameEnToChangeTextBoxValue
         {
@@ -79,8 +92,7 @@ namespace WpfApp1
             {
                 // Implement with property changed handling for INotifyPropertyChanged
                 this._filmNameEnToChangeTextBoxValue = value;
-                this.OnPropertyChanged(
-                    "FilmNameEnToChangeTextBoxValue"); // Method to raise the PropertyChanged event in your BaseViewModel class...
+                this.OnPropertyChanged("FilmNameEnToChangeTextBoxValue"); 
             }
         }
 
@@ -104,7 +116,7 @@ namespace WpfApp1
             }
         }
 
-        private ICommand _executeFilmRenameButtonCommand;
+
         public ICommand ExecuteFilmRenameButtonCommand
         {
             get
@@ -115,7 +127,6 @@ namespace WpfApp1
             }
         }
 
-        private ICommand _executeFilmMoveButtonCommand;
         public ICommand ExecuteFilmMoveButtonCommand
         {
             get
@@ -126,24 +137,33 @@ namespace WpfApp1
             }
         }
 
-
+        #endregion
 
 
         public HomeViewModel()
         {
             _applicationDataList = new ApplicationDataList();
             _listOfGenres = _applicationDataList.ListOfGenres;
+
+            SelectedGenre = ListOfGenres.FirstOrDefault();
+            SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
+
         }
 
+
+        #region Methods
         private void RenameFilmFileNameButton_Click(object obj)
         {
             SelectedFilm.ChangeFileName(FilmNameEnToChangeTextBoxValue,FilmNameCzskToChangeTextBoxValue,FilmYearToChangeTextBoxValue);
         }
+
         private void MoveFilmFileButton_Click(object obj)
         {
             SelectedFilm.ChangeFileName(FilmNameEnToChangeTextBoxValue,FilmNameCzskToChangeTextBoxValue,FilmYearToChangeTextBoxValue);
-            ActionSet.ChangeFilmGenre(SelectedFilm, SelectedGenre, GenreToMoveSelectedFilm);
+            ActionSet.ChangeFilmGenre(SelectedFilm, SelectedGenre, NewGenreForSelectedFilm);
 
         }
+        #endregion
+
     }
 }

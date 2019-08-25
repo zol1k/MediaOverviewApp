@@ -67,3 +67,5 @@ C:\UserData\z003ssxj\Documents\Visual Studio 2017\Backup Files\FilmDBApp\FilmDBA
 C:\UserData\z003ssxj\Documents\Visual Studio 2017\Backup Files\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.csproj.CopyComplete
 C:\UserData\z003ssxj\Documents\Visual Studio 2017\Backup Files\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.exe
 C:\UserData\z003ssxj\Documents\Visual Studio 2017\Backup Files\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.pdb
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\Newtonsoft.Json.xml

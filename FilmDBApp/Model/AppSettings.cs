@@ -22,6 +22,11 @@ namespace WpfApp1.Model
         private FileInfo _generalFilmsFolder;
         private FileInfo _generalSerialsFolder;
 
+        public static string ImdbURL = @"http://www.omdbapi.com/?t=";
+        public static string ImdbURLApi = "&apikey=9757f013";
+        public static string ImdbURLYear = "&y=";
+
+
         #endregion
 
         #region Properties / Commands

@@ -14,7 +14,6 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <GroupBox Header="GroupBox" HorizontalAlignment="Left" Height="239" Margin="10,324,0,0" VerticalAlignment="Top" Width="162"/>
             <ListView ItemsSource="{Binding SelectedGenre.ListOfFilms}" HorizontalAlignment="Left" Height="484" Margin="177,10,0,0" VerticalAlignment="Top" Width="997" SelectedItem="{Binding SelectedFilm}">
                 <ListView.View>
                     <GridView>
@@ -48,6 +47,26 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+                    </Grid>
+                </DockPanel>
+            </GroupBox>
+            <GroupBox Header="Film Information" Height="400" Margin="10,0,0,10" VerticalAlignment="bottom" HorizontalAlignment="left" Width="162">
+                <DockPanel >
+                    <Grid Height="390" VerticalAlignment="Top">
+
+                        <Label Content="Title" HorizontalAlignment="Left" Margin="-4,83,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Year" HorizontalAlignment="Left" Margin="-4,127,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Genre" HorizontalAlignment="Left" Margin="-4,175,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Country" HorizontalAlignment="Left" Margin="33,127,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                        <Label Content="ImdbURL" HorizontalAlignment="Left" Margin="-4,243,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="1,104,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Title}" VerticalAlignment="Top" Width="149"/>
+                        <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="38,153,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Country}" VerticalAlignment="Top" Width="112"/>
+                        <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="42" Margin="0,201,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Genre}" VerticalAlignment="Top" Width="150"/>
+                        <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="1,153,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Year}" VerticalAlignment="Top" Width="32"/>
+                        <Label Content="{Binding SelectedFilm.ImdbInfo.ImdbRating}" HorizontalAlignment="Center" Margin="91,10,0,0" VerticalAlignment="Top" Width="59" Height="32" FontWeight="ExtraBold" FontSize="16" FontFamily="Tahoma" Foreground="#FFFF7300"/>
+                        <Label Content="Actors" HorizontalAlignment="Left" Margin="-4,274,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="61" Margin="1,305,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Actors}" VerticalAlignment="Top" Width="149" Grid.ColumnSpan="2"/>
+                        <Image HorizontalAlignment="Left" Height="85" Margin="1,0,0,0" VerticalAlignment="Top" Width="85" Source="{Binding SelectedFilm.ImdbInfo.Poster}" Grid.ColumnSpan="2"/>
                     </Grid>
                 </DockPanel>
             </GroupBox>

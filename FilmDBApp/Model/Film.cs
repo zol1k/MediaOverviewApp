@@ -1,6 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Text.RegularExpressions;
+using FilmDBApp.Model;
+using WpfApp1.Model;
+using Newtonsoft.Json;
 
 namespace WpfApp1
 {
@@ -14,18 +18,11 @@ namespace WpfApp1
         private string _filmNameCzsk;
         private string _filmNameEn;
         private string _filmYear;
+        private string _fileName;
         private FileInfo _filmFileInfo;
         private bool _isDirectory;
 
         #endregion
-
-        public Film(FileInfo fileInfo, bool isDirectory)
-        {
-            this._filmFileInfo = fileInfo;
-            this._isDirectory = isDirectory;
-
-            ParseFileName();
-        }
 
         #region Properties
 
@@ -39,7 +36,13 @@ namespace WpfApp1
         }
         public string FileName
         {
-            get => Path.GetFileNameWithoutExtension(FilePath);
+            get => _fileName;
+            set
+            {
+                _fileName = value;
+                OnPropertyChanged("FileName");
+            }
+
         }
         public string FileExtension
         {
@@ -80,13 +83,32 @@ namespace WpfApp1
         {
             get => Path.GetDirectoryName(FilePath);
         }
+
+        public ImdbEntity ImdbInfo { get; set; }
+
         #endregion
+
+
+
+
+        public Film(FileInfo fileInfo, bool isDirectory)
+        {
+            this._filmFileInfo = fileInfo;
+            this._isDirectory = isDirectory;
+
+            ParseFileName();
+
+            ImdbInfo = new ImdbEntity();
+        }
+
+
 
 
         #region Methods
 
         private void ParseFileName()
         {
+            FileName = Path.GetFileNameWithoutExtension(FilePath);
             // if The following regex returns true as long as the string contains [] and () brackets
             if (Regex.IsMatch(FileName, @"\[.*?\]"))
             {
@@ -144,11 +166,27 @@ namespace WpfApp1
             FilmFileInfo.MoveTo(newfilePathName);
 
             ParseFileName();
-
-            // OnPropertyChange is called in Properties except of this one
-            // update view elements
-            OnPropertyChanged("FileName");
         }
+
+        /*
+         * RetrieveImdbInfo()
+         * - function that is building string out of collected data and retrieving json 
+         *   out of omdb service. After that deserialize of retrieved json into ImdbEntity.
+         *   Retrieved data are avaliable inside of ImdbEntity properties
+         */
+        public void RetrieveImdbInfo()
+        {
+            WebClient wc = new WebClient();
+
+            string searchBy = FilmNameEn != "" ? FilmNameEn : FilmNameCzsk;
+
+            string json = "";
+
+            json = wc.DownloadString(AppSettings.ImdbURL + searchBy + AppSettings.ImdbURLYear + FilmYear + AppSettings.ImdbURLApi);
+
+            ImdbInfo = JsonConvert.DeserializeObject<ImdbEntity>(json);
+        }
+
 
         #endregion
     }
