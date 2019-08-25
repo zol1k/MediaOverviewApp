@@ -30,10 +30,12 @@ namespace WpfApp1
         {
             get => _filmFileInfo;
         }
+
         public string FilePath
         {
             get => FilmFileInfo.FullName;
         }
+
         public string FileName
         {
             get => _fileName;
@@ -44,9 +46,24 @@ namespace WpfApp1
             }
 
         }
+
         public string FileExtension
         {
             get => Path.GetExtension(FilePath);
+        }
+        public string FileSize
+        {
+            get
+            {
+                try
+                {
+                    return ActionSet.FormatSize(FilmFileInfo.Length);
+                }
+                catch (Exception e)
+                {
+                    return "";
+                }
+            }
         }
 
         public string FilmNameCzsk

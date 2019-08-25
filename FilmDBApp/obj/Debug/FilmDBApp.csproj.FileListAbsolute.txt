@@ -21,7 +21,6 @@ C:\Users\mzold\source\repos\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.csproj.CoreC
 C:\Users\mzold\source\repos\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.csproj.CopyComplete
 C:\Users\mzold\source\repos\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.exe
 C:\Users\mzold\source\repos\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.pdb
-C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\FilmDBApp.csprojAssemblyReference.cache
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\HomeView.baml
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\HomeView.g.cs
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\ApplicationView.g.cs
@@ -69,3 +68,4 @@ C:\UserData\z003ssxj\Documents\Visual Studio 2017\Backup Files\FilmDBApp\FilmDBA
 C:\UserData\z003ssxj\Documents\Visual Studio 2017\Backup Files\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.pdb
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\Newtonsoft.Json.dll
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\FilmDBApp.csprojAssemblyReference.cache

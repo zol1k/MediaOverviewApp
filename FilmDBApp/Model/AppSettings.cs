@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -95,6 +96,9 @@ namespace WpfApp1.Model
                 GeneralSerialsFolder = new FileInfo(serialsFolderPath);
             }
         }
+
+
+        private void GetFilmFilesFromGeneralFilmFolder() { }
 
         private void GetGenresFromConfigFile()
         {

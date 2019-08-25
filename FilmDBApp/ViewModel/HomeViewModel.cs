@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,8 +16,8 @@ namespace WpfApp1
         private Genre _selectedGenre;
         private Genre _newGenreForSelectedFilm;
         private Film _selectedFilm;
-        private ApplicationDataList _applicationDataList;
-        private ObservableCollection<Genre> _listOfGenres;
+        private AppSettings _settings;
+        private CollectionOfGenres _collectionOfGenres;
 
         private string _filmNameToChangeTextBoxValue;
         private string _filmNameEnToChangeTextBoxValue;
@@ -30,9 +31,9 @@ namespace WpfApp1
 
         #region Properties / Commands
 
-        public ObservableCollection<Genre> ListOfGenres
+        public ObservableCollection<Genre> CollectionOfGenres
         {
-            get { return _listOfGenres; }
+            get { return _collectionOfGenres.GenreList; }
         }
 
         public string Name
@@ -142,10 +143,15 @@ namespace WpfApp1
 
         public HomeViewModel()
         {
-            _applicationDataList = new ApplicationDataList();
-            _listOfGenres = _applicationDataList.ListOfGenres;
+            _settings = new AppSettings();
 
-            SelectedGenre = ListOfGenres.FirstOrDefault();
+            _collectionOfGenres = _settings.CollectionOfGenres;
+            _collectionOfGenres.AddNewGenre(new Genre(new FileInfo(_settings.GeneralFilmsFolder.FullName)));
+
+            ActionSet.CollectGenreFilms(_collectionOfGenres);
+            
+
+            SelectedGenre = CollectionOfGenres.FirstOrDefault();
             SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
 
         }

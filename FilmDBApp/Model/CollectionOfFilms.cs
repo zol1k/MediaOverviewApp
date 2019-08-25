@@ -21,7 +21,12 @@ namespace WpfApp1.Model
 
         public ObservableCollection<Film> ListOfFilms
         {
-            get => _listOfFilms;
+
+            get
+            {
+                
+                return _listOfFilms;
+            }
         }
 
 

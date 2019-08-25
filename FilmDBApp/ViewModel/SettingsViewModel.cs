@@ -85,8 +85,6 @@ namespace WpfApp1
 
         #region Methods 
 
-
-
         private void AddNewGenreButton_Click(object obj)
         {
 
