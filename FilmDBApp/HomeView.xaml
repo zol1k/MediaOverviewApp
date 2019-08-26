@@ -16,12 +16,22 @@
             </ListView>
             <DataGrid ItemsSource="{Binding SelectedGenre.ListOfFilms}" HeadersVisibility="All" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="484" Margin="177,10,0,0" VerticalAlignment="Top" Width="997" SelectedItem="{Binding SelectedFilm}" IsReadOnly="True" BorderThickness="0.5" GridLinesVisibility="None" AlternatingRowBackground="#7F9B9B9B" Opacity="0.5">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" />
-                    <DataGridTextColumn Header="Film name EN" Binding="{Binding FilmNameEn}" />
-                    <DataGridTextColumn Header="Film name Cz/SK" Binding="{Binding FilmNameCzsk}" />
-                    <DataGridTextColumn Header="Year" Binding="{Binding FilmYear}" />
-                    <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension}" />
-                    <DataGridTextColumn Header="Size" Binding="{Binding FileSize}" />
+                    <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" Width="200" />
+                    <DataGridTextColumn Header="Film name EN" Binding="{Binding FilmNameEn}" Width="200" />
+                    <DataGridTextColumn Header="Film name Cz/SK" Binding="{Binding FilmNameCzsk}" Width="200" />
+                    <DataGridTextColumn Header="Year" Binding="{Binding FilmYear}" Width="50" />
+                    <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension}" Width="40" />
+                    <DataGridTextColumn Header="Size" Binding="{Binding FileSize}" Width="50" CanUserResize="False" />
+                    <DataGridTemplateColumn Header="Delete">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
+                                              Path=DataContext.ExecuteFilmDeleteButtonCommand}"
+                                        CommandParameter="{Binding}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <GroupBox x:Name="Rename_Film" Header="Options" Margin="179,499,0,0" VerticalAlignment="Top" HorizontalAlignment="left" Height="235" >
@@ -37,7 +47,7 @@
                         <Button x:Name="RenameFilmFileName" Content="RENAME" Margin="238,89,2,53" Command="{Binding ExecuteFilmRenameButtonCommand}"/>
                         <Label Content="Move To ..." HorizontalAlignment="Left" Margin="-2,116,0,0" VerticalAlignment="Top" Width="77" Height="26" />
                         <Button x:Name="MoveFilmIntoSelectedGenre" Content="MOVE" Margin="238,116,2,24" Command="{Binding ExecuteFilmMoveButtonCommand}"  />
-                        <ComboBox Margin="115,116,88,24" ItemsSource="{Binding ListOfGenres}" SelectedIndex="1" SelectedItem="{Binding GenreToMoveSelectedFilm}"  >
+                        <ComboBox Margin="115,116,88,24" ItemsSource="{Binding CollectionOfGenres}" SelectedIndex="2" SelectedItem="{Binding GenreToMoveSelectedFilm}"  >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock>

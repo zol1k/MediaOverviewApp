@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using FilmDBApp.Model;
 using WpfApp1.Model;
@@ -25,6 +26,7 @@ namespace WpfApp1
 
         private ICommand _executeFilmRenameButtonCommand;
         private ICommand _executeFilmMoveButtonCommand;
+        private ICommand _executeFilmDeleteButtonCommand;
 
         #endregion
 
@@ -137,6 +139,16 @@ namespace WpfApp1
             }
         }
 
+        public ICommand ExecuteFilmDeleteButtonCommand
+        {
+            get
+            {
+                if (_executeFilmDeleteButtonCommand == null)
+                    _executeFilmDeleteButtonCommand = new RelayCommand(DeleteFilmFileButton_Click);
+                return _executeFilmDeleteButtonCommand;
+            }
+        }
+
         #endregion
 
 
@@ -166,6 +178,18 @@ namespace WpfApp1
         {
             SelectedFilm.ChangeFileName(FilmNameEnToChangeTextBoxValue,FilmNameCzskToChangeTextBoxValue,FilmYearToChangeTextBoxValue);
             ActionSet.ChangeFilmGenre(SelectedFilm, SelectedGenre, NewGenreForSelectedFilm);
+
+        }
+        private void DeleteFilmFileButton_Click(object obj)
+        {
+
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want to delete "+ SelectedFilm.FileName.ToUpper() + " film?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            SelectedGenre.ListOfFilms.Remove(SelectedFilm);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                File.SetAttributes(SelectedFilm.FilmFileInfo.FullName, FileAttributes.Normal);
+                File.Delete(SelectedFilm.FilmFileInfo.FullName);
+            }
 
         }
         #endregion

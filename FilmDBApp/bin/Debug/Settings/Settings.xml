@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <settings>
-	<AppSettings>
-		<ImdbInfo ImdbURLApi="&apikey=9757f013"></ImdbInfo>
-	</AppSettings>
-    <FilmsSettings PathToFolder="L:\1. Films">
+    <FilmsSettings PathToFolder="L:\">
       <Genres>
         <Genre GenreName="1.animovane" PathToGenreFolder="L:\1. Films\1.animovane" />
         <Genre GenreName="1.ceske" PathToGenreFolder="L:\1. Films\1.ceske" />
@@ -16,6 +13,7 @@
         <Genre GenreName="1.scifi" PathToGenreFolder="L:\1. Films\1.scifi" />
         <Genre GenreName="1.thriller" PathToGenreFolder="L:\1. Films\1.thriller" />
         <Genre GenreName="1.vojnove" PathToGenreFolder="L:\1. Films\1.vojnove" />
+        <Genre GenreName="1. Films" PathToGenreFolder="L:\1. Films" />
       </Genres>
     </FilmsSettings>
     <SerialsSettings PathToFolder="L:\1. Series"></SerialsSettings>

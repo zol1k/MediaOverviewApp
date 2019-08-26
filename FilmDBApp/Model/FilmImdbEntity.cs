@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp1;
 
 namespace FilmDBApp.Model
 {
-    public class ImdbEntity
+    public class ImdbEntity:ObservableObject
     {
+
         public string Title { get; set; }
         public string Year { get; set; }
         public string Rated { get; set; }
@@ -28,5 +30,15 @@ namespace FilmDBApp.Model
         public string ImdbID { get; set; }
         public string Type { get; set; }
         public string Response { get; set; }
+
+        public void Update()
+        {
+            OnPropertyChanged("Title");
+            OnPropertyChanged("Year");
+            OnPropertyChanged("ImdbRating");
+            OnPropertyChanged("Poster");
+            OnPropertyChanged("Genre");
+            OnPropertyChanged("Actors");
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace WpfApp1
         private string _fileName;
         private readonly FileInfo _filmFileInfo;
         private readonly bool _isDirectory;
+        private WebClient webClient;
 
         #endregion
 
@@ -113,8 +114,7 @@ namespace WpfApp1
             this._isDirectory = isDirectory;
 
             ParseFileName();
-
-            ImdbInfo = new ImdbEntity();
+            webClient = new WebClient();
         }
 
 
@@ -168,22 +168,26 @@ namespace WpfApp1
             newYear = newYear ?? "";
 
 
-            var newFilename = "";
+            string newFilename = "";
 
-            if (newFilmName.Trim() != "")
+            if (newFilmName != "")
                 newFilename = newFilmName;
 
-            if (newCzFilmName.Trim() != "")
-                newFilename = newFilename + " [" + newCzFilmName + "]";
+            if (newCzFilmName != "")
+                newFilename = newFilename.Trim() + " [" + newCzFilmName.Trim() + "]";
 
             if (newYear.Trim() != "")
-                newFilename = newFilename + " (" + newYear + ")";
+                newFilename = newFilename.Trim() + " (" + newYear + ")";
 
-            var newfilePathName = DirectoryPath + "\\" + newFilename + FileExtension;
+            string newfilePathName = DirectoryPath + "\\" + newFilename.Replace(':', '-').Trim() + FileExtension;
 
             FilmFileInfo.MoveTo(newfilePathName);
 
             ParseFileName();
+
+            RetrieveImdbInfo();
+
+            ImdbInfo.Update();
         }
 
         /*
@@ -194,15 +198,15 @@ namespace WpfApp1
          */
         public void RetrieveImdbInfo()
         {
-            WebClient wc = new WebClient();
-
+            ImdbInfo = new ImdbEntity();
             string searchBy = FilmNameEn != "" ? FilmNameEn : FilmNameCzsk;
 
             string json = "";
 
-            json = wc.DownloadString(AppSettings.ImdbURL + searchBy + AppSettings.ImdbURLYear + FilmYear + AppSettings.ImdbURLApi);
+            json = webClient.DownloadString(AppSettings.ImdbURL + searchBy + AppSettings.ImdbURLYear + FilmYear + AppSettings.ImdbURLApi);
 
             ImdbInfo = JsonConvert.DeserializeObject<ImdbEntity>(json);
+
         }
 
 
