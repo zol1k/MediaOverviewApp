@@ -18,7 +18,7 @@ namespace WpfApp1
         private Genre _newGenreForSelectedFilm;
         private Film _selectedFilm;
         private AppSettings _settings;
-        private CollectionOfGenres _collectionOfGenres;
+        private ObservableCollection<Genre> _collectionOfGenres;
 
         private string _filmNameEnToChangeTextBoxValue;
         private string _filmNameCzskToChangeTextBoxValue;
@@ -27,6 +27,7 @@ namespace WpfApp1
         private ICommand _executeFilmRenameButtonCommand;
         private ICommand _executeFilmMoveButtonCommand;
         private ICommand _executeFilmDeleteButtonCommand;
+        private ICommand _updateGenreListButtonCommand;
 
         #endregion
 
@@ -34,7 +35,12 @@ namespace WpfApp1
 
         public ObservableCollection<Genre> CollectionOfGenres
         {
-            get { return _collectionOfGenres.GenreList; }
+            get { return _collectionOfGenres; }
+            set
+            {
+                _collectionOfGenres = value;
+                OnPropertyChanged("CollectionOfGenres");
+            }
         }
 
         public string Name
@@ -148,6 +154,15 @@ namespace WpfApp1
                 return _executeFilmDeleteButtonCommand;
             }
         }
+        public ICommand UpdateGenreListButtonCommand
+        {
+            get
+            {
+                if (_updateGenreListButtonCommand == null)
+                    _updateGenreListButtonCommand = new RelayCommand(UpdateGenresAndFilmsButton_Click);
+                return _updateGenreListButtonCommand;
+            }
+        }
 
         #endregion
 
@@ -156,12 +171,10 @@ namespace WpfApp1
         {
             _settings = new AppSettings();
 
-            _collectionOfGenres = _settings.CollectionOfGenres;
-            _collectionOfGenres.AddNewGenre(new Genre(new FileInfo(_settings.GeneralFilmsFolder.FullName)));
+            _collectionOfGenres = _settings.ListOfGenres;
 
             ActionSet.CollectGenreFilms(_collectionOfGenres);
             
-
             SelectedGenre = CollectionOfGenres.FirstOrDefault();
             SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
 
@@ -191,6 +204,13 @@ namespace WpfApp1
                 File.Delete(SelectedFilm.FilmFileInfo.FullName);
             }
 
+        }
+
+        private void UpdateGenresAndFilmsButton_Click(object obj)
+        {
+            _settings.GetGenresFromConfigFile();
+            CollectionOfGenres = _settings.ListOfGenres;
+            ActionSet.CollectGenreFilms(CollectionOfGenres);
         }
         #endregion
 

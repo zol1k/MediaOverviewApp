@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using FilmDBApp.Helpers;
 
 namespace WpfApp1.Model
 {
@@ -21,9 +22,13 @@ namespace WpfApp1.Model
 
         public ObservableCollection<Genre> GenreList
         {
-            get => _genreList;
-        }
+            get
+            {
+                _genreList.Sort();
+                return _genreList;
+            }
 
+        }
 
         #endregion
 
@@ -36,7 +41,14 @@ namespace WpfApp1.Model
         #region Methods
         public void AddNewGenre(Genre genre)
         {
-            _genreList.Add(genre);
+            bool _ifListCointainstGenre = _genreList.Any(p => p.GenreName == genre.GenreName);
+
+            if (_ifListCointainstGenre == false)
+                _genreList.Add(genre);
+            else
+            {
+                MessageBox.Show(genre.GenreName + " is already in genre list!");
+            }
         }
 
         public void RemoveGenreFromList(Genre genre)

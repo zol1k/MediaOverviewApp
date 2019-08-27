@@ -78,6 +78,7 @@
                     </Grid>
                 </DockPanel>
             </GroupBox>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="761,590,0,0" VerticalAlignment="Top" Width="75" Command="{Binding UpdateGenreListButtonCommand}"/>
 
         </Grid>
 

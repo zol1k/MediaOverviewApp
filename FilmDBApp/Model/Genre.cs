@@ -10,7 +10,7 @@ using Microsoft.WindowsAPICodePack.Shell.Interop;
 
 namespace WpfApp1.Model
 {
-    public class Genre: ObservableObject
+    public class Genre: ObservableObject, IComparable
     {
         #region Fields
 
@@ -44,9 +44,14 @@ namespace WpfApp1.Model
             _collectionOfFilms = new CollectionOfFilms();
         }
 
+        public int CompareTo(object obj)
+        {
+    
+            Genre a = this;
+            Genre b = (Genre)obj;
+            return string.Compare(a.GenreName, b.GenreName);
 
-        
-
-
+        }
+    
     }
 }

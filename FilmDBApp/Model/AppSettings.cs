@@ -97,10 +97,7 @@ namespace WpfApp1.Model
             }
         }
 
-
-        private void GetFilmFilesFromGeneralFilmFolder() { }
-
-        private void GetGenresFromConfigFile()
+        public void GetGenresFromConfigFile()
         {
             CollectionOfGenres.ClearAll();
             string genrePath = "";
@@ -127,7 +124,7 @@ namespace WpfApp1.Model
                     CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(filename)));
             }
 
-            UpdateGenresInXmlDocument();
+
         }
 
         public void AddPathToFilmsFolder()
@@ -213,5 +210,10 @@ namespace WpfApp1.Model
             XDoc.Save(settingsFilePath);
         }
 
+        private bool IsInGenreCollection(Genre genre)
+        {
+
+            return true;
+        }
     }
 }

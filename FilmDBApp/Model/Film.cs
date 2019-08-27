@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace WpfApp1
 {
-    public class Film : ObservableObject
+    public class Film : ObservableObject, IComparable
     {
         #region Fields
 
@@ -48,7 +48,13 @@ namespace WpfApp1
 
         public string FileExtension
         {
-            get => Path.GetExtension(FilePath);
+            get
+            {
+                if (_isDirectory)
+                    return "";
+                else
+                    return Path.GetExtension(FilePath);
+            }
         }
         public string FileSize
         {
@@ -124,7 +130,10 @@ namespace WpfApp1
 
         private void ParseFileName()
         {
-            FileName = Path.GetFileNameWithoutExtension(FilePath);
+            if (_isDirectory)
+                FileName = FilmFileInfo.Name;
+            else
+                FileName = Path.GetFileNameWithoutExtension(FilePath);
             // if The following regex returns true as long as the string contains [] and () brackets
             if (Regex.IsMatch(FileName, @"\[.*?\]"))
             {
@@ -206,6 +215,15 @@ namespace WpfApp1
             json = webClient.DownloadString(AppSettings.ImdbURL + searchBy + AppSettings.ImdbURLYear + FilmYear + AppSettings.ImdbURLApi);
 
             ImdbInfo = JsonConvert.DeserializeObject<ImdbEntity>(json);
+
+        }
+
+        public int CompareTo(object obj)
+        {
+
+            Film a = this;
+            Film b = (Film)obj;
+            return string.Compare(a.FileName, b.FileName);
 
         }
 

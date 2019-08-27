@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using FilmDBApp.Helpers;
 
 namespace WpfApp1.Model
 {
@@ -24,7 +25,7 @@ namespace WpfApp1.Model
 
             get
             {
-                
+                _listOfFilms.Sort();
                 return _listOfFilms;
             }
         }

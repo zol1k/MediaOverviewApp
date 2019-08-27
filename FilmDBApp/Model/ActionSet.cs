@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -55,18 +56,18 @@ namespace FilmDBApp.Model
             }
         }
 
-        public static void CollectGenreFilms(CollectionOfGenres CollectionOfGenres)
+        public static void CollectGenreFilms(ObservableCollection<Genre> CollectionOfGenres)
         {
             List<string> namesOfGenres = new List<string>();
 
             // Firstly get List<namesOfGenres> to not show genre folders inside of FilmList
-            foreach (var genre in CollectionOfGenres.GenreList)
+            foreach (var genre in CollectionOfGenres)
             {
                 namesOfGenres.Add(genre.GenreName);
             }
 
             //
-            foreach (var genre in CollectionOfGenres.GenreList)
+            foreach (var genre in CollectionOfGenres)
             {
                 CollectGenreFilms(genre, namesOfGenres);
             }
