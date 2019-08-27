@@ -18,7 +18,7 @@ namespace WpfApp1
         private string _filmYear;
         private string _fileName;
         private readonly FileInfo _filmFileInfo;
-        private readonly bool _isDirectory;
+        public readonly bool IsDirectory;
         private WebClient webClient;
 
         #endregion
@@ -50,7 +50,7 @@ namespace WpfApp1
         {
             get
             {
-                if (_isDirectory)
+                if (IsDirectory)
                     return "";
                 else
                     return Path.GetExtension(FilePath);
@@ -109,6 +109,7 @@ namespace WpfApp1
 
         public ImdbEntity ImdbInfo { get; set; }
 
+
         #endregion
 
 
@@ -117,7 +118,7 @@ namespace WpfApp1
         public Film(FileInfo fileInfo, bool isDirectory)
         {
             this._filmFileInfo = fileInfo;
-            this._isDirectory = isDirectory;
+            this.IsDirectory = isDirectory;
 
             ParseFileName();
             webClient = new WebClient();
@@ -130,7 +131,7 @@ namespace WpfApp1
 
         private void ParseFileName()
         {
-            if (_isDirectory)
+            if (IsDirectory)
                 FileName = FilmFileInfo.Name;
             else
                 FileName = Path.GetFileNameWithoutExtension(FilePath);

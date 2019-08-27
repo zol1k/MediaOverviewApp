@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using FilmDBApp.Model;
 using WpfApp1.Model;
@@ -29,9 +30,25 @@ namespace WpfApp1
         private ICommand _executeFilmDeleteButtonCommand;
         private ICommand _updateGenreListButtonCommand;
 
+        private string _searchString;
+
+
+
+
         #endregion
 
         #region Properties / Commands
+
+        public string SearchString
+        {
+            get { return _searchString; }
+            set
+            {
+                _searchString = value;
+                OnPropertyChanged("SearchString");
+                SelectedGenreFilmListView.Refresh();
+            }
+        }
 
         public ObservableCollection<Genre> CollectionOfGenres
         {
@@ -59,6 +76,7 @@ namespace WpfApp1
                     _selectedGenre = value;
                     OnPropertyChanged("SelectedGenre");
                     SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
+                    SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(_selectedGenre.ListOfFilms);
                 }
             }
         }
@@ -90,6 +108,18 @@ namespace WpfApp1
                     OnPropertyChanged("SelectedFilm");
                 }
             }
+        }
+
+        private ICollectionView _selectedGenreFilmListView;
+        public ICollectionView SelectedGenreFilmListView
+        {
+            set
+            {
+                _selectedGenreFilmListView = CollectionViewSource.GetDefaultView(SelectedGenre.ListOfFilms);
+                _selectedGenreFilmListView.Filter = x => Filter(x as Film);
+                OnPropertyChanged("SelectedGenreFilmListView");
+            }
+            get { return _selectedGenreFilmListView; }
         }
 
 
@@ -178,8 +208,23 @@ namespace WpfApp1
             SelectedGenre = CollectionOfGenres.FirstOrDefault();
             SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
 
+
+            _selectedGenreFilmListView = CollectionViewSource.GetDefaultView(SelectedGenre.ListOfFilms);
+            _selectedGenreFilmListView.Filter = x => Filter(x as Film);
+
+
+
         }
 
+        private bool Filter(Film film)
+        {
+            var searchstring = (SearchString ?? string.Empty).ToLower();
+
+            return film != null &&
+                   ((film.FileName ?? string.Empty).ToLower().Contains(searchstring) ||
+                    (film.FilmNameEn ?? string.Empty).ToLower().Contains(searchstring) ||
+                    (film.FilmNameCzsk ?? string.Empty).ToLower().Contains(searchstring));
+        }
 
         #region Methods
         private void RenameFilmFileNameButton_Click(object obj)
@@ -193,15 +238,24 @@ namespace WpfApp1
             ActionSet.ChangeFilmGenre(SelectedFilm, SelectedGenre, NewGenreForSelectedFilm);
 
         }
-        private void DeleteFilmFileButton_Click(object obj)
+        private void DeleteFilmFileButton_Click(object film)
         {
-
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want to delete "+ SelectedFilm.FileName.ToUpper() + " film?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
-            SelectedGenre.ListOfFilms.Remove(SelectedFilm);
+            
+            Film filmToDelete = (Film)film;
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want to delete "+ filmToDelete.FileName.ToUpper() + " film?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            SelectedGenre.ListOfFilms.Remove(filmToDelete);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                File.SetAttributes(SelectedFilm.FilmFileInfo.FullName, FileAttributes.Normal);
-                File.Delete(SelectedFilm.FilmFileInfo.FullName);
+                string pathToDelete = filmToDelete.FilmFileInfo.FullName;
+                if (filmToDelete.IsDirectory)
+                {
+                    ActionSet.DeleteDirectory(pathToDelete);
+                }
+                else
+                    {
+                        File.SetAttributes(pathToDelete, FileAttributes.Normal);
+                        File.Delete(pathToDelete);
+                    }
             }
 
         }

@@ -14,7 +14,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <DataGrid ItemsSource="{Binding SelectedGenre.ListOfFilms}" HeadersVisibility="All" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="484" Margin="177,10,0,0" VerticalAlignment="Top" Width="997" SelectedItem="{Binding SelectedFilm}" IsReadOnly="True" BorderThickness="0.5" GridLinesVisibility="None" AlternatingRowBackground="#7F9B9B9B" Opacity="0.5">
+            <DataGrid ItemsSource="{Binding SelectedGenreFilmListView}" HeadersVisibility="All" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="455" Margin="177,39,0,0" VerticalAlignment="Top" Width="997" SelectedItem="{Binding SelectedFilm}" IsReadOnly="True" BorderThickness="0.5" GridLinesVisibility="None" AlternatingRowBackground="#7F9B9B9B" Opacity="0.5">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" Width="200" />
                     <DataGridTextColumn Header="Film name EN" Binding="{Binding FilmNameEn}" Width="200" />
@@ -79,6 +79,7 @@
                 </DockPanel>
             </GroupBox>
             <Button Content="Button" HorizontalAlignment="Left" Margin="761,590,0,0" VerticalAlignment="Top" Width="75" Command="{Binding UpdateGenreListButtonCommand}"/>
+            <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="177,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="997"/>
 
         </Grid>
 
