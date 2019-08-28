@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using FilmDBApp.Helpers;
 using FilmDBApp.Model;
 using WpfApp1.Model;
 
@@ -20,6 +21,7 @@ namespace WpfApp1
         private Film _selectedFilm;
         private AppSettings _settings;
         private ObservableCollection<Genre> _collectionOfGenres;
+        private bool _fullListActive ;
 
         private string _filmNameEnToChangeTextBoxValue;
         private string _filmNameCzskToChangeTextBoxValue;
@@ -77,6 +79,7 @@ namespace WpfApp1
                     OnPropertyChanged("SelectedGenre");
                     SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
                     SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(_selectedGenre.ListOfFilms);
+                    _fullListActive = false;
                 }
             }
         }
@@ -115,7 +118,7 @@ namespace WpfApp1
         {
             set
             {
-                _selectedGenreFilmListView = CollectionViewSource.GetDefaultView(SelectedGenre.ListOfFilms);
+                _selectedGenreFilmListView = value;
                 _selectedGenreFilmListView.Filter = x => Filter(x as Film);
                 OnPropertyChanged("SelectedGenreFilmListView");
             }
@@ -194,26 +197,34 @@ namespace WpfApp1
             }
         }
 
+        private ICommand _showAllFilmsButtonCommand;
+        public ICommand ShowAllFilmsButtonCommand
+        {
+            get
+            {
+                if (_showAllFilmsButtonCommand == null)
+                    _showAllFilmsButtonCommand = new RelayCommand(ShowAllFilmsButton_Click);
+                return _showAllFilmsButtonCommand;
+            }
+        }
+
         #endregion
 
 
         public HomeViewModel()
         {
             _settings = new AppSettings();
-
+            
             _collectionOfGenres = _settings.ListOfGenres;
-
             ActionSet.CollectGenreFilms(_collectionOfGenres);
             
             SelectedGenre = CollectionOfGenres.FirstOrDefault();
-            SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
+            _fullListActive = false;
 
+            SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
 
             _selectedGenreFilmListView = CollectionViewSource.GetDefaultView(SelectedGenre.ListOfFilms);
             _selectedGenreFilmListView.Filter = x => Filter(x as Film);
-
-
-
         }
 
         private bool Filter(Film film)
@@ -240,7 +251,6 @@ namespace WpfApp1
         }
         private void DeleteFilmFileButton_Click(object film)
         {
-            
             Film filmToDelete = (Film)film;
             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want to delete "+ filmToDelete.FileName.ToUpper() + " film?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
             SelectedGenre.ListOfFilms.Remove(filmToDelete);
@@ -252,10 +262,16 @@ namespace WpfApp1
                     ActionSet.DeleteDirectory(pathToDelete);
                 }
                 else
-                    {
-                        File.SetAttributes(pathToDelete, FileAttributes.Normal);
-                        File.Delete(pathToDelete);
-                    }
+                {
+                    File.SetAttributes(pathToDelete, FileAttributes.Normal);
+                    File.Delete(pathToDelete);
+                }
+
+                if (_fullListActive == true)
+                {
+                    SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(CollectAllGenreFilms());
+                    _fullListActive = true;
+                }
             }
 
         }
@@ -266,6 +282,28 @@ namespace WpfApp1
             CollectionOfGenres = _settings.ListOfGenres;
             ActionSet.CollectGenreFilms(CollectionOfGenres);
         }
+
+        private void ShowAllFilmsButton_Click(object obj)
+        {
+            SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(CollectAllGenreFilms());
+            _fullListActive = true;
+        }
+
+        private ObservableCollection<Film> CollectAllGenreFilms()
+        {
+            ObservableCollection<Film> collectedFilms = new ObservableCollection<Film>();
+            foreach (var genre in CollectionOfGenres)
+            {
+                foreach (var film in genre.ListOfFilms)
+                {
+                    collectedFilms.Add(film);
+                }
+            }
+
+            collectedFilms.Sort();
+            return collectedFilms;
+        }
+
         #endregion
 
     }

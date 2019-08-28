@@ -35,7 +35,10 @@ namespace FilmDBApp.Model
 
                     //if current file is not hidden, add it into film db
                     if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
-                        genre.CollectionOfFilms.AddNewFilm(new Film(fileInfo, false));
+                        genre.CollectionOfFilms.AddNewFilm(new Film(fileInfo, false)
+                        {
+                            DirectoryGenre = genre.GenreName
+                        });
                 }
 
                 foreach (var file in Directory.GetDirectories(genre.PathToGenreDirectory))
@@ -46,7 +49,10 @@ namespace FilmDBApp.Model
                         continue;
                     //if current directory is not hidden, add it into film db
                     if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
-                        genre.CollectionOfFilms.AddNewFilm(new Film(fileInfo, true));
+                        genre.CollectionOfFilms.AddNewFilm(new Film(fileInfo, true)
+                        {
+                            DirectoryGenre = genre.GenreName
+                        });
                 }
 
                 //genre.Films = genre.Films.OrderBy(o => o.FileName).ToList();
@@ -88,6 +94,23 @@ namespace FilmDBApp.Model
             }
             return string.Format("{0:n1}{1}", number, suffixes[counter]);
         }
+
+        public static string GetFolderSize(string s)
+        {
+            string[] fileNames = Directory.GetFiles(s, "*.*");
+            long size = 0;
+
+            // Calculate total size by looping through files in the folder and totalling their sizes
+            foreach (string name in fileNames)
+            {
+                // length of each file.
+                FileInfo details = new FileInfo(name);
+                size += details.Length;
+            }
+            return FormatSize(size);
+        }
+
+
 
         /// <summary>
         /// Depth-first recursive delete, with handling for descendant 

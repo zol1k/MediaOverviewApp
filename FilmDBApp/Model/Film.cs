@@ -19,6 +19,7 @@ namespace WpfApp1
         private string _fileName;
         private readonly FileInfo _filmFileInfo;
         public readonly bool IsDirectory;
+        public string DirectoryGenre { get; set; }
         private WebClient webClient;
 
         #endregion
@@ -62,7 +63,10 @@ namespace WpfApp1
             {
                 try
                 {
-                    return ActionSet.FormatSize(FilmFileInfo.Length);
+                    if (IsDirectory == true)
+                        return ActionSet.GetFolderSize(FilmFileInfo.FullName);
+                    else
+                        return ActionSet.FormatSize(FilmFileInfo.Length);
                 }
                 catch (Exception ex)
                 {
