@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WpfApp1
+namespace FilmDBApp
 {
     /// <summary>
     /// A command whose sole purpose is to relay its functionality to other

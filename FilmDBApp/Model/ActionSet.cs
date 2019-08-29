@@ -7,8 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using WpfApp1;
-using WpfApp1.Model;
+using FilmDBApp.Model;
 
 namespace FilmDBApp.Model
 {
@@ -26,8 +25,8 @@ namespace FilmDBApp.Model
 
         private static void CollectGenreFilms(Genre genre, List<string> listToIgnore)
         {
-            try
-            {
+            List<string> errorList = new List<string>();
+
 
                 foreach (var file in Directory.GetFiles(genre.PathToGenreDirectory))
                 {
@@ -56,16 +55,15 @@ namespace FilmDBApp.Model
                 }
 
                 //genre.Films = genre.Films.OrderBy(o => o.FileName).ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+
+
         }
 
         public static void CollectGenreFilms(ObservableCollection<Genre> CollectionOfGenres)
         {
             List<string> namesOfGenres = new List<string>();
+
+            List<string> errorList = new List<string>();
 
             // Firstly get List<namesOfGenres> to not show genre folders inside of FilmList
             foreach (var genre in CollectionOfGenres)
@@ -76,8 +74,30 @@ namespace FilmDBApp.Model
             //
             foreach (var genre in CollectionOfGenres)
             {
-                CollectGenreFilms(genre, namesOfGenres);
+                try
+                { 
+                    CollectGenreFilms(genre, namesOfGenres);
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    
+                    errorList.Add(genre.GenreName + " - " + genre.PathToGenreDirectory);
+                }
+                
             }
+            if (errorList.Count > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Bellow path to genre(s) Not Found.");
+                sb.AppendLine();
+                sb.AppendLine();
+                sb.Append(String.Join(Environment.NewLine, errorList.ToArray()));
+                sb.AppendLine();
+                sb.AppendLine();
+                sb.Append("Please go to settings and choose your genre folder again !");
+                MessageBox.Show(sb.ToString(), "Genres Not Found");
+            }
+            
         }
 
 

@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using WpfApp1.Model;
+using FilmDBApp.Model;
 
-namespace WpfApp1
+namespace FilmDBApp
 {
     class SettingsViewModel : ObservableObject, IPageViewModel
     {

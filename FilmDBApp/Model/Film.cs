@@ -3,10 +3,9 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using FilmDBApp.Model;
-using WpfApp1.Model;
 using Newtonsoft.Json;
 
-namespace WpfApp1
+namespace FilmDBApp
 {
     public class Film : ObservableObject, IComparable
     {
@@ -201,7 +200,6 @@ namespace WpfApp1
 
             RetrieveImdbInfo();
 
-            ImdbInfo.Update();
         }
 
         /*

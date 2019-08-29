@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfApp1;
+using FilmDBApp;
 
 namespace FilmDBApp.Model
 {
@@ -30,15 +30,5 @@ namespace FilmDBApp.Model
         public string ImdbID { get; set; }
         public string Type { get; set; }
         public string Response { get; set; }
-
-        public void Update()
-        {
-            OnPropertyChanged("Title");
-            OnPropertyChanged("Year");
-            OnPropertyChanged("ImdbRating");
-            OnPropertyChanged("Poster");
-            OnPropertyChanged("Genre");
-            OnPropertyChanged("Actors");
-        }
     }
 }

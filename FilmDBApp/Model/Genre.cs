@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using FilmDBApp.Model;
 using Microsoft.WindowsAPICodePack.Shell.Interop;
 
-namespace WpfApp1.Model
+namespace FilmDBApp.Model
 {
     public class Genre: ObservableObject, IComparable
     {

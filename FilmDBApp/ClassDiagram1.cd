@@ -1,2 +1,158 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FilmDBApp.App" Collapsed="true">
+    <Position X="28.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilmDBApp.ApplicationView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApplicationView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FilmDBApp.ObservableObject" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAQAQgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\ObservableObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FilmDBApp.RelayCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\RelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FilmDBApp.HomeView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HomeView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FilmDBApp.Film">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAFQAAAAgABAARgAAAAAAAAAIACIEAABAlAAIBABAA=</HashCode>
+      <FileName>Model\Film.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FilmDBApp.SettingsView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SettingsView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FilmDBApp.ApplicationViewModel" Collapsed="true">
+    <Position X="15.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAABAAAAAAAAIAAAAAQAAEBAACAA=</HashCode>
+      <FileName>ViewModel\ApplicationViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilmDBApp.HomeViewModel">
+    <Position X="22.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBAAoCEAABAUAEAIgAACEBQGABAQRAQAEEkBNCAALAg=</HashCode>
+      <FileName>ViewModel\HomeViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FilmDBApp.SettingsViewModel">
+    <Position X="4.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAgAAEAQCAAEAAAAQAMQCAQABEhgIBAAAAAAA=</HashCode>
+      <FileName>ViewModel\SettingsViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FilmDBApp.Helpers.Extensions" Collapsed="true">
+    <Position X="27" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\Extensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilmDBApp.Model.ActionSet" Collapsed="true">
+    <Position X="27" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAQAAAgAAAAAAAAAAAAAAASAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Model\ActionSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilmDBApp.Model.ImdbEntity" Collapsed="true">
+    <Position X="17.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AiAAABAADBBAgEQACAIAAAAAAAIQEAEAAQAEAAEAIAA=</HashCode>
+      <FileName>Model\FilmImdbEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilmDBApp.Model.ApplicationDataList" Collapsed="true">
+    <Position X="24.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Model\ApplicationDataList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilmDBApp.Model.AppSettings">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAEAACAACEAAAAggAACAAAghAIAQAgAAAIAJAAAYhg=</HashCode>
+      <FileName>Model\AppSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilmDBApp.Model.CollectionOfFilms">
+    <Position X="11" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAApAAAAAAAAAAAAAAAAABAIAAAAAAAA=</HashCode>
+      <FileName>Model\CollectionOfFilms.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilmDBApp.Model.CollectionOfGenres">
+    <Position X="13.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAARAAAAAAIAAAAAAAAgAAAIAAAAAAAA=</HashCode>
+      <FileName>Model\CollectionOfGenres.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilmDBApp.Model.Genre" Collapsed="true">
+    <Position X="20" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAIwAAAAQAACAAAAgAAAAAAAAAAAAAAY=</HashCode>
+      <FileName>Model\Genre.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FilmDBApp.Properties.Resources" Collapsed="true">
+    <Position X="27" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilmDBApp.Properties.Settings" Collapsed="true">
+    <Position X="28.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="FilmDBApp.IPageViewModel" Collapsed="true">
+    <Position X="27" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\IPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

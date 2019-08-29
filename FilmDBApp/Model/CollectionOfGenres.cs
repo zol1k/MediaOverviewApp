@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using FilmDBApp.Helpers;
 
-namespace WpfApp1.Model
+namespace FilmDBApp.Model
 {
     public class CollectionOfGenres:ObservableObject
     {

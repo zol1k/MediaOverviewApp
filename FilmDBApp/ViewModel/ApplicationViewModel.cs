@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 
-namespace WpfApp1
+namespace FilmDBApp
 {
     class ApplicationViewModel : ObservableObject
     {

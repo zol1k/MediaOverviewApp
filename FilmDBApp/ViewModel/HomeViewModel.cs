@@ -8,9 +8,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using FilmDBApp.Helpers;
 using FilmDBApp.Model;
-using WpfApp1.Model;
 
-namespace WpfApp1
+namespace FilmDBApp
 {
     internal class HomeViewModel : ObservableObject, IPageViewModel
     {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
-namespace WpfApp1.Model
+namespace FilmDBApp.Model
 {
     class AppSettings : ObservableObject
     {
