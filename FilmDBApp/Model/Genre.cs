@@ -24,7 +24,17 @@ namespace FilmDBApp.Model
 
         #region Properties / Commands
 
-        public string GenreName{ get=> _genreName; }
+        public string GenreName
+        {
+            get
+            {
+                
+
+
+            return _genreName != "" ? _genreName : _pathToGenreDirectory;
+            }
+        }
+
         public string PathToGenreDirectory{ get => _pathToGenreDirectory;}
         public CollectionOfFilms CollectionOfFilms { get => _collectionOfFilms; set => _collectionOfFilms = value; }
         public bool ToBeDeletedFromGenreCollection { get; set; }

@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:FilmDBApp"
-        Title="Manage your film media files! - FilmDBApp" Height="800" Width="810" ResizeMode="NoResize">
+        Title="Manage your film media files! - FilmDBApp" Height="733" Width="810" ResizeMode="NoResize">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type local:HomeViewModel}">
@@ -16,24 +16,17 @@
         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.8"/>
     </Window.Background>
 
-    <DockPanel x:Name="DockPanel">
-        <Border DockPanel.Dock="Top" BorderBrush="Black" Height="32">
-            <ItemsControl ItemsSource="{Binding PageViewModels}" Margin="0">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button Content="{Binding Name}"
-                                Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                                CommandParameter="{Binding }" HorizontalAlignment="Left" Margin="0,0,3,0" Padding="3,1"/>
-
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </Border>
-        <ContentControl Content="{Binding CurrentPageViewModel}" Margin="0,0,0,0"/>
+    <DockPanel x:Name="DockPanel" Height="700">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open"/>
+                <MenuItem Header="_Close"/>
+                <MenuItem Header="_Save"/>
+            </MenuItem>
+            <MenuItem Header="Home" Command="{Binding ChangePageCommand}" CommandParameter="{Binding DataContext.PageViewModels[0], RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+            <MenuItem Header="Settings" Command="{Binding ChangePageCommand}" CommandParameter="{Binding DataContext.PageViewModels[1], RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+        </Menu>
+        
+        <ContentControl Content="{Binding CurrentPageViewModel}" Margin="0,0,0,0" Height="680" Width="801"/>
     </DockPanel>
 </Window>

@@ -3,96 +3,135 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:FilmDBApp.Helpers"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="800" Background="#7FF0F0F0" Width="800" Height="680">
+
+    <UserControl.Resources>
+        <helpers:TextInputToVisibilityConverter x:Key="TextInputToVisibilityConverter" />
+        <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
+        <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
+        <SolidColorBrush x:Key="brushWatermarkBorder" Color="Indigo" />
+        <Style x:Key="EntryFieldStyle" TargetType="Grid" >
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="20,0" />
+        </Style>
+    </UserControl.Resources>
+
     <DockPanel >
         <DockPanel.Background>
             <SolidColorBrush />
         </DockPanel.Background>
-        <Grid Margin="0,0,0,0">
-            <Grid.Background>
-                <SolidColorBrush Color="#FFF0F0F0" Opacity="0.6"/>
-            </Grid.Background>
-            <DataGrid Opacity="0.8" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="280" Margin="10,39,0,0" VerticalAlignment="Top" Width="162" ItemsSource="{Binding CollectionOfGenres}" SelectedItem="{Binding SelectedGenre}" IsReadOnly="True"
-                      GridLinesVisibility="None" BorderBrush="{x:Null}"  >
-                <DataGrid.Background>
-                    <SolidColorBrush Color="#FFF0F0F0" Opacity="0.3"/>
-                </DataGrid.Background>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Genre🤔" Binding ="{Binding GenreName}" Width="162" />
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid ItemsSource="{Binding SelectedGenreFilmListView}" HeadersVisibility="All" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="453" Margin="177,39,0,0" VerticalAlignment="Top" SelectedItem="{Binding SelectedFilm}" IsReadOnly="True" BorderThickness="0.5" GridLinesVisibility="None" AlternatingRowBackground="#7F9B9B9B" Opacity="0.8" Width="613" Grid.ColumnSpan="2">
-                <DataGrid.Background>
-                    <SolidColorBrush Color="#FFF0F0F0" Opacity="0.3"/>
-                </DataGrid.Background>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" Width="200" />
-                    <DataGridTextColumn Header="Film name EN" Binding="{Binding DirectoryGenre}" Width="200" />
-                    <DataGridTextColumn Header="Year" Binding="{Binding FilmYear}" Width="50" />
-                    <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension}" Width="40" />
-                    <DataGridTextColumn Header="Size" Binding="{Binding FileSize}" Width="50" CanUserResize="False" />
-                    <DataGridTemplateColumn Header="Delete">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Delete"
+        <Grid Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="13*" />
+                <RowDefinition Height="377*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"  VerticalAlignment="Top" Height="27" Margin="0,0,0,0" Width="800">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="178" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Show All" Command="{Binding ShowAllFilmsButtonCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="162" Height="23" Margin="10,0,0,0"/>
+                <Grid Grid.Column="1" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" Height="23" HorizontalAlignment="Left" Margin="0,0,0,4" Width="614">
+                    <TextBlock Text="Search film ..." Foreground="{StaticResource brushWatermarkForeground}" Padding="5,2" Width="600" Margin="2,0,3,0" Grid.RowSpan="2" >
+                        <TextBlock.Visibility>
+                            <MultiBinding Converter="{StaticResource TextInputToVisibilityConverter}">
+                                <Binding ElementName="txtUserEntry2" Path="Text.IsEmpty" />
+                                <Binding ElementName="txtUserEntry2" Path="IsFocused" />
+                            </MultiBinding>
+                        </TextBlock.Visibility>
+                    </TextBlock>
+                    <TextBox Name="txtUserEntry2" Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" Grid.RowSpan="2"/>
+                </Grid>
+
+            </Grid>
+
+            <Grid HorizontalAlignment="Left" Margin="0,4,0,0" Grid.Row="1" Width="800">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="179*"/>
+                    <ColumnDefinition Width="621*"/>
+                </Grid.ColumnDefinitions>
+
+                <DataGrid Grid.Column="0" Opacity="0.8" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="230" Margin="10,0,0,0" VerticalAlignment="Top" Width="162" ItemsSource="{Binding CollectionOfGenres}" SelectedItem="{Binding SelectedGenre}" IsReadOnly="True"
+                      GridLinesVisibility="None" MaxHeight="230" ScrollViewer.CanContentScroll="False" CanUserResizeColumns="False" CanUserResizeRows="False" HorizontalScrollBarVisibility="Hidden"  >
+                    <DataGrid.Background>
+                        <SolidColorBrush Color="#FFF0F0F0" Opacity="0.3"/>
+                    </DataGrid.Background>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Genre🤔" Binding ="{Binding GenreName}" Width="162" CanUserResize="False" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedGenreFilmListView}" HeadersVisibility="All" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" SelectedItem="{Binding SelectedFilm}" IsReadOnly="True" BorderThickness="0.5" GridLinesVisibility="None" AlternatingRowBackground="#7F9B9B9B" Opacity="0.9" Width="613" MaxHeight="400" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <DataGrid.Background>
+                        <SolidColorBrush Color="#FFF0F0F0" Opacity="0.3"/>
+                    </DataGrid.Background>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" Width="200" />
+                        <DataGridTextColumn Header="Film name EN" Binding="{Binding DirectoryGenre}" Width="200" />
+                        <DataGridTextColumn Header="Year" Binding="{Binding FilmYear}" Width="50" />
+                        <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension}" Width="40" />
+                        <DataGridTextColumn Header="Size" Binding="{Binding FileSize}" Width="50" CanUserResize="False" />
+                        <DataGridTemplateColumn Header="Delete">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete"
                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
                                               Path=DataContext.ExecuteFilmDeleteButtonCommand}"
                                         CommandParameter="{Binding}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            <GroupBox Opacity="0.8" x:Name="Rename_Film" Header="Options" Margin="179,499,0,0" VerticalAlignment="Top" HorizontalAlignment="left" Height="235" Grid.ColumnSpan="2" >
-                <DockPanel>
-                    <Grid Height="166">
-                        <TextBox Text="{Binding SelectedFilm.FileName, Mode=OneWay}"  IsReadOnly="True" Margin="0,7,2,136" FontSize="11" />
-                        <Label x:Name="FilmDetail_Name_CZ_" Content="Film name (En)" Margin="-2,35,235,104"/>
-                        <TextBox TextWrapping="Wrap" Margin="115,38,2,104" Text="{Binding FilmNameEnToChangeTextBoxValue , Mode=TwoWay}" />
-                        <Label x:Name="FilmDetail_Name_EN_" Content="Film name (Cz/Sk)" Margin="-2,62,0,79" HorizontalAlignment="Left" Width="117"/>
-                        <TextBox TextWrapping="Wrap" Margin="115,64,2,79" Text="{Binding FilmNameCzskToChangeTextBoxValue}"/>
-                        <Label x:Name="FilmDetail_Year" Content="Released" HorizontalAlignment="Left" Width="117" Margin="-2,87,0,55"/>
-                        <TextBox TextWrapping="Wrap" Text="{Binding FilmYearToChangeTextBoxValue}" Margin="115,89,88,55"/>
-                        <Button x:Name="RenameFilmFileName" Content="RENAME" Margin="238,89,2,53" Command="{Binding ExecuteFilmRenameButtonCommand}"/>
-                        <Label Content="Move To ..." HorizontalAlignment="Left" Margin="-2,116,0,0" VerticalAlignment="Top" Width="77" Height="26" />
-                        <Button x:Name="MoveFilmIntoSelectedGenre" Content="MOVE" Margin="238,116,2,24" Command="{Binding ExecuteFilmMoveButtonCommand}"  />
-                        <ComboBox Margin="115,116,88,24" ItemsSource="{Binding CollectionOfGenres}" SelectedIndex="2" SelectedItem="{Binding GenreToMoveSelectedFilm}"  >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <Run Text="{Binding GenreName, Mode=OneWay}"/>
-                                    </TextBlock>
                                 </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </Grid>
-                </DockPanel>
-            </GroupBox>
-            <GroupBox Opacity="0.8" Header="Film Information" Height="410" Margin="10,0,0,0" VerticalAlignment="bottom" HorizontalAlignment="left" Width="162" Grid.RowSpan="2">
-                <DockPanel >
-                    <Grid Height="390" VerticalAlignment="Top">
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <GroupBox Opacity="0.8" x:Name="Rename_Film" Header="Adjust Film Info" Margin="0,408,0,0" VerticalAlignment="Top" HorizontalAlignment="left" Height="165" Width="305" Grid.Column="1" >
+                    <DockPanel>
+                        <Grid Height="166">
+                            <TextBox Text="{Binding SelectedFilm.FileName, Mode=OneWay}"  IsReadOnly="True" Margin="0,12,0,132" FontSize="11" Height="22" />
+                            <Label x:Name="FilmDetail_Name_CZ_" Content="Film name (En)" Margin="0,39,21,105" Height="22" Padding="2"/>
+                            <TextBox TextWrapping="Wrap" Margin="102,39,0,105" Text="{Binding FilmNameEnToChangeTextBoxValue , Mode=TwoWay}" Height="22" VerticalAlignment="Center" Padding="2" />
+                            <Label x:Name="FilmDetail_Name_EN_" Content="Film name (Cz/Sk)" Margin="0,66,0,78" HorizontalAlignment="Left" Width="117" Height="22" Padding="2" Grid.ColumnSpan="2"/>
+                            <TextBox TextWrapping="Wrap" Margin="102,66,0,78" Text="{Binding FilmNameCzskToChangeTextBoxValue}" Height="22" Padding="2"/>
+                            <Label x:Name="FilmDetail_Year" Content="Released" HorizontalAlignment="Left" Width="117" Margin="0,93,0,51" Height="22" Padding="2" Grid.ColumnSpan="2"/>
+                            <TextBox TextWrapping="Wrap" Text="{Binding FilmYearToChangeTextBoxValue}" Margin="102,93,77,51" Padding="2"/>
+                            <Button x:Name="RenameFilmFileName" Content="RENAME" Margin="218,93,0,51" Command="{Binding ExecuteFilmRenameButtonCommand}" Padding="2" Height="22"/>
+                            <Label Content="Move To ..." HorizontalAlignment="Left" Margin="0,120,0,0" VerticalAlignment="Top" Width="77" Height="20" Padding="2" />
+                            <Button x:Name="MoveFilmIntoSelectedGenre" Content="MOVE" Margin="218,119,0,25" Command="{Binding ExecuteFilmMoveButtonCommand}" Height="22" Padding="2"  />
+                            <ComboBox Margin="102,119,77,25" ItemsSource="{Binding CollectionOfGenres}" SelectedIndex="2" SelectedItem="{Binding GenreToMoveSelectedFilm}" Height="22" Padding="2"  >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                        <Run Text="{Binding GenreName, Mode=OneWay}"/>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </Grid>
+                    </DockPanel>
+                </GroupBox>
+                <GroupBox Grid.Column="0" Header="Film Information" Height="338" Margin="0,0,7,71" VerticalAlignment="bottom" HorizontalAlignment="Right" Width="162" BorderBrush="{x:Null}">
+                    <DockPanel >
+                        <Grid Height="390" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="14*"/>
+                                <ColumnDefinition Width="11*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Title" HorizontalAlignment="Left" Margin="-4,134,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Year" HorizontalAlignment="Left" Margin="-4,174,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Genre" HorizontalAlignment="Left" Margin="-4,220,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Country" HorizontalAlignment="Left" Margin="33,174,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                            <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="1,155,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Title}" VerticalAlignment="Top" Width="149" Grid.ColumnSpan="2"/>
+                            <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="38,200,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Country}" VerticalAlignment="Top" Width="112" Grid.ColumnSpan="2"/>
+                            <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="66" Margin="0,246,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Genre}" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2"/>
+                            <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="1,200,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Year}" VerticalAlignment="Top" Width="32"/>
+                            <Label Content="{Binding SelectedFilm.ImdbInfo.ImdbRating}" HorizontalAlignment="Center" Margin="20,10,-13,0" VerticalAlignment="Top" Width="59" Height="32" FontWeight="ExtraBold" FontSize="16" FontFamily="Tahoma" Foreground="Black" Grid.Column="1"/>
+                            <Image HorizontalAlignment="Left" Height="129" Margin="1,0,0,0" VerticalAlignment="Top" Width="103" Source="{Binding SelectedFilm.ImdbInfo.Poster}" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </DockPanel>
+                </GroupBox>
 
-                        <Label Content="Title" HorizontalAlignment="Left" Margin="-4,134,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Year" HorizontalAlignment="Left" Margin="-4,174,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Genre" HorizontalAlignment="Left" Margin="-4,220,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Country" HorizontalAlignment="Left" Margin="33,174,0,0" VerticalAlignment="Top"/>
-                        <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="1,155,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Title}" VerticalAlignment="Top" Width="149"/>
-                        <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="38,200,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Country}" VerticalAlignment="Top" Width="112"/>
-                        <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="42" Margin="0,246,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Genre}" VerticalAlignment="Top" Width="150"/>
-                        <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="1,200,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Year}" VerticalAlignment="Top" Width="32"/>
-                        <Label Content="{Binding SelectedFilm.ImdbInfo.ImdbRating}" HorizontalAlignment="Center" Margin="104,10,-13,0" VerticalAlignment="Top" Width="59" Height="32" FontWeight="ExtraBold" FontSize="16" FontFamily="Tahoma" Foreground="#FFFF7300"/>
-                        <Label Content="Actors" HorizontalAlignment="Left" Margin="0,293,0,0" VerticalAlignment="Top"/>
-                        <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="61" Margin="1,319,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Actors}" VerticalAlignment="Top" Width="149"/>
-                        <Image HorizontalAlignment="Left" Height="129" Margin="1,0,0,0" VerticalAlignment="Top" Width="103" Source="{Binding SelectedFilm.ImdbInfo.Poster}"/>
-                    </Grid>
-                </DockPanel>
-            </GroupBox>
-            <Button Content="Refresh" HorizontalAlignment="Left" Margin="715,10,0,0" VerticalAlignment="Top" Width="75" Command="{Binding UpdateGenreListButtonCommand}" Height="23"/>
-            <TextBox Opacity="0.8" Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="177,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="533" Grid.ColumnSpan="2" Background="{x:Null}"/>
-            <Button Content="Show All" Command="{Binding ShowAllFilmsButtonCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="162" Margin="10,10,0,0" Height="23"/>
-
+            </Grid>
         </Grid>
-
     </DockPanel>
 </UserControl>

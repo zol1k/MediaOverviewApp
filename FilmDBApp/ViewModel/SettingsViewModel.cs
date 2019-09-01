@@ -18,7 +18,7 @@ namespace FilmDBApp
         private ICommand _changeFilmsFolderFilePathCommand;
         private ICommand _changeSerialsFolderFilePathCommand;
         private ICommand _saveSettingsCommand;
-        private AppSettings settings;
+        private AppSettings _settings;
 
         #endregion
 
@@ -30,7 +30,7 @@ namespace FilmDBApp
             get { return _listOfGenres; }
         }
 
-        public AppSettings Settings { get => settings;}
+        public AppSettings Settings { get => _settings;}
 
         public string Name
         {
@@ -68,9 +68,9 @@ namespace FilmDBApp
 
         #endregion
 
-        public SettingsViewModel()
+        public SettingsViewModel(AppSettings settings)
         {
-            settings = new AppSettings();
+            _settings = settings;
             _listOfGenres = settings.ListOfGenres;
             AddNewGenreCommand = new RelayCommand(AddNewGenreButton_Click);
             ChangeFilmsFolderFilePathCommand = new RelayCommand(ChangeFilmsFolderButton_Click);
@@ -90,8 +90,8 @@ namespace FilmDBApp
 
             try
             {
-                settings.AddNewGenre();
-                _listOfGenres = settings.ListOfGenres;
+                _settings.AddNewGenre();
+                _listOfGenres = _settings.ListOfGenres;
             }
             catch (Exception ex)
             {
@@ -106,17 +106,17 @@ namespace FilmDBApp
 
         private void ChangeSerialsFolderButton_Click(object obj)
         {
-            settings.AddPathToSerialsFolder();
+            _settings.AddPathToSerialsFolder();
         }
 
         private void RemoveSelectedGenresButton_Click(object obj)
         {
-            settings.CollectionOfGenres.RemoveToBeDeletedFromGenreList();
+            _settings.CollectionOfGenres.RemoveToBeDeletedFromGenreList();
         }
 
         private void SaveSettingsButton_Click(object obj)
         {
-            settings.SaveSettings();
+            _settings.SaveSettings();
         }
 
         #endregion

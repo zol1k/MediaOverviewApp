@@ -4,14 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FilmDBApp"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid HorizontalAlignment="Left" Height="614" VerticalAlignment="Top" Width="800" Background="White" Margin="0,0,0,-164">
+             mc:Ignorable="d" d:DesignWidth="800" Background="#7FF0F0F0" Height="680">
+    <Grid HorizontalAlignment="Left" Height="614" VerticalAlignment="Top" Width="800" Margin="0,10,0,0">
 
         <GroupBox Header="Manage your film genres" HorizontalAlignment="Left" Height="332" Margin="10,137,0,0" VerticalAlignment="Top" Width="197">
             <Grid>
-                <Grid.ColumnDefinitions>
-                </Grid.ColumnDefinitions>
                 <ListView HorizontalAlignment="Left" Height="240" Margin="0,10,0,0" VerticalAlignment="Top" Width="174" ItemsSource="{Binding ListOfGenres}">
                     <ListView.View>
                         <GridView>

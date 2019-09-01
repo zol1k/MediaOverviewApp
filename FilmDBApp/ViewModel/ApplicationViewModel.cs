@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using FilmDBApp.Model;
 
 
 namespace FilmDBApp
@@ -13,6 +14,7 @@ namespace FilmDBApp
     {
         #region Fields
 
+        private AppSettings _appSettings;
         private ICommand _changePageCommand;
         private List<IPageViewModel> _pageViewModels;
         private IPageViewModel _currentPageViewModel;
@@ -21,8 +23,9 @@ namespace FilmDBApp
 
         public ApplicationViewModel()
         {
-            PageViewModels.Add(new HomeViewModel());
-            PageViewModels.Add(new SettingsViewModel());
+            _appSettings = new AppSettings();
+            PageViewModels.Add(new HomeViewModel(_appSettings));
+            PageViewModels.Add(new SettingsViewModel(_appSettings));
             CurrentPageViewModel = PageViewModels[0];
         }
 

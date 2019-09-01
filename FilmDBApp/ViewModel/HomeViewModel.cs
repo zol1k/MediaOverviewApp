@@ -63,7 +63,7 @@ namespace FilmDBApp
 
         public string Name
         {
-            get { return "HomePage"; }
+            get => "Name";
         }
 
 
@@ -186,16 +186,6 @@ namespace FilmDBApp
                 return _executeFilmDeleteButtonCommand;
             }
         }
-        public ICommand UpdateGenreListButtonCommand
-        {
-            get
-            {
-                if (_updateGenreListButtonCommand == null)
-                    _updateGenreListButtonCommand = new RelayCommand(UpdateGenresAndFilmsButton_Click);
-                return _updateGenreListButtonCommand;
-            }
-        }
-
         private ICommand _showAllFilmsButtonCommand;
         public ICommand ShowAllFilmsButtonCommand
         {
@@ -210,10 +200,9 @@ namespace FilmDBApp
         #endregion
 
 
-        public HomeViewModel()
+        public HomeViewModel(AppSettings settings)
         {
-            _settings = new AppSettings();
-            
+            _settings = settings;
             _collectionOfGenres = _settings.ListOfGenres;
             ActionSet.CollectGenreFilms(_collectionOfGenres);
             
@@ -274,14 +263,6 @@ namespace FilmDBApp
             }
 
         }
-
-        private void UpdateGenresAndFilmsButton_Click(object obj)
-        {
-            _settings.GetGenresFromConfigFile();
-            CollectionOfGenres = _settings.ListOfGenres;
-            ActionSet.CollectGenreFilms(CollectionOfGenres);
-        }
-
         private void ShowAllFilmsButton_Click(object obj)
         {
             SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(CollectAllGenreFilms());
