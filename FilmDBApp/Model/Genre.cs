@@ -13,12 +13,9 @@ namespace FilmDBApp.Model
     public class Genre: ObservableObject, IComparable
     {
         #region Fields
-
-        private readonly string _genreName;
-        private readonly string _pathToGenreDirectory;
+        private FileInfo _genreFileInfo;
         private CollectionOfFilms _collectionOfFilms;
-
-
+        private bool _isRoot;
 
         #endregion
 
@@ -28,14 +25,11 @@ namespace FilmDBApp.Model
         {
             get
             {
-                
-
-
-            return _genreName != "" ? _genreName : _pathToGenreDirectory;
+                return _isRoot == false ? _genreFileInfo.Name : "Root";
             }
         }
 
-        public string PathToGenreDirectory{ get => _pathToGenreDirectory;}
+        public string PathToGenreDirectory{ get => _genreFileInfo.FullName; }
         public CollectionOfFilms CollectionOfFilms { get => _collectionOfFilms; set => _collectionOfFilms = value; }
         public bool ToBeDeletedFromGenreCollection { get; set; }
 
@@ -48,19 +42,17 @@ namespace FilmDBApp.Model
 
         public Genre(FileInfo fileInfo)
         {
-            _genreName = fileInfo.Name;
-            _pathToGenreDirectory = fileInfo.FullName;
-            ToBeDeletedFromGenreCollection = false;
+            _genreFileInfo = fileInfo;
             _collectionOfFilms = new CollectionOfFilms();
+
+            if (fileInfo.Directory == null) _isRoot = true;
         }
 
         public int CompareTo(object obj)
         {
-    
             Genre a = this;
             Genre b = (Genre)obj;
-            return string.Compare(a.GenreName, b.GenreName);
-
+            return String.Compare(a.GenreName, b.GenreName);
         }
     
     }

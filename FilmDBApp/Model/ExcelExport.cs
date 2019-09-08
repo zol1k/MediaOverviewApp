@@ -8,7 +8,7 @@ using OfficeOpenXml;
 
 namespace FilmDBApp.Model
 {
-    class ExcelExport
+    class ExcelExport:IDisposable
     {
         private CollectionOfGenres _collectionOfGenres;
         ExcelPackage _excelFile;
@@ -23,7 +23,6 @@ namespace FilmDBApp.Model
         {
             _excelFile = new ExcelPackage();
             _collectionOfGenres = collectionOfGenres;
-
             CreateExcelFile();
         }
 
@@ -69,10 +68,22 @@ namespace FilmDBApp.Model
             }
         }
 
+        private async Task PopulateExcelFileAsync()
+        {
+
+
+        }
+
         private void SaveExcelFile(string filename)
         {
             _excelFile.SaveAs(new FileInfo(filename));
         }
 
+        public void Dispose()
+        {
+            _excelFile = null;
+            _collectionOfGenres = null;
+
+        }
     }
 }
