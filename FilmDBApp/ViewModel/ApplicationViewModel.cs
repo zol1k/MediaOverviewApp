@@ -16,6 +16,7 @@ namespace FilmDBApp
 
         private AppSettings _appSettings;
         private ICommand _changePageCommand;
+        private ICommand _exportToCSVCommand;
         private List<IPageViewModel> _pageViewModels;
         private IPageViewModel _currentPageViewModel;
 
@@ -67,6 +68,17 @@ namespace FilmDBApp
 
             }
         }
+        public ICommand ExportToCSVCommand {
+            get
+            {
+                if (_exportToCSVCommand == null)
+                    _exportToCSVCommand = new RelayCommand(ExportToCSVButton_Click);
+                return _exportToCSVCommand;
+
+            }
+        }
+
+
 
         #endregion
 
@@ -81,7 +93,10 @@ namespace FilmDBApp
             CurrentPageViewModel = PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
         }
-
+        private void ExportToCSVButton_Click(object obj)
+        {
+            ExcelExport exportToCSV = new ExcelExport(_appSettings.CollectionOfGenres);
+        }
         #endregion
 
 

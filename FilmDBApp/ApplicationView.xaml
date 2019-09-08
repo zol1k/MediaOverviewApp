@@ -18,15 +18,13 @@
 
     <DockPanel x:Name="DockPanel" Height="700">
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Open"/>
-                <MenuItem Header="_Close"/>
-                <MenuItem Header="_Save"/>
-            </MenuItem>
             <MenuItem Header="Home" Command="{Binding ChangePageCommand}" CommandParameter="{Binding DataContext.PageViewModels[0], RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
             <MenuItem Header="Settings" Command="{Binding ChangePageCommand}" CommandParameter="{Binding DataContext.PageViewModels[1], RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+            <MenuItem Header="_Export">
+                <MenuItem Header="_To *.csv" Command="{Binding ExportToCSVCommand}"/>
+            </MenuItem>
         </Menu>
-        
+
         <ContentControl Content="{Binding CurrentPageViewModel}" Margin="0,0,0,0" Height="680" Width="801"/>
     </DockPanel>
 </Window>

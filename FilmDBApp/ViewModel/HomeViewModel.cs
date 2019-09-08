@@ -29,13 +29,7 @@ namespace FilmDBApp
         private ICommand _executeFilmRenameButtonCommand;
         private ICommand _executeFilmMoveButtonCommand;
         private ICommand _executeFilmDeleteButtonCommand;
-        private ICommand _updateGenreListButtonCommand;
-
         private string _searchString;
-
-
-
-
         #endregion
 
         #region Properties / Commands
