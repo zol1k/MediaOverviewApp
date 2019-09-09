@@ -16,14 +16,16 @@ namespace FilmDBApp.Model
 
         static List<string[]> headerRow = new List<string[]>()
         {
-            new string[] { "Title", "Year", "Rated" , "Country" }
+            new string[] { "Title", "Year", "Rated" , "Size" }
         };
 
         public ExcelExport(CollectionOfGenres collectionOfGenres)
         {
             _excelFile = new ExcelPackage();
             _collectionOfGenres = collectionOfGenres;
+
             CreateExcelFile();
+
         }
 
         private void CreateExcelFile()
@@ -41,7 +43,14 @@ namespace FilmDBApp.Model
             {
                 // SaveExcelFile document
                 string filename = dlg.FileName;
+
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+
                 PopulateExcelFile();
+
+                watch.Stop();
+                var elapsedMs = watch.ElapsedMilliseconds;
+
                 SaveExcelFile(filename);
             }
         }
@@ -68,12 +77,32 @@ namespace FilmDBApp.Model
             }
         }
 
+        // https://www.youtube.com/watch?v=2moh18sh5p4
         private async Task PopulateExcelFileAsync()
         {
+            foreach (var genre in _collectionOfGenres.GenreList)
+            {
+                _excelFile.Workbook.Worksheets.Add(genre.GenreName);
+                var worksheet = _excelFile.Workbook.Worksheets[genre.GenreName];
+                worksheet.Cells[headerRange].Style.Font.Bold = true;
+                worksheet.Cells[headerRange].Style.Font.Size = 14;
+                worksheet.Cells[headerRange].LoadFromArrays(headerRow);
+            }
 
+            Dictionary<string, List<object[]>> listWithExcelData = new Dictionary<string, List<object[]>>();
 
+            foreach (var genre in _collectionOfGenres.GenreList)
+            {
+                List<object[]> cellData = new List<object[]>();
+                foreach (var film in genre.ListOfFilms)
+                {
+                    film.RetrieveImdbInfo();
+                    cellData.Add(new object[4] { film.FileName, film.ImdbInfo.ImdbRating, film.FilmYear, film.FileSize });
+                }
+
+                listWithExcelData.Add(genre.GenreName, cellData);
+            }
         }
-
         private void SaveExcelFile(string filename)
         {
             _excelFile.SaveAs(new FileInfo(filename));
@@ -83,7 +112,6 @@ namespace FilmDBApp.Model
         {
             _excelFile = null;
             _collectionOfGenres = null;
-
         }
     }
 }
