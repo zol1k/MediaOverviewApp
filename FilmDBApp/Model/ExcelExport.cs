@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using OfficeOpenXml;
 
 namespace FilmDBApp.Model
@@ -46,11 +47,11 @@ namespace FilmDBApp.Model
 
                 var watch = System.Diagnostics.Stopwatch.StartNew();
 
-                PopulateExcelFile();
+                PopulateExcelFileAsync();
 
                 watch.Stop();
                 var elapsedMs = watch.ElapsedMilliseconds;
-
+                MessageBox.Show("done in " + elapsedMs);
                 SaveExcelFile(filename);
             }
         }
@@ -88,21 +89,26 @@ namespace FilmDBApp.Model
                 worksheet.Cells[headerRange].Style.Font.Size = 14;
                 worksheet.Cells[headerRange].LoadFromArrays(headerRow);
             }
-
             Dictionary<string, List<object[]>> listWithExcelData = new Dictionary<string, List<object[]>>();
-
             foreach (var genre in _collectionOfGenres.GenreList)
             {
+                 await Task.Run(() => _excelFile.Workbook.Worksheets[genre.GenreName].Cells[2, 1].LoadFromArrays(GetDataForExcel(genre)));
+            }
+
+            
+        }
+
+        private List<object[]> GetDataForExcel(Genre genre)
+        {
                 List<object[]> cellData = new List<object[]>();
                 foreach (var film in genre.ListOfFilms)
                 {
                     film.RetrieveImdbInfo();
                     cellData.Add(new object[4] { film.FileName, film.ImdbInfo.ImdbRating, film.FilmYear, film.FileSize });
                 }
-
-                listWithExcelData.Add(genre.GenreName, cellData);
-            }
+            return cellData;
         }
+
         private void SaveExcelFile(string filename)
         {
             _excelFile.SaveAs(new FileInfo(filename));
