@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,7 +30,7 @@ namespace FilmDBApp.Model
 
         }
 
-        private void CreateExcelFile()
+        private async void CreateExcelFile()
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
             dlg.FileName = "List of movies"; // Default file name
@@ -47,7 +48,7 @@ namespace FilmDBApp.Model
 
                 var watch = System.Diagnostics.Stopwatch.StartNew();
 
-                PopulateExcelFileAsync();
+                await PopulateExcelFileAsync();
 
                 watch.Stop();
                 var elapsedMs = watch.ElapsedMilliseconds;
@@ -92,7 +93,10 @@ namespace FilmDBApp.Model
             Dictionary<string, List<object[]>> listWithExcelData = new Dictionary<string, List<object[]>>();
             foreach (var genre in _collectionOfGenres.GenreList)
             {
-                 await Task.Run(() => _excelFile.Workbook.Worksheets[genre.GenreName].Cells[2, 1].LoadFromArrays(GetDataForExcel(genre)));
+                List<object[]> data = new List<object[]>();
+                await Task.Run(() => data = GetDataForExcel(genre));
+                await Task.Run(() => _excelFile.Workbook.Worksheets[genre.GenreName].Cells[2, 1].LoadFromArrays(data));
+                _excelFile.Workbook.Worksheets[genre.GenreName].Cells[2, 1].LoadFromArrays(data);
             }
 
             
@@ -100,12 +104,15 @@ namespace FilmDBApp.Model
 
         private List<object[]> GetDataForExcel(Genre genre)
         {
-                List<object[]> cellData = new List<object[]>();
-                foreach (var film in genre.ListOfFilms)
-                {
-                    film.RetrieveImdbInfo();
-                    cellData.Add(new object[4] { film.FileName, film.ImdbInfo.ImdbRating, film.FilmYear, film.FileSize });
-                }
+            List<object[]> cellData = new List<object[]>();
+
+            List<Film> list = genre.LListOfFilms;
+
+            foreach (var film in list)
+            {
+                film.RetrieveImdbInfo();
+                cellData.Add(new object[4] { film.FileName, film.ImdbInfo.ImdbRating, film.FilmYear, film.FileSize });
+            }
             return cellData;
         }
 
