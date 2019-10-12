@@ -52,9 +52,9 @@ namespace FilmDBApp
         #region ICommand Members
 
         [DebuggerStepThrough]
-        public bool CanExecute(object parameters)
+        public bool CanExecute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute(parameters);
+            return _canExecute == null ? true : _canExecute(parameter);
         }
 
         public event EventHandler CanExecuteChanged
@@ -63,9 +63,9 @@ namespace FilmDBApp
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public void Execute(object parameters)
+        public void Execute(object parameter)
         {
-            _execute(parameters);
+            _execute(parameter);
         }
 
         #endregion // ICommand Members

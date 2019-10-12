@@ -14,7 +14,7 @@ namespace FilmDBApp.Model
         readonly ExcelPackage _excelFile;
         private readonly string headerRange = "A1:" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + "1";
 
-        static List<string[]> headerRow = new List<string[]>()
+        static readonly List<string[]> headerRow = new List<string[]>()
         {
             new string[] { "Title", "Year", "Rated" , "Country" }
         };
@@ -27,10 +27,12 @@ namespace FilmDBApp.Model
 
         private void CreateExcelFile()
         {
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = "List of movies"; // Default file name
-            dlg.DefaultExt = ".xlsx"; // Default file extension
-            dlg.Filter = "Excel documents (.xlsx)|*.xlsx"; // Filter files by extension
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
+            {
+                FileName = "List of movies", // Default file name
+                DefaultExt = ".xlsx", // Default file extension
+                Filter = "Excel documents (.xlsx)|*.xlsx" // Filter files by extension
+            };
 
             // Show save file dialog box
             Nullable<bool> result = dlg.ShowDialog();
@@ -44,6 +46,8 @@ namespace FilmDBApp.Model
                 SaveExcelFile(filename);
                 System.Windows.MessageBox.Show("Excel export done!");
             }
+
+
         }
 
         private void PopulateExcelFile()

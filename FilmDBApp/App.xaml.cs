@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FilmDBApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -16,9 +17,9 @@ namespace FilmDBApp
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
             ApplicationView app = new ApplicationView();
-            ApplicationViewModel context = new ApplicationViewModel();
+            ApplicationModel model = new ApplicationModel();
+            ApplicationViewModel context = new ApplicationViewModel(model);
             app.DataContext = context;
             app.Show();
         }

@@ -24,11 +24,17 @@ namespace FilmDBApp.Model
         {
             get
             {
-                _genreList.Sort();
                 return _genreList;
             }
-
         }
+        public List<string> GenreNameList
+        {
+            get
+            {
+                return ReturnListOfGenreNames();
+            }
+        }
+
 
         #endregion
 
@@ -39,6 +45,10 @@ namespace FilmDBApp.Model
 
 
         #region Methods
+        /// <summary>
+        /// Add genre to GenreList
+        /// </summary>
+        /// <param name="genre">will be added into GenreList</param>
         public void AddNewGenre(Genre genre)
         {
             bool _ifListCointainstGenre = _genreList.Any(p => p.GenreName == genre.GenreName);
@@ -51,28 +61,48 @@ namespace FilmDBApp.Model
             }
         }
 
+        /// <summary>
+        /// Remove genre from GenreList
+        /// </summary>
+        /// <param name="genre">will be removed from GenreList</param>
         public void RemoveGenreFromList(Genre genre)
         {
             _genreList.Remove(genre);
         }
 
+        /// <summary>
+        /// Clear current GenreList
+        /// </summary>
         public void ClearAll()
         {
             _genreList.Clear();
         }
 
+        /// <summary>
+        /// Loop throught of Genres, and those with attribute "ToBeDeleted" will be removed
+        /// </summary>
         public void RemoveToBeDeletedFromGenreList()
         {
             for (int i = _genreList.Count - 1; i >= 0; i--)
             {
                 if (_genreList[i].ToBeDeletedFromGenreCollection)
                 { 
-                    MessageBox.Show(_genreList[i].GenreName);
+                    
                     _genreList.RemoveAt(i);
                 }
             }
+            MessageBox.Show(_genreList.ToString());
         }
 
+        /// <summary>
+        /// Method to collect names of genres
+        /// </summary>
+        /// <returns>list<string> of genre names</returns>
+        private List<string> ReturnListOfGenreNames()
+        {
+            List<string> list = GenreList.Select(o => o.GenreName).ToList();
+            return list;
+        }
 
         #endregion
     }

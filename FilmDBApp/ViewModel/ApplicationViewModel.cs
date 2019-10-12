@@ -13,25 +13,22 @@ namespace FilmDBApp
     class ApplicationViewModel : ObservableObject
     {
         #region Fields
-
-        private readonly ApplicationModel model;
+        private readonly ApplicationModel _model;
         private ICommand _changePageCommand;
         private ICommand _exportToCSVCommand;
         private List<IPageViewModel> _pageViewModels;
         private IPageViewModel _currentPageViewModel;
-
         #endregion
 
-        public ApplicationViewModel()
+        public ApplicationViewModel(ApplicationModel model)
         {
-            model = new ApplicationModel();
+            _model = model;
             PageViewModels.Add(new HomeViewModel(model));
             PageViewModels.Add(new SettingsViewModel(model));
             CurrentPageViewModel = PageViewModels[0];
         }
 
         #region Properties / Commands
-
         public List<IPageViewModel> PageViewModels {
             get
             {
@@ -39,7 +36,6 @@ namespace FilmDBApp
                     _pageViewModels = new List<IPageViewModel>();
                 return _pageViewModels;
             }
-
         }
 
         public IPageViewModel CurrentPageViewModel {
@@ -74,7 +70,6 @@ namespace FilmDBApp
                 if (_exportToCSVCommand == null)
                     _exportToCSVCommand = new RelayCommand(ExportToCSVButton_Click);
                 return _exportToCSVCommand;
-
             }
         }
 
@@ -95,7 +90,7 @@ namespace FilmDBApp
         }
         private void ExportToCSVButton_Click(object obj)
         {
-            ExcelExport exportToCSV = new ExcelExport(model.CollectionOfGenres);
+            ExcelExport exportToCSV = new ExcelExport(_model.CollectionOfGenres);
             exportToCSV.Run();
             exportToCSV.Dispose();
         }

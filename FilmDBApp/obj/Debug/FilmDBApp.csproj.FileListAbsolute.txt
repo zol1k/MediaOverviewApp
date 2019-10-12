@@ -21,10 +21,6 @@ C:\Users\mzold\source\repos\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.csproj.CoreC
 C:\Users\mzold\source\repos\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.csproj.CopyComplete
 C:\Users\mzold\source\repos\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.exe
 C:\Users\mzold\source\repos\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.pdb
-C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\HomeView.baml
-C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\HomeView.g.cs
-C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\ApplicationView.g.cs
-C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\SettingsView.g.cs
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\App.g.cs
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\FilmDBApp_MarkupCompile.cache
@@ -36,8 +32,6 @@ C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\FilmDBApp.exe
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\FilmDBApp.pdb
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\Microsoft.WindowsAPICodePack.dll
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
-C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\ApplicationView.baml
-C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\SettingsView.baml
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\FilmDBApp.g.resources
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\FilmDBApp.Properties.Resources.resources
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\FilmDBApp.csproj.GenerateResource.cache
@@ -76,6 +70,12 @@ C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\DocumentFormat.O
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\EPPlus.xml
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\FilmDBApp.exe.CodeAnalysisLog.xml
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\FilmDBApp.exe.lastcodeanalysissucceeded
-C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\FilmDBApp.csprojAssemblyReference.cache
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\log4net.dll
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\log4net.xml
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\Views\HomeView.g.cs
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\Views\ApplicationView.g.cs
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\Views\SettingsView.g.cs
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\Views\HomeView.baml
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\Views\ApplicationView.baml
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\Views\SettingsView.baml
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\FilmDBApp.csprojAssemblyReference.cache

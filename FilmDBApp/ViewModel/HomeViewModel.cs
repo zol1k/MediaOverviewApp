@@ -18,10 +18,8 @@ namespace FilmDBApp
         private Genre _selectedGenre;
         private Genre _newGenreForSelectedFilm;
         private Film _selectedFilm;
-        private readonly ApplicationModel model;
-
+        private readonly ApplicationModel _model;
         private bool _fullListActive ;
-
         private string _filmNameEnToChangeTextBoxValue;
         private string _filmNameCzskToChangeTextBoxValue;
         private string _filmYearToChangeTextBoxValue;
@@ -47,7 +45,7 @@ namespace FilmDBApp
 
         public ObservableCollection<Genre> CollectionOfGenres
         {
-            get { return model.ListOfGenres; }
+            get { return _model.ListOfGenres; }
             set
             {
                 CollectionOfGenres = value;
@@ -194,10 +192,10 @@ namespace FilmDBApp
         #endregion
 
 
-        public HomeViewModel(ApplicationModel settings)
+        public HomeViewModel(ApplicationModel model)
         {
-            model = settings;
-            ActionSet.CollectGenreFilms(CollectionOfGenres);
+            _model = model;
+            _model.CollectGenreFilms();
             
             SelectedGenre = CollectionOfGenres.FirstOrDefault();
             _fullListActive = false;

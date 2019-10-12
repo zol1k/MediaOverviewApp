@@ -3,18 +3,10 @@
   <settings>
     <FilmsSettings PathToFolder="L:\1. Films">
       <Genres>
-        <Genre GenreName="1. Films" PathToGenreFolder="L:\1. Films" />
         <Genre GenreName="1.animovane" PathToGenreFolder="L:\1. Films\1.animovane" />
         <Genre GenreName="1.ceske" PathToGenreFolder="L:\1. Films\1.ceske" />
         <Genre GenreName="1.drama-akcne" PathToGenreFolder="L:\1. Films\1.drama-akcne" />
         <Genre GenreName="1.fantasy" PathToGenreFolder="L:\1. Films\1.fantasy" />
-        <Genre GenreName="1.horor" PathToGenreFolder="L:\1. Films\1.horor" />
-        <Genre GenreName="1.komedia" PathToGenreFolder="L:\1. Films\1.komedia" />
-        <Genre GenreName="1.komixovka" PathToGenreFolder="L:\1. Films\1.komixovka" />
-        <Genre GenreName="1.scifi" PathToGenreFolder="L:\1. Films\1.scifi" />
-        <Genre GenreName="1.thriller" PathToGenreFolder="L:\1. Films\1.thriller" />
-        <Genre GenreName="1.vojnove" PathToGenreFolder="L:\1. Films\1.vojnove" />
-        <Genre GenreName="L:\" PathToGenreFolder="L:\" />
       </Genres>
     </FilmsSettings>
     <SerialsSettings PathToFolder="L:\1. Series"></SerialsSettings>

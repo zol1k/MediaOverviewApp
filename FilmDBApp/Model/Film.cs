@@ -99,7 +99,7 @@ namespace FilmDBApp
             get => _filmYear;
             set
             {
-                _filmYear = value;
+               _filmYear = value;
                OnPropertyChanged("FilmYear");
             }
         }
@@ -169,7 +169,6 @@ namespace FilmDBApp
             newCzFilmName = newCzFilmName ?? "";
             newYear = newYear ?? "";
 
-
             string newFilename = "";
 
             if (newFilmName != "")
@@ -201,12 +200,9 @@ namespace FilmDBApp
             webClient = new WebClient();
             ImdbInfo = new ImdbEntity();
             string searchBy = FilmNameEn != "" ? FilmNameEn : FilmNameCzsk;
-
-            string json = webClient.DownloadString(ApplicationModel.ImdbURL + searchBy + ApplicationModel.ImdbURLYear + FilmYear + ApplicationModel.ImdbURLApi);
-
+            string json = webClient.DownloadString(ApplicationConfiguration.ImdbURL + searchBy + ApplicationConfiguration.ImdbURLYear + FilmYear + ApplicationConfiguration.ImdbURLApi);
             ImdbInfo = JsonConvert.DeserializeObject<ImdbEntity>(json);
             webClient.Dispose();
-
         }
 
         public int CompareTo(object obj)

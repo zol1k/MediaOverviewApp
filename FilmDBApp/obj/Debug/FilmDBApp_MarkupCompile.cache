@@ -10,11 +10,11 @@ none
 false
 CODE_ANALYSIS;DEBUG;TRACE
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\App.xaml
-3-1048979200
+3-1558126655
 
-23-1473041148
+25-386498899
 25-1547751824
-HomeView.xaml;ApplicationView.xaml;SettingsView.xaml;
+Views\HomeView.xaml;Views\ApplicationView.xaml;Views\SettingsView.xaml;
 
 False
 

@@ -19,81 +19,11 @@ namespace FilmDBApp.Model
             filmOldGenre.ListOfFilms.Remove(filmToMove);
             filmNewGenre.ListOfFilms.Add(filmToMove);
             string path = filmNewGenre.PathToGenreDirectory;
-            filmToMove.FilmFileInfo.MoveTo(path + "\\" + filmToMove.FilmFileInfo.Name);
+            filmToMove.FilmFileInfo.MoveTo(path + Path.DirectorySeparatorChar + filmToMove.FilmFileInfo.Name);
         }
 
 
-        private static void CollectGenreFilms(Genre genre, List<string> listToIgnore)
-        {
-                foreach (var file in Directory.GetFiles(genre.PathToGenreDirectory))
-                {
-                    FileInfo fileInfo = new FileInfo(file);
-
-                    //if current file is not hidden, add it into film db
-                    if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
-                        genre.CollectionOfFilms.AddNewFilm(new Film(fileInfo, false)
-                        {
-                            DirectoryGenre = genre.GenreName
-                        });
-                }
-
-                foreach (var file in Directory.GetDirectories(genre.PathToGenreDirectory))
-                {
-                    FileInfo fileInfo = new FileInfo(file);
-
-                    if (listToIgnore.Contains(fileInfo.Name))
-                        continue;
-                    //if current directory is not hidden, add it into film db
-                    if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
-                        genre.CollectionOfFilms.AddNewFilm(new Film(fileInfo, true)
-                        {
-                            DirectoryGenre = genre.GenreName
-                        });
-                }
-        }
-
-        public static void CollectGenreFilms(ObservableCollection<Genre> CollectionOfGenres)
-        {
-            List<string> namesOfGenres = new List<string>();
-
-            List<string> errorList = new List<string>();
-
-            // Firstly get List<namesOfGenres> to not show genre folders inside of FilmList
-            foreach (var genre in CollectionOfGenres)
-            {
-                namesOfGenres.Add(genre.GenreName);
-            }
-
-            //
-            foreach (var genre in CollectionOfGenres)
-            {
-                try
-                { 
-                    CollectGenreFilms(genre, namesOfGenres);
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    
-                    errorList.Add(genre.GenreName + " - " + genre.PathToGenreDirectory);
-                }
-                
-            }
-            if (errorList.Count > 0)
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("Bellow path to genre(s) Not Found.");
-                sb.AppendLine();
-                sb.AppendLine();
-                sb.Append(String.Join(Environment.NewLine, errorList.ToArray()));
-                sb.AppendLine();
-                sb.AppendLine();
-                sb.Append("Please go to settings and choose your genre folder again !");
-                MessageBox.Show(sb.ToString(), "Genres Not Found");
-            }
-            
-        }
-
-
+        
         static readonly string[] suffixes =
             { "Bytes", "KB", "MB", "GB", "TB", "PB" };
         public static string FormatSize(Int64 bytes)
