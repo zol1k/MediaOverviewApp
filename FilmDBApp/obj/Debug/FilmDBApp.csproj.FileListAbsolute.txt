@@ -68,10 +68,14 @@ C:\UserData\z003ssxj\Documents\Visual Studio 2017\Backup Files\FilmDBApp\FilmDBA
 C:\UserData\z003ssxj\Documents\Visual Studio 2017\Backup Files\FilmDBApp\FilmDBApp\obj\Debug\FilmDBApp.pdb
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\Newtonsoft.Json.dll
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\Newtonsoft.Json.xml
-C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\FilmDBApp.csprojAssemblyReference.cache
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\DocumentFormat.OpenXml.dll
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\EPPlus.dll
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\System.IO.FileSystem.Primitives.dll
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\System.IO.Packaging.dll
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\DocumentFormat.OpenXml.xml
 C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\EPPlus.xml
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\FilmDBApp.exe.CodeAnalysisLog.xml
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\FilmDBApp.exe.lastcodeanalysissucceeded
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\obj\Debug\FilmDBApp.csprojAssemblyReference.cache
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\log4net.dll
+C:\Users\mzold\OneDrive\Documents\filmdbapp\FilmDBApp\bin\Debug\log4net.xml

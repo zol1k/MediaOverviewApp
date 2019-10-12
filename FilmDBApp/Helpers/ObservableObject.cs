@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace FilmDBApp
 {
+
+
     public abstract class ObservableObject : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged Members
+
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Raised when a property on this object has a new value.
@@ -21,7 +25,7 @@ namespace FilmDBApp
         /// Raises this object's PropertyChanged event.
         /// </summary>
         /// <param name="propertyName">The property that has a new value.</param>
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged(string propertyName)
         {
             this.VerifyPropertyName(propertyName);
 
@@ -43,7 +47,7 @@ namespace FilmDBApp
         /// </summary>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
-        public virtual void VerifyPropertyName(string propertyName)
+        public void VerifyPropertyName(string propertyName)
         {
             // Verify that the property name matches a real,
             // public, instance property on this object.
@@ -52,7 +56,7 @@ namespace FilmDBApp
                 string msg = "Invalid property name: " + propertyName;
 
                 if (this.ThrowOnInvalidPropertyName)
-                    throw new Exception(msg);
+                    Log.Error(msg);
                 else
                     Debug.Fail(msg);
             }
@@ -64,7 +68,7 @@ namespace FilmDBApp
         /// The default value is false, but subclasses used by unit tests might
         /// override this property's getter to return true.
         /// </summary>
-        protected virtual bool ThrowOnInvalidPropertyName { get; private set; }
+        protected bool ThrowOnInvalidPropertyName { get; private set; }
 
         #endregion // Debugging Aides
     }

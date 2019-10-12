@@ -13,7 +13,7 @@ namespace FilmDBApp.Model
     {
         #region Fields
 
-        private ObservableCollection<Genre> _genreList;
+        private readonly ObservableCollection<Genre> _genreList;
 
         #endregion
 
@@ -43,7 +43,7 @@ namespace FilmDBApp.Model
         {
             bool _ifListCointainstGenre = _genreList.Any(p => p.GenreName == genre.GenreName);
 
-            if (_ifListCointainstGenre == false)
+            if (! _ifListCointainstGenre)
                 _genreList.Add(genre);
             else
             {
@@ -65,7 +65,7 @@ namespace FilmDBApp.Model
         {
             for (int i = _genreList.Count - 1; i >= 0; i--)
             {
-                if (_genreList[i].ToBeDeletedFromGenreCollection == true)
+                if (_genreList[i].ToBeDeletedFromGenreCollection)
                 { 
                     MessageBox.Show(_genreList[i].GenreName);
                     _genreList.RemoveAt(i);

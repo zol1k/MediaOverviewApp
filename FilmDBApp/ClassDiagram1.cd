@@ -10,7 +10,7 @@
   <Class Name="FilmDBApp.ApplicationView" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="30.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgIAAAAgAAAAAACAAAAAAA=</HashCode>
       <FileName>ApplicationView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -18,7 +18,7 @@
   <Class Name="FilmDBApp.ObservableObject" Collapsed="true">
     <Position X="14.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAIAAAAQAQgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAQAQgAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Helpers\ObservableObject.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -42,7 +42,7 @@
   <Class Name="FilmDBApp.Film">
     <Position X="8.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAAFQAAAAgABAARgAAAAAAAAAIACIEAABAlAAIBABAA=</HashCode>
+      <HashCode>EAAFQAAAAiABAARgAAAAAAAAAIgAIEAABAlAAIBABAA=</HashCode>
       <FileName>Model\Film.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -58,14 +58,14 @@
   <Class Name="FilmDBApp.ApplicationViewModel" Collapsed="true">
     <Position X="15.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAAAAAABAAAAAAAAIAAAAAQAAEBAACAA=</HashCode>
+      <HashCode>AAAAAAAAAwAAAAAAAABAAAAAAAAIAIAAAQAAEBAICAA=</HashCode>
       <FileName>ViewModel\ApplicationViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FilmDBApp.HomeViewModel">
     <Position X="22.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BBAAoCEAABAUAEAIgAACEBQGABAQRAQAEEkBNCAALAg=</HashCode>
+      <HashCode>BBAAoCEAAAAUAEAIAAAAEBQEABAQRAQAEEkBNCAILAg=</HashCode>
       <FileName>ViewModel\HomeViewModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -73,7 +73,7 @@
   <Class Name="FilmDBApp.SettingsViewModel">
     <Position X="4.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAgAAEAQCAAEAAAAQAMQCAQABEhgIBAAAAAAA=</HashCode>
+      <HashCode>AAAAgAAAgAAEAQCAgEAAAAQAMQAAQABEhgIBAAAAAAA=</HashCode>
       <FileName>ViewModel\SettingsViewModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -99,18 +99,11 @@
       <FileName>Model\FilmImdbEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FilmDBApp.Model.ApplicationDataList" Collapsed="true">
-    <Position X="24.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAIAAAAAAAA=</HashCode>
-      <FileName>Model\ApplicationDataList.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FilmDBApp.Model.AppSettings">
+  <Class Name="FilmDBApp.Model.ApplicationModel">
     <Position X="6.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACAEAACAACEAAAAggAACAAAghAIAQAgAAAIAJAAAYhg=</HashCode>
-      <FileName>Model\AppSettings.cs</FileName>
+      <HashCode>ACAEAACAACEAAAAggAACAAAghAAAQAgAAAIAIAAAYhg=</HashCode>
+      <FileName>Model\ApplicationModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FilmDBApp.Model.CollectionOfFilms">
@@ -130,7 +123,7 @@
   <Class Name="FilmDBApp.Model.Genre" Collapsed="true">
     <Position X="20" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAIwAAAAQAACAAAAgAAAAAAAAAAAAAAY=</HashCode>
+      <HashCode>AAAgAAAQAACAAIwAAAAAAAAAAAAgAAAAAAAAAAAAAAY=</HashCode>
       <FileName>Model\Genre.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

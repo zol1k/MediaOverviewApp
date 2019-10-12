@@ -25,9 +25,6 @@ namespace FilmDBApp.Model
 
         private static void CollectGenreFilms(Genre genre, List<string> listToIgnore)
         {
-            List<string> errorList = new List<string>();
-
-
                 foreach (var file in Directory.GetFiles(genre.PathToGenreDirectory))
                 {
                     FileInfo fileInfo = new FileInfo(file);
@@ -53,10 +50,6 @@ namespace FilmDBApp.Model
                             DirectoryGenre = genre.GenreName
                         });
                 }
-
-                //genre.Films = genre.Films.OrderBy(o => o.FileName).ToList();
-
-
         }
 
         public static void CollectGenreFilms(ObservableCollection<Genre> CollectionOfGenres)

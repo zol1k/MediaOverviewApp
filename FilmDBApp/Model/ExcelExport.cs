@@ -8,11 +8,11 @@ using OfficeOpenXml;
 
 namespace FilmDBApp.Model
 {
-    class ExcelExport:IDisposable
+    class ExcelExport : IDisposable
     {
         private CollectionOfGenres _collectionOfGenres;
-        ExcelPackage _excelFile;
-        string headerRange = "A1:" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + "1";
+        readonly ExcelPackage _excelFile;
+        private readonly string headerRange = "A1:" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + "1";
 
         static List<string[]> headerRow = new List<string[]>()
         {
@@ -23,7 +23,6 @@ namespace FilmDBApp.Model
         {
             _excelFile = new ExcelPackage();
             _collectionOfGenres = collectionOfGenres;
-            CreateExcelFile();
         }
 
         private void CreateExcelFile()
@@ -43,6 +42,7 @@ namespace FilmDBApp.Model
                 string filename = dlg.FileName;
                 PopulateExcelFile();
                 SaveExcelFile(filename);
+                System.Windows.MessageBox.Show("Excel export done!");
             }
         }
 
@@ -68,12 +68,6 @@ namespace FilmDBApp.Model
             }
         }
 
-        private async Task PopulateExcelFileAsync()
-        {
-
-
-        }
-
         private void SaveExcelFile(string filename)
         {
             _excelFile.SaveAs(new FileInfo(filename));
@@ -81,9 +75,20 @@ namespace FilmDBApp.Model
 
         public void Dispose()
         {
-            _excelFile = null;
-            _collectionOfGenres = null;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            // Cleanup
+            _excelFile.Dispose();
+            _collectionOfGenres = null;
+        }
+
+        internal void Run()
+        {
+            CreateExcelFile();
         }
     }
 }

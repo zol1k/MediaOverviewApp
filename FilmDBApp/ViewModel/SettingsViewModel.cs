@@ -18,7 +18,7 @@ namespace FilmDBApp
         private ICommand _changeFilmsFolderFilePathCommand;
         private ICommand _changeSerialsFolderFilePathCommand;
         private ICommand _saveSettingsCommand;
-        private AppSettings _settings;
+        private ApplicationModel _settings;
 
         #endregion
 
@@ -30,7 +30,7 @@ namespace FilmDBApp
             get { return _listOfGenres; }
         }
 
-        public AppSettings Settings { get => _settings;}
+        public ApplicationModel Settings { get => _settings;}
 
         public string Name
         {
@@ -68,7 +68,7 @@ namespace FilmDBApp
 
         #endregion
 
-        public SettingsViewModel(AppSettings settings)
+        public SettingsViewModel(ApplicationModel settings)
         {
             _settings = settings;
             _listOfGenres = settings.ListOfGenres;

@@ -20,9 +20,7 @@ namespace FilmDBApp
     /// </summary>
     public partial class ApplicationView : Window
     {
-        private string ImageFolderPath = AppDomain.CurrentDomain.BaseDirectory + "BackgroundImages\\" ;
-        private static string ImagesFolderPath = AppDomain.CurrentDomain.BaseDirectory + "BackgroundImages\\1.jpg";
-
+        private readonly string ImageFolderPath = AppDomain.CurrentDomain.BaseDirectory + "BackgroundImages\\" ;
         public ApplicationView()
         {
             InitializeComponent();

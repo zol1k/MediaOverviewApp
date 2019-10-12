@@ -5,13 +5,13 @@ using System.Text.RegularExpressions;
 using FilmDBApp.Model;
 using Newtonsoft.Json;
 
+
 namespace FilmDBApp
 {
-    public class Film : ObservableObject, IComparable
+    public class Film : ObservableObject, IComparable, IDisposable
     {
         #region Fields
-
-
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private string _filmNameCzsk;
         private string _filmNameEn;
         private string _filmYear;
@@ -62,15 +62,14 @@ namespace FilmDBApp
             {
                 try
                 {
-                    if (IsDirectory == true)
+                    if (IsDirectory)
                         return ActionSet.GetFolderSize(FilmFileInfo.FullName);
                     else
                         return ActionSet.FormatSize(FilmFileInfo.Length);
                 }
                 catch (Exception ex)
                 {
-                    string error = ex.Message;
-                    return "";
+                    return ex.ToString();
                 }
             }
         }
@@ -105,30 +104,20 @@ namespace FilmDBApp
             }
         }
 
-        private string DirectoryPath
+        private string GetDirectoryPath()
         {
-            get => Path.GetDirectoryName(FilePath);
+            return Path.GetDirectoryName(FilePath);
         }
 
         public ImdbEntity ImdbInfo { get; set; }
-
-
         #endregion
-
-
-
 
         public Film(FileInfo fileInfo, bool isDirectory)
         {
             this._filmFileInfo = fileInfo;
             this.IsDirectory = isDirectory;
-
             ParseFileName();
-            webClient = new WebClient();
         }
-
-
-
 
         #region Methods
 
@@ -148,7 +137,7 @@ namespace FilmDBApp
                 }
                 catch (FormatException ex)
                 {
-                    string error = ex.Message;
+                    Log.Error(ex.Message);
                     FilmNameEn = FileName;
                 }
             }
@@ -165,7 +154,7 @@ namespace FilmDBApp
                 }
                 catch (Exception ex)
                 {
-                    string error = ex.Message;
+                    Log.Error(ex.Message);
                     FilmNameEn = FileName;
                 }
             }
@@ -192,7 +181,7 @@ namespace FilmDBApp
             if (newYear.Trim() != "")
                 newFilename = newFilename.Trim() + " (" + newYear + ")";
 
-            string newfilePathName = DirectoryPath + "\\" + newFilename.Replace(':', '-').Trim() + FileExtension;
+            string newfilePathName = GetDirectoryPath() + Path.PathSeparator + newFilename.Replace(':', '-').Trim() + FileExtension;
 
             FilmFileInfo.MoveTo(newfilePathName);
 
@@ -202,32 +191,41 @@ namespace FilmDBApp
 
         }
 
-        /*
-         * RetrieveImdbInfo()
-         * - function that is building string out of collected data and retrieving json 
-         *   out of omdb service. After that deserialize of retrieved json into ImdbEntity.
-         *   Retrieved data are avaliable inside of ImdbEntity properties
-         */
+        /// <summary>
+        ///  Building string out of collected data and retrieving json
+        ///  out of omdb service.After that deserialize of retrieved json into ImdbEntity.
+        ///  Retrieved data are avaliable inside of ImdbEntity properties
+        /// </summary>
         public void RetrieveImdbInfo()
         {
+            webClient = new WebClient();
             ImdbInfo = new ImdbEntity();
             string searchBy = FilmNameEn != "" ? FilmNameEn : FilmNameCzsk;
 
-            string json = "";
-
-            json = webClient.DownloadString(AppSettings.ImdbURL + searchBy + AppSettings.ImdbURLYear + FilmYear + AppSettings.ImdbURLApi);
+            string json = webClient.DownloadString(ApplicationModel.ImdbURL + searchBy + ApplicationModel.ImdbURLYear + FilmYear + ApplicationModel.ImdbURLApi);
 
             ImdbInfo = JsonConvert.DeserializeObject<ImdbEntity>(json);
+            webClient.Dispose();
 
         }
 
         public int CompareTo(object obj)
         {
-
             Film a = this;
             Film b = (Film)obj;
             return string.Compare(a.FileName, b.FileName);
+        }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // Cleanup
+            webClient.Dispose();
         }
 
 

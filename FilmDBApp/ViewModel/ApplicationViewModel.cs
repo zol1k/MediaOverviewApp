@@ -14,7 +14,7 @@ namespace FilmDBApp
     {
         #region Fields
 
-        private AppSettings _appSettings;
+        private readonly ApplicationModel model;
         private ICommand _changePageCommand;
         private ICommand _exportToCSVCommand;
         private List<IPageViewModel> _pageViewModels;
@@ -24,9 +24,9 @@ namespace FilmDBApp
 
         public ApplicationViewModel()
         {
-            _appSettings = new AppSettings();
-            PageViewModels.Add(new HomeViewModel(_appSettings));
-            PageViewModels.Add(new SettingsViewModel(_appSettings));
+            model = new ApplicationModel();
+            PageViewModels.Add(new HomeViewModel(model));
+            PageViewModels.Add(new SettingsViewModel(model));
             CurrentPageViewModel = PageViewModels[0];
         }
 
@@ -89,13 +89,15 @@ namespace FilmDBApp
             {
                 PageViewModels.Add(viewModel);
             }
-            //tomuto zapisu trochu nerozumiem
+            //tomuto zapisu trochu nerozumiemdobre d
             CurrentPageViewModel = PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
         }
         private void ExportToCSVButton_Click(object obj)
         {
-            ExcelExport exportToCSV = new ExcelExport(_appSettings.CollectionOfGenres);
+            ExcelExport exportToCSV = new ExcelExport(model.CollectionOfGenres);
+            exportToCSV.Run();
+            exportToCSV.Dispose();
         }
         #endregion
 

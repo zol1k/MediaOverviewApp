@@ -18,8 +18,8 @@ namespace FilmDBApp
         private Genre _selectedGenre;
         private Genre _newGenreForSelectedFilm;
         private Film _selectedFilm;
-        private AppSettings _settings;
-        private ObservableCollection<Genre> _collectionOfGenres;
+        private readonly ApplicationModel model;
+
         private bool _fullListActive ;
 
         private string _filmNameEnToChangeTextBoxValue;
@@ -47,10 +47,10 @@ namespace FilmDBApp
 
         public ObservableCollection<Genre> CollectionOfGenres
         {
-            get { return _collectionOfGenres; }
+            get { return model.ListOfGenres; }
             set
             {
-                _collectionOfGenres = value;
+                CollectionOfGenres = value;
                 OnPropertyChanged("CollectionOfGenres");
             }
         }
@@ -194,11 +194,10 @@ namespace FilmDBApp
         #endregion
 
 
-        public HomeViewModel(AppSettings settings)
+        public HomeViewModel(ApplicationModel settings)
         {
-            _settings = settings;
-            _collectionOfGenres = _settings.ListOfGenres;
-            ActionSet.CollectGenreFilms(_collectionOfGenres);
+            model = settings;
+            ActionSet.CollectGenreFilms(CollectionOfGenres);
             
             SelectedGenre = CollectionOfGenres.FirstOrDefault();
             _fullListActive = false;
@@ -249,7 +248,7 @@ namespace FilmDBApp
                     File.Delete(pathToDelete);
                 }
 
-                if (_fullListActive == true)
+                if (_fullListActive)
                 {
                     SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(CollectAllGenreFilms());
                     _fullListActive = true;

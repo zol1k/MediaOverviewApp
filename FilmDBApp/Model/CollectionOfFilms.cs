@@ -13,7 +13,7 @@ namespace FilmDBApp.Model
     {
         #region Fields
 
-        private ObservableCollection<Film> _listOfFilms;
+        private readonly ObservableCollection<Film> _listOfFilms;
 
         #endregion
 
@@ -22,7 +22,6 @@ namespace FilmDBApp.Model
 
         public ObservableCollection<Film> ListOfFilms
         {
-
             get
             {
                 _listOfFilms.Sort();
