@@ -12,9 +12,7 @@ namespace FilmDBApp.Model
     public class CollectionOfFilms:ObservableObject
     {
         #region Fields
-
         private readonly ObservableCollection<Film> _listOfFilms;
-
         #endregion
 
 
@@ -43,17 +41,14 @@ namespace FilmDBApp.Model
         {
             _listOfFilms.Add(film);
         }
-
         public void RemoveGenreFromList(Film film)
         {
             _listOfFilms.Remove(film);
         }
-
         public void ClearAll()
         {
             _listOfFilms.Clear();
         }
-
 
 
 

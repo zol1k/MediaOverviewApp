@@ -41,8 +41,5 @@
                 <Button Content="..." Command="{Binding ChangeSerialsFolderFilePathCommand}" HorizontalAlignment="Left" Margin="340,30,0,0" VerticalAlignment="Top" Width="20"/>
             </Grid>
         </GroupBox>
-
-        <Button Content="Save settings into configuration file" HorizontalAlignment="Left" Margin="10,584,0,0" VerticalAlignment="Top" Command="{Binding SaveSettingsCommand}" Width="780"/>
-
     </Grid>
 </UserControl>

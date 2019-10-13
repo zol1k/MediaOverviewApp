@@ -14,6 +14,7 @@ namespace FilmDBApp.Model
         #region Fields
 
         private readonly ObservableCollection<Genre> _genreList;
+        private List<string> _genreNameList;
 
         #endregion
 
@@ -27,19 +28,11 @@ namespace FilmDBApp.Model
                 return _genreList;
             }
         }
-        public List<string> GenreNameList
-        {
-            get
-            {
-                return ReturnListOfGenreNames();
-            }
-        }
-
-
         #endregion
 
         public CollectionOfGenres()
         {
+            _genreNameList = new List<string>();
             _genreList = new ObservableCollection<Genre>();
         }
 
@@ -53,8 +46,11 @@ namespace FilmDBApp.Model
         {
             bool _ifListCointainstGenre = _genreList.Any(p => p.GenreName == genre.GenreName);
 
-            if (! _ifListCointainstGenre)
+            if (!_ifListCointainstGenre)
+            {
                 _genreList.Add(genre);
+
+            }
             else
             {
                 MessageBox.Show(genre.GenreName + " is already in genre list!");

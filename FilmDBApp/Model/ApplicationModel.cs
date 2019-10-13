@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
+using FilmDBApp.Helpers;
 using Microsoft.WindowsAPICodePack.Dialogs;
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 namespace FilmDBApp.Model
@@ -31,6 +32,7 @@ namespace FilmDBApp.Model
             get => CollectionOfGenres.GenreList;
         }
 
+        public ObservableCollection<Film> CollectionOfAllFilms { get => MergeGenreFilmCollections(); }
         public ApplicationConfiguration Config { get => _config; }
 
         #endregion
@@ -40,7 +42,7 @@ namespace FilmDBApp.Model
             _config = new ApplicationConfiguration();
             FillGenreCollectionByConfigurationFile();
         }
-
+        #region Methods
         public void FillGenreCollectionByConfigurationFile()
         {
             CollectionOfGenres = new CollectionOfGenres();
@@ -52,74 +54,29 @@ namespace FilmDBApp.Model
                 CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(path)));
             }
         }
-
-
-        /// <summary>
-        /// Going throught paths of recieved genres, and fill its filmLists with CollectGenreFilms
-        /// </summary>
-        /// <param name="CollectionOfGenres">collection of Genres</param>
-        public void CollectGenreFilms()
+        
+        public void ChangeFilmGenre(Film filmToMove, Genre filmOldGenre, Genre filmNewGenre)
         {
-            List<string> errorList = new List<string>();
-
-            foreach (Genre genre in ListOfGenres)
-            {
-                try
-                {
-                    CollectGenreFilms(genre);
-                }
-                catch (DirectoryNotFoundException msg)
-                {
-                    errorList.Add(genre.GenreName + " - " + genre.PathToGenreDirectory);
-                    Log.Error(msg.ToString());
-                }
-            }
-            if (errorList.Count > 0)
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("Bellow path to genre(s) Not Found.");
-                sb.AppendLine();
-                sb.AppendLine();
-                sb.Append(String.Join(Environment.NewLine, errorList.ToArray()));
-                sb.AppendLine();
-                sb.AppendLine();
-                sb.Append("Please go to settings and choose your genre folder again !");
-                MessageBox.Show(sb.ToString(), "Genres Not Found");
-            }
+            filmOldGenre.ListOfFilms.Remove(filmToMove);
+            filmNewGenre.ListOfFilms.Add(filmToMove);
+            string path = filmNewGenre.PathToGenreDirectory;
+            filmToMove.FilmFileInfo.MoveTo(path + Path.DirectorySeparatorChar + filmToMove.FilmFileInfo.Name);
         }
 
-        private void CollectGenreFilms(Genre genre)
+        private ObservableCollection<Film> MergeGenreFilmCollections()
         {
-            foreach (var file in Directory.GetFiles(genre.PathToGenreDirectory))
+            ObservableCollection<Film> collectedFilms = new ObservableCollection<Film>();
+            foreach (var genre in ListOfGenres)
             {
-                FileInfo fileInfo = new FileInfo(file);
-
-                //if current file is not hidden, add it into film db
-                if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
+                foreach (var film in genre.ListOfFilms)
                 {
-                    genre.CollectionOfFilms.AddNewFilm(new Film(fileInfo, false)
-                    {
-                        DirectoryGenre = genre.GenreName
-                    });
+                    collectedFilms.Add(film);
                 }
             }
 
-            foreach (var file in Directory.GetDirectories(genre.PathToGenreDirectory))
-            {
-                FileInfo fileInfo = new FileInfo(file);
-
-                if (CollectionOfGenres.GenreNameList.Contains(fileInfo.Name))
-                    continue;
-                //if current directory is not hidden, add it into film db
-                if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
-                {
-                    genre.CollectionOfFilms.AddNewFilm(new Film(fileInfo, true)
-                    {
-                        DirectoryGenre = genre.GenreName
-                    });
-                }
-            }
-
+            collectedFilms.Sort();
+            return collectedFilms;
         }
+        #endregion
     }
 }

@@ -13,6 +13,7 @@ namespace FilmDBApp.Model
     public class Genre: ObservableObject, IComparable
     {
         #region Fields
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly FileInfo _genreFileInfo;
         private readonly bool _isRoot;
 
@@ -45,6 +46,8 @@ namespace FilmDBApp.Model
             CollectionOfFilms = new CollectionOfFilms();
 
             if (fileInfo.Directory == null) _isRoot = true;
+
+            CollectFilms();
         }
 
         public int CompareTo(object obj)
@@ -53,6 +56,42 @@ namespace FilmDBApp.Model
             Genre b = (Genre)obj;
             return String.Compare(a.GenreName, b.GenreName);
         }
-    
+
+        /// <summary>
+        /// Going throught paths of recieved genres, and fill its filmLists with CollectGenreFilms
+        /// </summary>
+        private void CollectFilms()
+        {
+            foreach (var file in Directory.GetFiles(PathToGenreDirectory))
+            {
+                FileInfo fileInfo = new FileInfo(file);
+
+                //if current file is not hidden, add it into film db
+                if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
+                {
+                    CollectionOfFilms.AddNewFilm(new Film(fileInfo, false)
+                    {
+                        DirectoryGenre = GenreName
+                    });
+                }
+            }
+
+            foreach (var file in Directory.GetDirectories(PathToGenreDirectory))
+            {
+                FileInfo fileInfo = new FileInfo(file);
+
+                //if (CollectionOfGenres.GenreNameList.Contains(fileInfo.Name))
+                    //continue;
+                //if current directory is not hidden, add it into film db
+                if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
+                {
+                    CollectionOfFilms.AddNewFilm(new Film(fileInfo, true)
+                    {
+                        DirectoryGenre = GenreName
+                    });
+                }
+            }
+
+        }
     }
 }

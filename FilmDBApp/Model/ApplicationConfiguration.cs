@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Linq;
 
 namespace FilmDBApp.Model
@@ -11,6 +12,7 @@ namespace FilmDBApp.Model
     class ApplicationConfiguration : ObservableObject
     {
         #region Fields
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly XDocument XDoc;
         private readonly XElement XGenresNode;
@@ -84,13 +86,44 @@ namespace FilmDBApp.Model
         public List<string> GetGenrePathsFromConfigFile()
         {
             List<string> configGenrePathsList = new List<string>();
+
+            List<string> configNotValidGenrePathsList = new List<string>();
+
             string genrePath;
             foreach (XElement el in XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
             {
+
                 genrePath = el.Attribute("PathToGenreFolder").Value;
-                configGenrePathsList.Add(genrePath);
+                if (ActionSet.FileOrDirectoryExists(genrePath))
+                {
+                    configGenrePathsList.Add(genrePath);
+                }
+                else
+                {
+                    configNotValidGenrePathsList.Add(genrePath);
+                    Log.Error("Application Configuration - Could not find destination of " + genrePath + " path.");
+                }
             }
+
+            if (configNotValidGenrePathsList.Count > 0)
+            {
+                ShowMsgBoxWithNotValidPaths(configNotValidGenrePathsList);
+            }
+
             return configGenrePathsList;
+        }
+
+        private void ShowMsgBoxWithNotValidPaths(List<string> configNotValidGenrePathsList)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Bellow path to genre(s) Not Found.");
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.Append(String.Join(Environment.NewLine, configNotValidGenrePathsList.ToArray()));
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.Append("Please go to settings and choose your genre folder again !");
+            MessageBox.Show(sb.ToString(), "Genres Not Found");
         }
 
         public void ChangeFilmsFolder(FileInfo folder)

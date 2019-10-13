@@ -43,7 +43,6 @@ namespace FilmDBApp
                 _fileName = value;
                 OnPropertyChanged("FileName");
             }
-
         }
 
         public string FileExtension
@@ -180,7 +179,7 @@ namespace FilmDBApp
             if (newYear.Trim() != "")
                 newFilename = newFilename.Trim() + " (" + newYear + ")";
 
-            string newfilePathName = GetDirectoryPath() + Path.PathSeparator + newFilename.Replace(':', '-').Trim() + FileExtension;
+            string newfilePathName = GetDirectoryPath() + Path.DirectorySeparatorChar + newFilename.Replace(':', '-').Trim() + FileExtension;
 
             FilmFileInfo.MoveTo(newfilePathName);
 

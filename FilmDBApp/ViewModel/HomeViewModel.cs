@@ -23,10 +23,6 @@ namespace FilmDBApp
         private string _filmNameEnToChangeTextBoxValue;
         private string _filmNameCzskToChangeTextBoxValue;
         private string _filmYearToChangeTextBoxValue;
-
-        private ICommand _executeFilmRenameButtonCommand;
-        private ICommand _executeFilmMoveButtonCommand;
-        private ICommand _executeFilmDeleteButtonCommand;
         private string _searchString;
         #endregion
 
@@ -74,6 +70,7 @@ namespace FilmDBApp
                 }
             }
         }
+
         public Genre NewGenreForSelectedFilm
         {
             get => _newGenreForSelectedFilm;
@@ -115,7 +112,7 @@ namespace FilmDBApp
             }
             get { return _selectedGenreFilmListView; }
         }
-
+        public ApplicationModel Model { get => _model; }
 
         public string FilmNameEnToChangeTextBoxValue
         {
@@ -149,45 +146,10 @@ namespace FilmDBApp
         }
 
 
-        public ICommand ExecuteFilmRenameButtonCommand
-        {
-            get
-            {
-                if (_executeFilmRenameButtonCommand == null)
-                    _executeFilmRenameButtonCommand = new RelayCommand(RenameFilmFileNameButton_Click);
-                return _executeFilmRenameButtonCommand;
-            }
-        }
-
-        public ICommand ExecuteFilmMoveButtonCommand
-        {
-            get
-            {
-                if (_executeFilmMoveButtonCommand == null)
-                    _executeFilmMoveButtonCommand = new RelayCommand(MoveFilmFileButton_Click);
-                return _executeFilmMoveButtonCommand;
-            }
-        }
-
-        public ICommand ExecuteFilmDeleteButtonCommand
-        {
-            get
-            {
-                if (_executeFilmDeleteButtonCommand == null)
-                    _executeFilmDeleteButtonCommand = new RelayCommand(DeleteFilmFileButton_Click);
-                return _executeFilmDeleteButtonCommand;
-            }
-        }
-        private ICommand _showAllFilmsButtonCommand;
-        public ICommand ShowAllFilmsButtonCommand
-        {
-            get
-            {
-                if (_showAllFilmsButtonCommand == null)
-                    _showAllFilmsButtonCommand = new RelayCommand(ShowAllFilmsButton_Click);
-                return _showAllFilmsButtonCommand;
-            }
-        }
+        public ICommand ExecuteFilmRenameButtonCommand { get; }
+        public ICommand ExecuteFilmMoveButtonCommand { get; }
+        public ICommand ExecuteFilmDeleteButtonCommand { get; }
+        public ICommand ShowAllFilmsButtonCommand { get; }
 
         #endregion
 
@@ -195,15 +157,22 @@ namespace FilmDBApp
         public HomeViewModel(ApplicationModel model)
         {
             _model = model;
-            _model.CollectGenreFilms();
+            //_model.CollectGenreFilms();
             
             SelectedGenre = CollectionOfGenres.FirstOrDefault();
             _fullListActive = false;
+            if (SelectedGenre != null)
+            {
+                SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
+                _selectedGenreFilmListView = CollectionViewSource.GetDefaultView(SelectedGenre.ListOfFilms);
+                _selectedGenreFilmListView.Filter = x => Filter(x as Film);
+            }
 
-            SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
 
-            _selectedGenreFilmListView = CollectionViewSource.GetDefaultView(SelectedGenre.ListOfFilms);
-            _selectedGenreFilmListView.Filter = x => Filter(x as Film);
+            ShowAllFilmsButtonCommand = new RelayCommand(ShowAllFilmsButton_Click);
+            ExecuteFilmDeleteButtonCommand = new RelayCommand(DeleteFilmFileButton_Click);
+            ExecuteFilmMoveButtonCommand = new RelayCommand(MoveFilmFileButton_Click);
+            ExecuteFilmRenameButtonCommand = new RelayCommand(RenameFilmFileNameButton_Click);
         }
 
         private bool Filter(Film film)
@@ -225,7 +194,7 @@ namespace FilmDBApp
         private void MoveFilmFileButton_Click(object obj)
         {
             SelectedFilm.ChangeFileName(FilmNameEnToChangeTextBoxValue,FilmNameCzskToChangeTextBoxValue,FilmYearToChangeTextBoxValue);
-            ActionSet.ChangeFilmGenre(SelectedFilm, SelectedGenre, NewGenreForSelectedFilm);
+            Model.ChangeFilmGenre(SelectedFilm, SelectedGenre, NewGenreForSelectedFilm);
 
         }
         private void DeleteFilmFileButton_Click(object film)
@@ -248,7 +217,7 @@ namespace FilmDBApp
 
                 if (_fullListActive)
                 {
-                    SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(CollectAllGenreFilms());
+                    SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(Model.CollectionOfAllFilms);
                     _fullListActive = true;
                 }
             }
@@ -256,23 +225,8 @@ namespace FilmDBApp
         }
         private void ShowAllFilmsButton_Click(object obj)
         {
-            SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(CollectAllGenreFilms());
+            SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(Model.CollectionOfAllFilms);
             _fullListActive = true;
-        }
-
-        private ObservableCollection<Film> CollectAllGenreFilms()
-        {
-            ObservableCollection<Film> collectedFilms = new ObservableCollection<Film>();
-            foreach (var genre in CollectionOfGenres)
-            {
-                foreach (var film in genre.ListOfFilms)
-                {
-                    collectedFilms.Add(film);
-                }
-            }
-
-            collectedFilms.Sort();
-            return collectedFilms;
         }
 
         #endregion

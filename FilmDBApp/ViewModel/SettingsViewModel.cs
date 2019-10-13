@@ -22,25 +22,17 @@ namespace FilmDBApp
 
 
         #region Properties / Commands
-
         public ObservableCollection<Genre> ListOfGenres
         {
             get { return _listOfGenres; }
         }
 
-
         public ApplicationModel Model { get => _model;}
 
-        public string Name
-        {
-            get => "Settings Page";
-        }
         public ICommand AddNewGenreCommand { get; set; }
         public ICommand ChangeFilmsFolderFilePathCommand { get; set; }
         public ICommand ChangeSerialsFolderFilePathCommand { get; set; }
         public ICommand RemoveSelectedGenresCommand { get; set; }
-        public ICommand SaveSettingsCommand { get; set; }
-
         #endregion
 
         public SettingsViewModel(ApplicationModel model)
@@ -51,7 +43,6 @@ namespace FilmDBApp
             ChangeFilmsFolderFilePathCommand = new RelayCommand(ChangeFilmsFolderButton_Click);
             ChangeSerialsFolderFilePathCommand = new RelayCommand(ChangeSerialsFolderButton_Click);
             RemoveSelectedGenresCommand = new RelayCommand(RemoveSelectedGenresButton_Click);
-            SaveSettingsCommand = new RelayCommand(SaveSettingsButton_Click);
         }
 
         #region Methods 
@@ -96,7 +87,6 @@ namespace FilmDBApp
                 Model.Config.ChangeFilmsFolder(new FileInfo(dialog.FileName));
             }
             dialog.Dispose();
-
         }
 
         private void ChangeSerialsFolderButton_Click(object obj)
@@ -117,7 +107,6 @@ namespace FilmDBApp
 
         private void RemoveSelectedGenresButton_Click(object obj)
         {
-
             MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
@@ -125,12 +114,6 @@ namespace FilmDBApp
                 Model.Config.GenresXmlUpdate(Model.CollectionOfGenres);
             }            
         }
-
-        private void SaveSettingsButton_Click(object obj)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
 
     }

@@ -13,17 +13,7 @@ namespace FilmDBApp.Model
 {
     static class ActionSet
     {
-
-        public static void ChangeFilmGenre(Film filmToMove, Genre filmOldGenre, Genre filmNewGenre)
-        {
-            filmOldGenre.ListOfFilms.Remove(filmToMove);
-            filmNewGenre.ListOfFilms.Add(filmToMove);
-            string path = filmNewGenre.PathToGenreDirectory;
-            filmToMove.FilmFileInfo.MoveTo(path + Path.DirectorySeparatorChar + filmToMove.FilmFileInfo.Name);
-        }
-
-
-        
+      
         static readonly string[] suffixes =
             { "Bytes", "KB", "MB", "GB", "TB", "PB" };
         public static string FormatSize(Int64 bytes)
@@ -77,6 +67,11 @@ namespace FilmDBApp.Model
 
             Directory.Delete(target_dir, false);
         
+        }
+
+        public static bool FileOrDirectoryExists(string name)
+        {
+            return (Directory.Exists(name) || File.Exists(name));
         }
     }
 }
