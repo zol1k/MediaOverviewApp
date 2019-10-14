@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -199,8 +200,24 @@ namespace FilmDBApp
             webClient = new WebClient();
             ImdbInfo = new ImdbEntity();
             string searchBy = FilmNameEn != "" ? FilmNameEn : FilmNameCzsk;
-            string json = webClient.DownloadString(ApplicationConfiguration.ImdbURL + searchBy + ApplicationConfiguration.ImdbURLYear + FilmYear + ApplicationConfiguration.ImdbURLApi);
-            ImdbInfo = JsonConvert.DeserializeObject<ImdbEntity>(json);
+
+            string databaseUrl = ConfigurationManager.AppSettings.Get("SearchUrl");
+            string searchTitleParameter = ConfigurationManager.AppSettings.Get("SearchTitleParameter");
+            string searchYearParameter = ConfigurationManager.AppSettings.Get("SearchYearParameter");
+            string apiKey = ConfigurationManager.AppSettings.Get("apiKey");
+            string mergeParameters = "&";
+
+            string stringBuilder = databaseUrl + searchTitleParameter + searchBy + mergeParameters + searchYearParameter + FilmYear + mergeParameters + apiKey;
+            try
+            {
+                string json = webClient.DownloadString(stringBuilder);
+                ImdbInfo = JsonConvert.DeserializeObject<ImdbEntity>(json);
+            }
+            catch (Exception msg)
+            {
+                Log.Error(msg);
+            }
+
             webClient.Dispose();
         }
 

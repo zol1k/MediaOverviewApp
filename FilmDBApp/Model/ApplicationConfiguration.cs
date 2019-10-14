@@ -20,11 +20,6 @@ namespace FilmDBApp.Model
 
         private FileInfo _generalFilmsFolder;
         private FileInfo _generalSerialsFolder;
-
-        public static string ImdbURL { get => @"http://www.omdbapi.com/?t="; }
-        public static string ImdbURLApi { get => "&apikey=9757f013"; }
-        public static string ImdbURLYear { get => "&y="; }
-
         #endregion
 
 
