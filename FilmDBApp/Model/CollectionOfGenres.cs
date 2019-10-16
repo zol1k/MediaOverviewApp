@@ -28,6 +28,8 @@ namespace FilmDBApp.Model
                 return _genreList;
             }
         }
+
+        public IEnumerable<Genre> GenresToBeDeleted { get => GetGenresToBeDeleted(); }
         #endregion
 
         public CollectionOfGenres()
@@ -57,6 +59,11 @@ namespace FilmDBApp.Model
             }
         }
 
+        internal IEnumerable<Genre> GetGenresToBeDeleted()
+        {
+            return _genreList.Where(genre => genre.ToBeDeletedFromGenreCollection);
+        }
+
         /// <summary>
         /// Remove genre from GenreList
         /// </summary>
@@ -64,6 +71,14 @@ namespace FilmDBApp.Model
         public void RemoveGenreFromList(Genre genre)
         {
             _genreList.Remove(genre);
+        }
+
+        public void RemoveGenreFromList(IEnumerable<Genre> listOfGenres)
+        {
+            foreach (Genre genre in listOfGenres)
+            {
+                RemoveGenreFromList(genre);
+            }
         }
 
         /// <summary>
@@ -98,6 +113,19 @@ namespace FilmDBApp.Model
         {
             List<string> list = GenreList.Select(o => o.GenreName).ToList();
             return list;
+        }
+
+        internal void RemoveFromGenreList(IEnumerable<Genre> toBeDeletedList)
+        {
+            for (int i = _genreList.Count - 1; i >= 0; i--)
+            {
+                if (_genreList[i].ToBeDeletedFromGenreCollection)
+                {
+
+                    _genreList.RemoveAt(i);
+                }
+            }
+            MessageBox.Show(_genreList.ToString());
         }
 
         #endregion

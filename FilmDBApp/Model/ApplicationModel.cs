@@ -35,6 +35,8 @@ namespace FilmDBApp.Model
         public ObservableCollection<Film> CollectionOfAllFilms { get => MergeGenreFilmCollections(); }
         public ApplicationConfiguration Config { get => _config; }
 
+  
+
         #endregion
 
         public ApplicationModel()

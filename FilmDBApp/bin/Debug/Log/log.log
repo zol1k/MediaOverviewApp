@@ -1,10 +1,6 @@
-2019/38/14 22:38:52,945 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of L:\1. Films\1.animovane path. 
-2019/38/14 22:38:52,953 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of L:\1. Films\1.ceske path. 
-2019/38/14 22:38:52,953 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of L:\1. Films\1.drama-akcne path. 
-2019/38/14 22:38:52,953 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of L:\1. Films\1.fantasy path. 
-2019/38/14 22:38:52,953 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of L:\1. Films\1.horor path. 
-2019/38/14 22:38:52,953 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of L:\1. Films\1.komedia path. 
-2019/38/14 22:38:52,953 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of L:\1. Films\1.komixovka path. 
-2019/38/14 22:38:52,953 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of L:\1. Films\1.scifi path. 
-2019/38/14 22:38:52,953 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of L:\1. Films\1.thriller path. 
-2019/38/14 22:38:52,953 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of L:\1. Films\1.vojnove path. 
+2019/06/16 22:06:32,551 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of C:\Users\mzold\Downloads1 path. 
+2019/06/16 22:06:32,557 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of C:\Users\mzold\Downloads2 path. 
+2019/12/16 22:12:15,873 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of C:\Users\mzold\Downloads1 path. 
+2019/12/16 22:12:15,879 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of C:\Users\mzold\Downloads2 path. 
+2019/43/16 22:43:56,517 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of C:\Users\mzold\Downloads1 path. 
+2019/43/16 22:43:56,531 ERROR FilmDBApp.Model.ApplicationConfiguration [1] Application Configuration - Could not find destination of C:\Users\mzold\Downloads2 path. 

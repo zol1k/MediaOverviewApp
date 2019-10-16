@@ -157,7 +157,6 @@ namespace FilmDBApp
         public HomeViewModel(ApplicationModel model)
         {
             _model = model;
-            //_model.CollectGenreFilms();
             
             SelectedGenre = CollectionOfGenres.FirstOrDefault();
             _fullListActive = false;

@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\FilmDBApp"
+    "\\FilmDBApp",
+    "\\FilmDBApp\\bin",
+    "\\FilmDBApp\\bin\\Debug",
+    "\\FilmDBApp\\bin\\Debug\\Settings"
   ],
-  "SelectedNode": "\\FilmDBApp - NEW.sln",
+  "SelectedNode": "\\FilmDBApp\\FilmDBApp.csproj",
   "PreviewInSolutionExplorer": false
 }

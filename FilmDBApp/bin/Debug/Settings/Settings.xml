@@ -3,7 +3,11 @@
   <settings>
     <FilmsSettings PathToFolder="C:\Users\mzold">
       <Genres>
-        <Genre GenreName="Downloads" PathToGenreFolder="C:\Users\mzold\Downloads" />
+        <Genre GenreName="Searches" PathToGenreFolder="C:\Users\mzold\Searches" />
+        <Genre GenreName="Music" PathToGenreFolder="C:\Users\mzold\Music" />
+        <Genre GenreName="Contacts" PathToGenreFolder="C:\Users\mzold\Contacts" />
+        <Genre GenreName="OneDrive" PathToGenreFolder="C:\Users\mzold\OneDrive" />
+        <Genre GenreName="source" PathToGenreFolder="C:\Users\mzold\source" />
       </Genres>
     </FilmsSettings>
     <SerialsSettings PathToFolder="C:\Users\Public"></SerialsSettings>
