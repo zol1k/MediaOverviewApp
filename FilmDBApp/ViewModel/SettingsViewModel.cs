@@ -107,18 +107,20 @@ namespace FilmDBApp
 
         private void RemoveSelectedGenresButton_Click(object obj)
         {
-            IEnumerable<Genre> toBeDeletedList = new List<Genre>();
-            toBeDeletedList = Model.CollectionOfGenres.GenresToBeDeleted;
-            if (toBeDeletedList.Count() != 0)
+            List<Genre> toBeDeletedList = Model.CollectionOfGenres.GenresToBeDeleted;
+
+            string stringOutputOfToBeDeletedGenres = String.Join("\n- ", toBeDeletedList.Select(o => o.GenreName).ToList());
+
+            // If number of toBeDeleted items is more then 0, then proceed
+            if (toBeDeletedList.Count != 0)
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete following genres? - "+ toBeDeletedList.ToString(), "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete following genres? \n- " + stringOutputOfToBeDeletedGenres, "Delete Confirmation", MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    Model.CollectionOfGenres.RemoveGenreFromList(toBeDeletedList);
+                    Model.CollectionOfGenres.RemoveGenreFromList(toBeDeletedList.ToList());
                     Model.Config.GenresXmlUpdate(Model.CollectionOfGenres);
                 }
             }
-         
         }
         #endregion
 
