@@ -12,9 +12,8 @@ namespace FilmDBApp.Model
     public class CollectionOfGenres:ObservableObject
     {
         #region Fields
-
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly ObservableCollection<Genre> _genreList;
-        private List<string> _genreNameList;
 
         #endregion
 
@@ -29,12 +28,15 @@ namespace FilmDBApp.Model
             }
         }
 
-        public IEnumerable<Genre> GenresToBeDeleted { get => GetGenresToBeDeleted(); }
+        public List<Genre> GenresToBeDeleted { get => GetGenresToBeDeleted(); }
+
+        public List<string> GenreNamesList { get => ReturnListOfGenreNames(); }
+
+
         #endregion
 
         public CollectionOfGenres()
         {
-            _genreNameList = new List<string>();
             _genreList = new ObservableCollection<Genre>();
         }
 
@@ -51,17 +53,18 @@ namespace FilmDBApp.Model
             if (!_ifListCointainstGenre)
             {
                 _genreList.Add(genre);
-
             }
             else
             {
-                MessageBox.Show(genre.GenreName + " is already in genre list!");
+                string msg = genre.GenreName + " is already in genre list!";
+                Log.Debug(msg);
+                MessageBox.Show(msg);
             }
         }
 
-        internal IEnumerable<Genre> GetGenresToBeDeleted()
+        internal List<Genre> GetGenresToBeDeleted()
         {
-            return _genreList.Where(genre => genre.ToBeDeletedFromGenreCollection);
+            return _genreList.Where(genre => genre.ToBeDeletedFromGenreCollection).ToList();
         }
 
         /// <summary>
@@ -73,7 +76,11 @@ namespace FilmDBApp.Model
             _genreList.Remove(genre);
         }
 
-        public void RemoveGenreFromList(IEnumerable<Genre> listOfGenres)
+        /// <summary>
+        /// Remove list genres from GenreList
+        /// </summary>
+        /// <param name="listOfGenres">List of Genres that will be removed from genreList</param>
+        public void RemoveGenreFromList(List<Genre> listOfGenres)
         {
             foreach (Genre genre in listOfGenres)
             {
@@ -90,22 +97,6 @@ namespace FilmDBApp.Model
         }
 
         /// <summary>
-        /// Loop throught of Genres, and those with attribute "ToBeDeleted" will be removed
-        /// </summary>
-        public void RemoveToBeDeletedFromGenreList()
-        {
-            for (int i = _genreList.Count - 1; i >= 0; i--)
-            {
-                if (_genreList[i].ToBeDeletedFromGenreCollection)
-                { 
-                    
-                    _genreList.RemoveAt(i);
-                }
-            }
-            MessageBox.Show(_genreList.ToString());
-        }
-
-        /// <summary>
         /// Method to collect names of genres
         /// </summary>
         /// <returns>list<string> of genre names</returns>
@@ -114,20 +105,6 @@ namespace FilmDBApp.Model
             List<string> list = GenreList.Select(o => o.GenreName).ToList();
             return list;
         }
-
-        internal void RemoveFromGenreList(IEnumerable<Genre> toBeDeletedList)
-        {
-            for (int i = _genreList.Count - 1; i >= 0; i--)
-            {
-                if (_genreList[i].ToBeDeletedFromGenreCollection)
-                {
-
-                    _genreList.RemoveAt(i);
-                }
-            }
-            MessageBox.Show(_genreList.ToString());
-        }
-
         #endregion
     }
 }
