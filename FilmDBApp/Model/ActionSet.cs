@@ -69,9 +69,14 @@ namespace FilmDBApp.Model
         
         }
 
-        public static bool FileOrDirectoryExists(string name)
+        /// <summary>
+        /// Check if give paths is file or directory.
+        /// </summary>
+        /// <param name="path">Folder/File path to check</param>
+        /// <returns></returns>
+        public static bool FileOrDirectoryExists(string path)
         {
-            return (Directory.Exists(name) || File.Exists(name));
+            return (Directory.Exists(path) || File.Exists(path));
         }
     }
 }

@@ -50,6 +50,7 @@ namespace FilmDBApp.Model
             CollectFilms();
         }
 
+        #region Methods
         public int CompareTo(object obj)
         {
             Genre a = this;
@@ -91,7 +92,8 @@ namespace FilmDBApp.Model
                     });
                 }
             }
-
         }
+        #endregion
     }
+
 }

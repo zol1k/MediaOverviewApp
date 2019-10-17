@@ -69,7 +69,8 @@ namespace FilmDBApp
                 }
                 catch (Exception ex)
                 {
-                    return ex.ToString();
+                    Log.Error(ex.Message);
+                    return ex.Message;
                 }
             }
         }
@@ -121,6 +122,9 @@ namespace FilmDBApp
 
         #region Methods
 
+        /// <summary>
+        /// Called from constructor, parsing name of file/folder into properties : FilmNameEn[FilmNameCzsk](FilmYear)
+        /// </summary>
         private void ParseFileName()
         {
             if (IsDirectory)
@@ -163,6 +167,12 @@ namespace FilmDBApp
                 FilmNameEn = FileName;
         }
 
+        /// <summary>
+        /// Change name of film.
+        /// </summary>
+        /// <param name="newFilmName">English name for film</param>
+        /// <param name="newCzFilmName">CZ/SK name for film</param>
+        /// <param name="newYear">Year of release</param>
         public void ChangeFileName(string newFilmName, string newCzFilmName, string newYear)
         {
             newFilmName = newFilmName ?? ""; // if null then ""
@@ -228,6 +238,9 @@ namespace FilmDBApp
             return string.Compare(a.FileName, b.FileName);
         }
 
+        /// <summary>
+        /// Dispose the instance of <Film> object.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);

@@ -16,8 +16,6 @@ namespace FilmDBApp.Model
         private readonly ObservableCollection<Genre> _genreList;
 
         #endregion
-
-
         #region Properties
 
         public ObservableCollection<Genre> GenreList
@@ -40,7 +38,6 @@ namespace FilmDBApp.Model
             _genreList = new ObservableCollection<Genre>();
         }
 
-
         #region Methods
         /// <summary>
         /// Add genre to GenreList
@@ -62,6 +59,10 @@ namespace FilmDBApp.Model
             }
         }
 
+        /// <summary>
+        /// Collect genre objects with ToBeDeletedFromGenreCollection set to false.
+        /// </summary>
+        /// <returns>List<Genre> with property ToBeDeletedFromGenreCollection set to false.</returns>
         internal List<Genre> GetGenresToBeDeleted()
         {
             return _genreList.Where(genre => genre.ToBeDeletedFromGenreCollection).ToList();

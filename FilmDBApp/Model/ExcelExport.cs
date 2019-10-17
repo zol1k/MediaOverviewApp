@@ -29,6 +29,18 @@ namespace FilmDBApp.Model
         }
 
         #region Methods
+
+        /// <summary>
+        /// Starts the ExcelExport() execution.
+        /// </summary>
+        internal void Run()
+        {
+            CreateExcelFile();
+        }
+
+        /// <summary>
+        /// Execute import to excel with predefined values.
+        /// </summary>
         private void CreateExcelFile()
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
@@ -49,6 +61,9 @@ namespace FilmDBApp.Model
             }
         }
 
+        /// <summary>
+        /// Use in CreateExcelFile() - Create sheets, retrieve IMDBInfo() and fill sheets with obtained data.
+        /// </summary>
         private void PopulateExcelFile()
         {
             // Go through GenreList and create new excel sheets
@@ -71,6 +86,10 @@ namespace FilmDBApp.Model
             }
         }
 
+        /// <summary>
+        /// Use in CreateExcelFile() - save generated, populated excel file.
+        /// </summary>
+        /// <param name="filename"></param>
         private void SaveExcelFile(string filename)
         {
             _excelFile.SaveAs(new FileInfo(filename));
@@ -88,10 +107,6 @@ namespace FilmDBApp.Model
             _collectionOfGenres = null;
         }
 
-        internal void Run()
-        {
-            CreateExcelFile();
-        }
         #endregion
     }
 }

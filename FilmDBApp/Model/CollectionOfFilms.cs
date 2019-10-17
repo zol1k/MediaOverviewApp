@@ -15,9 +15,7 @@ namespace FilmDBApp.Model
         private readonly ObservableCollection<Film> _listOfFilms;
         #endregion
 
-
         #region Properties
-
         public ObservableCollection<Film> ListOfFilms
         {
             get
@@ -26,7 +24,6 @@ namespace FilmDBApp.Model
                 return _listOfFilms;
             }
         }
-
 
         #endregion
         public CollectionOfFilms()
@@ -37,11 +34,15 @@ namespace FilmDBApp.Model
 
         #region Methods
 
+        /// <summary>
+        /// Add obj from parameter into CollectionOfFilms
+        /// </summary>
+        /// <param name="film">Film to add into collection</param>
         public void AddNewFilm(Film film)
         {
             _listOfFilms.Add(film);
         }
-        public void RemoveGenreFromList(Film film)
+        public void RemoveFilmFromList(Film film)
         {
             _listOfFilms.Remove(film);
         }

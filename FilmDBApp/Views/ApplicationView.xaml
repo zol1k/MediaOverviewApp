@@ -25,6 +25,9 @@
             </MenuItem>
         </Menu>
 
-        <ContentControl Content="{Binding CurrentPageViewModel}" Margin="0,0,0,0" Height="680" Width="801"/>
+        <ContentControl Content="{Binding CurrentPageViewModel}" Margin="0,1,0,37" Width="800"/>
+        <Grid Height="32" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Panel.ZIndex="1" Margin="-795,0,0,0">
+            <ProgressBar Margin="0,0,5,5" Width="200" HorizontalAlignment="Right" />
+        </Grid>
     </DockPanel>
 </Window>

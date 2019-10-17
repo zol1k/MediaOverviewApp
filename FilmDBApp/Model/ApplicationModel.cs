@@ -45,6 +45,9 @@ namespace FilmDBApp.Model
             FillGenreCollectionByConfigurationFile();
         }
         #region Methods
+        /// <summary>
+        /// Get genre paths from config
+        /// </summary>
         public void FillGenreCollectionByConfigurationFile()
         {
             CollectionOfGenres = new CollectionOfGenres();
@@ -56,7 +59,13 @@ namespace FilmDBApp.Model
                 CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(path)));
             }
         }
-        
+
+        /// <summary>
+        /// Change genre of film.
+        /// </summary>
+        /// <param name="filmToMove">Film to move into new genre</param>
+        /// <param name="filmOldGenre">Old film genre</param>
+        /// <param name="filmNewGenre">New film genre</param>
         public void ChangeFilmGenre(Film filmToMove, Genre filmOldGenre, Genre filmNewGenre)
         {
             filmOldGenre.ListOfFilms.Remove(filmToMove);
@@ -65,6 +74,10 @@ namespace FilmDBApp.Model
             filmToMove.FilmFileInfo.MoveTo(path + Path.DirectorySeparatorChar + filmToMove.FilmFileInfo.Name);
         }
 
+        /// <summary>
+        /// Going throught ListOfGenres and merging films into one collection.
+        /// </summary>
+        /// <returns>ObservableCollection<Film> of films</returns>
         private ObservableCollection<Film> MergeGenreFilmCollections()
         {
             ObservableCollection<Film> collectedFilms = new ObservableCollection<Film>();

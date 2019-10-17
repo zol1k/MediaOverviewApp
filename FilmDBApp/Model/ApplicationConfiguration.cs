@@ -21,8 +21,6 @@ namespace FilmDBApp.Model
         private FileInfo _generalFilmsFolder;
         private FileInfo _generalSerialsFolder;
         #endregion
-
-
         #region Properties / Commands
         public FileInfo GeneralFilmsFolder
         {
@@ -46,6 +44,7 @@ namespace FilmDBApp.Model
 
         public List<string> GenrePaths { get => GetGenrePathsFromConfigFile(); }
         #endregion
+
         public ApplicationConfiguration()
         {
             XDoc = XDocument.Load(settingsFilePath);
@@ -53,6 +52,7 @@ namespace FilmDBApp.Model
             GetFilmAndSerialFileInfoFromConfigFile();
         }
 
+        #region Methods
         /// <summary>
         /// Get FILM / SERIAL folder path from configuration file 
         /// </summary>
@@ -121,18 +121,25 @@ namespace FilmDBApp.Model
             MessageBox.Show(sb.ToString(), "Genres Not Found");
         }
 
+        /// <summary>
+        /// Change general folder for films.
+        /// </summary>
+        /// <param name="folder">fileInfo of general film folder</param>
         public void ChangeFilmsFolder(FileInfo folder)
         {
             GeneralFilmsFolder = folder;
             FilmFolderXmlUpdate();
         }
 
+        /// <summary>
+        /// Change general folder for serials.
+        /// </summary>
+        /// <param name="folder">fileInfo of general serial folder</param>
         public void ChangeSerialsFolder(FileInfo folder)
         {
             GeneralSerialsFolder = folder;
             SerialsFolderXmlUpdate();
         }
-
 
         /// <summary>
         /// Update Genre data in XML document. Remove all existing ones, and fill them with new data
@@ -152,36 +159,37 @@ namespace FilmDBApp.Model
             SaveSettings();
         }
 
-
-        /*
-         * Update values of main node folder paths
-         */
+        /// <summary>
+        /// Update Element("settings").Element("FilmsSettings").Attribute("PathToFolder");
+        /// </summary>
         private void FilmFolderXmlUpdate()
         {
             XAttribute xmlFilmsFolderPath = XDoc.Root.Element("settings").Element("FilmsSettings")
                 .Attribute("PathToFolder");
-            // If GeneralFilmsFolder is Null => ""
+
             xmlFilmsFolderPath.Value = (GeneralFilmsFolder == null) ? "" : GeneralFilmsFolder.FullName;
             SaveSettings();
         }
 
+        /// <summary>
+        /// Update Element("settings").Element("SerialsSettings").Attribute("PathToFolder");
+        /// </summary>
         private void SerialsFolderXmlUpdate()
         {
             XAttribute xmlSerialsFolderPath = XDoc.Root.Element("settings").Element("SerialsSettings")
                 .Attribute("PathToFolder");
-            // If GeneralSerialsFolder is Null => ""
+
             xmlSerialsFolderPath.Value = (GeneralSerialsFolder == null) ? "" : GeneralSerialsFolder.FullName;
             SaveSettings();
         }
 
-        /*
-         * Save genre, folder paths informations
-         */
-
+        /// <summary>
+        /// Save XML configuration file
+        /// </summary>
         private void SaveSettings()
         {
             XDoc.Save(settingsFilePath);
         }
-
+        #endregion
     }
 }
