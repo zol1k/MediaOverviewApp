@@ -20,7 +20,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Genre" DisplayMemberBinding="{Binding GenreName}" Width="153"/>
+                                <GridViewColumn Header="Genre" DisplayMemberBinding="{Binding Name}" Width="153"/>
                             </GridView.Columns>
                         </GridView>
                     </ListView.View>
