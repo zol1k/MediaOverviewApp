@@ -33,7 +33,8 @@
                     <ColumnDefinition Width="178" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Show All" Command="{Binding ShowAllFilmsButtonCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="162" Height="23" Margin="10,0,0,0"/>
+                <Button Grid.Column="0" Content="General Folder" Command="{Binding ShowFilmFolderFilmsButtonCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="23" Margin="10,0,0,0"/>
+                <Button Grid.Column="0" Content="Show All" Command="{Binding ShowAllFilmsButtonCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="67" Height="23" Margin="105,0,0,0"/>
                 <Grid Grid.Column="1" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" Height="23" HorizontalAlignment="Left" Margin="0,0,0,4" Width="614">
                     <TextBlock Text="Search film ..." Foreground="{StaticResource brushWatermarkForeground}" Padding="5,2" Width="600" Margin="2,0,3,0" Grid.RowSpan="2" >
                         <TextBlock.Visibility>
@@ -60,7 +61,7 @@
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.3"/>
                     </DataGrid.Background>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Genre🤔" Binding ="{Binding GenreName}" Width="162" CanUserResize="False" />
+                        <DataGridTextColumn Header="Genre🤔" Binding ="{Binding Name}" Width="162" CanUserResize="False" />
                     </DataGrid.Columns>
                 </DataGrid>
                 <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedGenreFilmListView}" HeadersVisibility="All" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" SelectedItem="{Binding SelectedFilm}" IsReadOnly="True" BorderThickness="0.5" GridLinesVisibility="None" AlternatingRowBackground="#7F9B9B9B" Opacity="0.9" Width="613" MaxHeight="400" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">

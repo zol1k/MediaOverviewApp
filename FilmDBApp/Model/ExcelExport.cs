@@ -69,8 +69,8 @@ namespace FilmDBApp.Model
             // Go through GenreList and create new excel sheets
             foreach (var genre in _collectionOfGenres.GenreList)
             {
-                _excelFile.Workbook.Worksheets.Add(genre.GenreName);
-                var worksheet = _excelFile.Workbook.Worksheets[genre.GenreName];
+                _excelFile.Workbook.Worksheets.Add(genre.Name);
+                var worksheet = _excelFile.Workbook.Worksheets[genre.Name];
                 worksheet.Cells[headerRange].Style.Font.Bold = true;
                 worksheet.Cells[headerRange].Style.Font.Size = 14;
                 worksheet.Cells[headerRange].LoadFromArrays(headerRow);

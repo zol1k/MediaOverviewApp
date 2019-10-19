@@ -1,15 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <settings>
-    <FilmsSettings PathToFolder="C:\Users\mzold">
+    <FilmsSettings PathToFolder="L:\1. Films">
       <Genres>
-        <Genre GenreName="Searches" PathToGenreFolder="C:\Users\mzold\Searches" />
-        <Genre GenreName="Music" PathToGenreFolder="C:\Users\mzold\Music" />
-        <Genre GenreName="Contacts" PathToGenreFolder="C:\Users\mzold\Contacts" />
-        <Genre GenreName="OneDrive" PathToGenreFolder="C:\Users\mzold\OneDrive" />
-        <Genre GenreName="source" PathToGenreFolder="C:\Users\mzold\source" />
+        <Genre Name="1.animovane" PathToGenreFolder="L:\1. Films\1.animovane" />
+        <Genre Name="1.ceske" PathToGenreFolder="L:\1. Films\1.ceske" />
+        <Genre Name="1.drama-akcne" PathToGenreFolder="L:\1. Films\1.drama-akcne" />
+        <Genre Name="1.fantasy" PathToGenreFolder="L:\1. Films\1.fantasy" />
+        <Genre Name="1.horor" PathToGenreFolder="L:\1. Films\1.horor" />
+        <Genre Name="1.komedia" PathToGenreFolder="L:\1. Films\1.komedia" />
+        <Genre Name="1.komixovka" PathToGenreFolder="L:\1. Films\1.komixovka" />
+        <Genre Name="1.scifi" PathToGenreFolder="L:\1. Films\1.scifi" />
+        <Genre Name="1.thriller" PathToGenreFolder="L:\1. Films\1.thriller" />
+        <Genre Name="1.vojnove" PathToGenreFolder="L:\1. Films\1.vojnove" />
       </Genres>
     </FilmsSettings>
-    <SerialsSettings PathToFolder="C:\Users\Public"></SerialsSettings>
+    <SerialsSettings PathToFolder="L:\1. Series"></SerialsSettings>
   </settings>
 </root>

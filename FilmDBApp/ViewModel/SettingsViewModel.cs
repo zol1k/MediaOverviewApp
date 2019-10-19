@@ -53,7 +53,7 @@ namespace FilmDBApp
             {
                 CommonOpenFileDialog dialog = new CommonOpenFileDialog
                 {
-                    InitialDirectory = _model.Config.GeneralFilmsFolder != null ? _model.Config.GeneralFilmsFolder.FullName : "C:\\Users",
+                    InitialDirectory = _model.Config.GeneralFilmFolder != null ? _model.Config.GeneralFilmFolder.FullName : "C:\\Users",
                     IsFolderPicker = true,
                     Multiselect = true
                 };
@@ -109,7 +109,7 @@ namespace FilmDBApp
         {
             List<Genre> toBeDeletedList = Model.CollectionOfGenres.GenresToBeDeleted;
 
-            string stringOutputOfToBeDeletedGenres = String.Join("\n- ", toBeDeletedList.Select(o => o.GenreName).ToList());
+            string stringOutputOfToBeDeletedGenres = String.Join("\n- ", toBeDeletedList.Select(o => o.Name).ToList());
 
             // If number of toBeDeleted items is more then 0, then proceed
             if (toBeDeletedList.Count != 0)

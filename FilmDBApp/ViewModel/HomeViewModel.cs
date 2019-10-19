@@ -150,6 +150,7 @@ namespace FilmDBApp
         public ICommand ExecuteFilmMoveButtonCommand { get; }
         public ICommand ExecuteFilmDeleteButtonCommand { get; }
         public ICommand ShowAllFilmsButtonCommand { get; }
+        public ICommand ShowFilmFolderFilmsButtonCommand { get; }
 
         #endregion
 
@@ -169,6 +170,7 @@ namespace FilmDBApp
 
 
             ShowAllFilmsButtonCommand = new RelayCommand(ShowAllFilmsButton_Click);
+            ShowFilmFolderFilmsButtonCommand = new RelayCommand(ShowFilmFolderFilmsButton_Click);
             ExecuteFilmDeleteButtonCommand = new RelayCommand(DeleteFilmFileButton_Click);
             ExecuteFilmMoveButtonCommand = new RelayCommand(MoveFilmFileButton_Click);
             ExecuteFilmRenameButtonCommand = new RelayCommand(RenameFilmFileNameButton_Click);
@@ -226,6 +228,11 @@ namespace FilmDBApp
         {
             SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(Model.CollectionOfAllFilms);
             _fullListActive = true;
+        }
+        private void ShowFilmFolderFilmsButton_Click(object obj)
+        {
+            SelectedGenreFilmListView = SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(Model.GeneralFilmFolder.ListOfFilms);
+            _fullListActive = false;
         }
 
         #endregion

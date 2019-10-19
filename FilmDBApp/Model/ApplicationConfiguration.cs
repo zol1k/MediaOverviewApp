@@ -18,17 +18,17 @@ namespace FilmDBApp.Model
         private readonly XElement XGenresNode;
         private static readonly string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
 
-        private FileInfo _generalFilmsFolder;
+        private FileInfo _generalFilmFolder;
         private FileInfo _generalSerialsFolder;
         #endregion
         #region Properties / Commands
-        public FileInfo GeneralFilmsFolder
+        public FileInfo GeneralFilmFolder
         {
-            get => _generalFilmsFolder;
+            get => _generalFilmFolder;
             set
             {
-                _generalFilmsFolder = value;
-                OnPropertyChanged("GeneralFilmsFolder");
+                _generalFilmFolder = value;
+                OnPropertyChanged("GeneralFilmFolder");
             }
         }
 
@@ -65,7 +65,7 @@ namespace FilmDBApp.Model
 
             if (Directory.Exists(filmsFolderPath))
             {
-                GeneralFilmsFolder = new FileInfo(filmsFolderPath);
+                GeneralFilmFolder = new FileInfo(filmsFolderPath);
             }
 
             if (Directory.Exists(serialsFolderPath))
@@ -127,7 +127,7 @@ namespace FilmDBApp.Model
         /// <param name="folder">fileInfo of general film folder</param>
         public void ChangeFilmsFolder(FileInfo folder)
         {
-            GeneralFilmsFolder = folder;
+            GeneralFilmFolder = folder;
             FilmFolderXmlUpdate();
         }
 
@@ -151,8 +151,8 @@ namespace FilmDBApp.Model
             {
                 XGenresNode.Add(
                     new XElement("Genre",
-                    new XAttribute("GenreName", genre.GenreName),
-                    new XAttribute("PathToGenreFolder", genre.PathToGenreDirectory)
+                    new XAttribute("Name", genre.Name),
+                    new XAttribute("PathToGenreFolder", genre.PathToDirectory)
                     )
                 );
             }
@@ -167,7 +167,7 @@ namespace FilmDBApp.Model
             XAttribute xmlFilmsFolderPath = XDoc.Root.Element("settings").Element("FilmsSettings")
                 .Attribute("PathToFolder");
 
-            xmlFilmsFolderPath.Value = (GeneralFilmsFolder == null) ? "" : GeneralFilmsFolder.FullName;
+            xmlFilmsFolderPath.Value = (GeneralFilmFolder == null) ? "" : GeneralFilmFolder.FullName;
             SaveSettings();
         }
 

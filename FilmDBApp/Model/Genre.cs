@@ -10,7 +10,7 @@ using Microsoft.WindowsAPICodePack.Shell.Interop;
 
 namespace FilmDBApp.Model
 {
-    public class Genre: ObservableObject, IComparable
+    public class Genre: ObservableObject, IComparable, IFilmCollection
     {
         #region Fields
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -21,7 +21,7 @@ namespace FilmDBApp.Model
 
         #region Properties / Commands
 
-        public string GenreName
+        public string Name
         {
             get
             {
@@ -29,7 +29,7 @@ namespace FilmDBApp.Model
             }
         }
 
-        public string PathToGenreDirectory{ get => _genreFileInfo.FullName; }
+        public string PathToDirectory{ get => _genreFileInfo.FullName; }
         public CollectionOfFilms CollectionOfFilms { get; set; }
         public bool ToBeDeletedFromGenreCollection { get; set; }
 
@@ -55,7 +55,7 @@ namespace FilmDBApp.Model
         {
             Genre a = this;
             Genre b = (Genre)obj;
-            return String.Compare(a.GenreName, b.GenreName);
+            return String.Compare(a.Name, b.Name);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace FilmDBApp.Model
         /// </summary>
         private void CollectFilms()
         {
-            foreach (var file in Directory.GetFiles(PathToGenreDirectory))
+            foreach (var file in Directory.GetFiles(PathToDirectory))
             {
                 FileInfo fileInfo = new FileInfo(file);
 
@@ -72,12 +72,12 @@ namespace FilmDBApp.Model
                 {
                     CollectionOfFilms.AddNewFilm(new Film(fileInfo, false)
                     {
-                        DirectoryGenre = GenreName
+                        DirectoryGenre = Name
                     });
                 }
             }
 
-            foreach (var file in Directory.GetDirectories(PathToGenreDirectory))
+            foreach (var file in Directory.GetDirectories(PathToDirectory))
             {
                 FileInfo fileInfo = new FileInfo(file);
 
@@ -88,7 +88,7 @@ namespace FilmDBApp.Model
                 {
                     CollectionOfFilms.AddNewFilm(new Film(fileInfo, true)
                     {
-                        DirectoryGenre = GenreName
+                        DirectoryGenre = Name
                     });
                 }
             }

@@ -33,6 +33,8 @@ namespace FilmDBApp.Model
         }
 
         public ObservableCollection<Film> CollectionOfAllFilms { get => MergeGenreFilmCollections(); }
+
+        public GeneralFilmFolder GeneralFilmFolder { get; }
         public ApplicationConfiguration Config { get => _config; }
 
   
@@ -43,6 +45,7 @@ namespace FilmDBApp.Model
         {
             _config = new ApplicationConfiguration();
             FillGenreCollectionByConfigurationFile();
+            GeneralFilmFolder = new GeneralFilmFolder(Config.GeneralFilmFolder);
         }
         #region Methods
         /// <summary>
@@ -59,7 +62,7 @@ namespace FilmDBApp.Model
                 CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(path)));
             }
         }
-
+        
         /// <summary>
         /// Change genre of film.
         /// </summary>
@@ -70,7 +73,7 @@ namespace FilmDBApp.Model
         {
             filmOldGenre.ListOfFilms.Remove(filmToMove);
             filmNewGenre.ListOfFilms.Add(filmToMove);
-            string path = filmNewGenre.PathToGenreDirectory;
+            string path = filmNewGenre.PathToDirectory;
             filmToMove.FilmFileInfo.MoveTo(path + Path.DirectorySeparatorChar + filmToMove.FilmFileInfo.Name);
         }
 
@@ -92,6 +95,9 @@ namespace FilmDBApp.Model
             collectedFilms.Sort();
             return collectedFilms;
         }
+
+
+
         #endregion
     }
 }

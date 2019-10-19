@@ -45,7 +45,7 @@ namespace FilmDBApp.Model
         /// <param name="genre">will be added into GenreList</param>
         public void AddNewGenre(Genre genre)
         {
-            bool _ifListCointainstGenre = _genreList.Any(p => p.GenreName == genre.GenreName);
+            bool _ifListCointainstGenre = _genreList.Any(p => p.Name == genre.Name);
 
             if (!_ifListCointainstGenre)
             {
@@ -53,7 +53,7 @@ namespace FilmDBApp.Model
             }
             else
             {
-                string msg = genre.GenreName + " is already in genre list!";
+                string msg = genre.Name + " is already in genre list!";
                 Log.Debug(msg);
                 MessageBox.Show(msg);
             }
@@ -103,7 +103,7 @@ namespace FilmDBApp.Model
         /// <returns>list<string> of genre names</returns>
         private List<string> ReturnListOfGenreNames()
         {
-            List<string> list = GenreList.Select(o => o.GenreName).ToList();
+            List<string> list = GenreList.Select(o => o.Name).ToList();
             return list;
         }
         #endregion

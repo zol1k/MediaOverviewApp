@@ -103,6 +103,8 @@
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\TextInputToVisibilityConverter.cs" />
     <Compile Include="Model\ApplicationConfiguration.cs" />
+    <Compile Include="Model\GeneralFilmFolder.cs" />
+    <Compile Include="Model\IFilmCollection.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
