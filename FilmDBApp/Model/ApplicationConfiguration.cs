@@ -13,8 +13,7 @@ namespace FilmDBApp.Model
     {
         #region Fields
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        private readonly XDocument XDoc;
+        private readonly XDocument XDoc = XDocument.Load(settingsFilePath);
         private readonly XElement XGenresNode;
         private static readonly string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
 
@@ -47,8 +46,9 @@ namespace FilmDBApp.Model
 
         public ApplicationConfiguration()
         {
-            XDoc = XDocument.Load(settingsFilePath);
+
             XGenresNode = XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres");
+            ValidateConfigFileOnInit();
             GetFilmAndSerialFileInfoFromConfigFile();
         }
 
@@ -59,53 +59,63 @@ namespace FilmDBApp.Model
         private void GetFilmAndSerialFileInfoFromConfigFile()
         {
             string filmsFolderPath = XDoc.Root.Element("settings").Element("FilmsSettings")
-                .Attribute("PathToFolder").Value;
+                    .Attribute("PathToFolder").Value;
+
             string serialsFolderPath = XDoc.Root.Element("settings").Element("SerialsSettings")
-                .Attribute("PathToFolder").Value;
+                    .Attribute("PathToFolder").Value;
 
-            if (Directory.Exists(filmsFolderPath))
-            {
-                GeneralFilmFolder = new FileInfo(filmsFolderPath);
-            }
+                if (ActionSet.FileOrDirectoryExists(filmsFolderPath))
+                {
+                    GeneralFilmFolder = new FileInfo(filmsFolderPath);
+                }
 
-            if (Directory.Exists(serialsFolderPath))
-            {
-                GeneralSerialsFolder = new FileInfo(serialsFolderPath);
-            }
+                if (ActionSet.FileOrDirectoryExists(serialsFolderPath))
+                {
+                    GeneralSerialsFolder = new FileInfo(serialsFolderPath);
+                }
         }
 
 
         /// <summary>
         /// Parse config file and return List<string> with genre paths
         /// </summary>
-        public List<string> GetGenrePathsFromConfigFile()
+        public static List<string> GetGenrePathsFromConfigFile()
         {
             List<string> configGenrePathsList = new List<string>();
-
-            List<string> configNotValidGenrePathsList = new List<string>();
-
             string genrePath;
-            foreach (XElement el in XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
+            var XDoc1 = XDocument.Load(settingsFilePath);
+            foreach (XElement el in XDoc1.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
             {
-
                 genrePath = el.Attribute("PathToGenreFolder").Value;
                 if (ActionSet.FileOrDirectoryExists(genrePath))
                 {
                     configGenrePathsList.Add(genrePath);
                 }
-                else
+            }
+            return configGenrePathsList;
+        }
+
+        private void ValidateConfigFileOnInit()
+        {
+
+
+
+            List<string> configNotValidGenrePathsList = new List<string>();
+            string genrePath;
+            foreach (XElement el in XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
+            {
+                genrePath = el.Attribute("PathToGenreFolder").Value;
+                if (! ActionSet.FileOrDirectoryExists(genrePath))
                 {
                     configNotValidGenrePathsList.Add(genrePath);
                     Log.Error("Application Configuration - Could not find destination of " + genrePath + " path.");
                 }
             }
-
             if (configNotValidGenrePathsList.Count > 0)
             {
                 ShowMsgBoxWithNotValidPaths(configNotValidGenrePathsList);
             }
-
-            return configGenrePathsList;
+            
         }
 
         private void ShowMsgBoxWithNotValidPaths(List<string> configNotValidGenrePathsList)

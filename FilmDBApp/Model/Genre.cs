@@ -71,9 +71,7 @@ namespace FilmDBApp.Model
                 if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
                 {
                     CollectionOfFilms.AddNewFilm(new Film(fileInfo, false)
-                    {
-                        DirectoryGenre = Name
-                    });
+                    );
                 }
             }
 
@@ -81,15 +79,11 @@ namespace FilmDBApp.Model
             {
                 FileInfo fileInfo = new FileInfo(file);
 
-                //if (CollectionOfGenres.GenreNameList.Contains(fileInfo.Name))
-                    //continue;
                 //if current directory is not hidden, add it into film db
                 if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
                 {
                     CollectionOfFilms.AddNewFilm(new Film(fileInfo, true)
-                    {
-                        DirectoryGenre = Name
-                    });
+                    );
                 }
             }
         }

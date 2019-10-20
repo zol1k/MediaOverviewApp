@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,6 @@ namespace FilmDBApp.Model
         public List<Genre> GenresToBeDeleted { get => GetGenresToBeDeleted(); }
 
         public List<string> GenreNamesList { get => ReturnListOfGenreNames(); }
-
 
         #endregion
 
@@ -106,6 +106,17 @@ namespace FilmDBApp.Model
             List<string> list = GenreList.Select(o => o.Name).ToList();
             return list;
         }
+        public static List<string>ReturnListOfGenreNamesFromConfigFile()
+        {
+            List<string> genreNames = new List<string>();
+
+            foreach (var genrePath in ApplicationConfiguration.GetGenrePathsFromConfigFile())
+            {
+                genreNames.Add(Path.GetFileName(genrePath));
+            }
+            return genreNames;
+        }
+
         #endregion
     }
 }

@@ -55,7 +55,7 @@
                     <ColumnDefinition Width="621*"/>
                 </Grid.ColumnDefinitions>
 
-                <DataGrid Grid.Column="0" Opacity="0.8" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="230" Margin="10,0,0,0" VerticalAlignment="Top" Width="162" ItemsSource="{Binding CollectionOfGenres}" SelectedItem="{Binding SelectedGenre}" IsReadOnly="True"
+                <DataGrid Grid.Column="0" Opacity="0.8" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="230" Margin="10,0,0,0" VerticalAlignment="Top" Width="162" ItemsSource="{Binding CollectionOfGenres}" SelectedItem="{Binding SelectedFilmCollection}" IsReadOnly="True"
                       GridLinesVisibility="None" MaxHeight="230" ScrollViewer.CanContentScroll="False" CanUserResizeColumns="False" CanUserResizeRows="False" HorizontalScrollBarVisibility="Hidden"  >
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.3"/>
@@ -70,7 +70,7 @@
                     </DataGrid.Background>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" Width="200" />
-                        <DataGridTextColumn Header="Film name EN" Binding="{Binding DirectoryGenre}" Width="200" />
+                        <DataGridTextColumn Header="Genre" Binding="{Binding DirectoryGenre}" Width="200" />
                         <DataGridTextColumn Header="Year" Binding="{Binding FilmYear}" Width="50" />
                         <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension}" Width="40" />
                         <DataGridTextColumn Header="Size" Binding="{Binding FileSize}" Width="50" CanUserResize="False" />
@@ -99,11 +99,11 @@
                             <Button x:Name="RenameFilmFileName" Content="RENAME" Margin="218,93,0,51" Command="{Binding ExecuteFilmRenameButtonCommand}" Padding="2" Height="22"/>
                             <Label Content="Move To ..." HorizontalAlignment="Left" Margin="0,120,0,0" VerticalAlignment="Top" Width="77" Height="20" Padding="2" />
                             <Button x:Name="MoveFilmIntoSelectedGenre" Content="MOVE" Margin="218,119,0,25" Command="{Binding ExecuteFilmMoveButtonCommand}" Height="22" Padding="2"  />
-                            <ComboBox Margin="102,119,77,25" ItemsSource="{Binding CollectionOfGenres}" SelectedIndex="2" SelectedItem="{Binding GenreToMoveSelectedFilm}" Height="22" Padding="2"  >
+                            <ComboBox Margin="102,119,77,25" ItemsSource="{Binding CollectionOfGenres}" SelectedIndex="2" SelectedItem="{Binding NewGenreForSelectedFilm}" Height="22" Padding="2"  >
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock>
-                                        <Run Text="{Binding GenreName, Mode=OneWay}"/>
+                                        <Run Text="{Binding Name, Mode=OneWay}"/>
                                         </TextBlock>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>

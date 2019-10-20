@@ -32,7 +32,7 @@ namespace FilmDBApp.Model
             get => CollectionOfGenres.GenreList;
         }
 
-        public ObservableCollection<Film> CollectionOfAllFilms { get => MergeGenreFilmCollections(); }
+        public ObservableCollection<Film> CollectionOfAllFilms { get => MergeFilmCollections(); }
 
         public GeneralFilmFolder GeneralFilmFolder { get; }
         public ApplicationConfiguration Config { get => _config; }
@@ -45,7 +45,8 @@ namespace FilmDBApp.Model
         {
             _config = new ApplicationConfiguration();
             FillGenreCollectionByConfigurationFile();
-            GeneralFilmFolder = new GeneralFilmFolder(Config.GeneralFilmFolder);
+            if (Config.GeneralFilmFolder != null)
+                GeneralFilmFolder = new GeneralFilmFolder(Config.GeneralFilmFolder);
         }
         #region Methods
         /// <summary>
@@ -54,13 +55,20 @@ namespace FilmDBApp.Model
         public void FillGenreCollectionByConfigurationFile()
         {
             CollectionOfGenres = new CollectionOfGenres();
-            List<string> genrePaths = _config.GenrePaths;
+            
+            List<string> genrePaths = ApplicationConfiguration.GetGenrePathsFromConfigFile();
             CollectionOfGenres.ClearAll();
 
             foreach (string path in genrePaths)
             {
                 CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(path)));
             }
+        }
+
+        public void UpdateGeneralFilmFolder(FileInfo newFileInfo)
+        {
+            if (GeneralFilmFolder != null)
+                GeneralFilmFolder.UpdateFileInfo(Config.GeneralFilmFolder);
         }
         
         /// <summary>
@@ -69,7 +77,7 @@ namespace FilmDBApp.Model
         /// <param name="filmToMove">Film to move into new genre</param>
         /// <param name="filmOldGenre">Old film genre</param>
         /// <param name="filmNewGenre">New film genre</param>
-        public void ChangeFilmGenre(Film filmToMove, Genre filmOldGenre, Genre filmNewGenre)
+        public void ChangeFilmGenre(Film filmToMove, IFilmCollection filmOldGenre, Genre filmNewGenre)
         {
             filmOldGenre.ListOfFilms.Remove(filmToMove);
             filmNewGenre.ListOfFilms.Add(filmToMove);
@@ -78,15 +86,24 @@ namespace FilmDBApp.Model
         }
 
         /// <summary>
-        /// Going throught ListOfGenres and merging films into one collection.
+        /// Going through ListOfGenres and films of GeneralFilmFolder and merging films into one collection.
         /// </summary>
         /// <returns>ObservableCollection<Film> of films</returns>
-        private ObservableCollection<Film> MergeGenreFilmCollections()
+        private ObservableCollection<Film> MergeFilmCollections()
         {
             ObservableCollection<Film> collectedFilms = new ObservableCollection<Film>();
+
             foreach (var genre in ListOfGenres)
             {
                 foreach (var film in genre.ListOfFilms)
+                {
+                    collectedFilms.Add(film);
+                }
+            }
+
+            if (GeneralFilmFolder != null)
+            {
+                foreach (var film in GeneralFilmFolder.ListOfFilms)
                 {
                     collectedFilms.Add(film);
                 }

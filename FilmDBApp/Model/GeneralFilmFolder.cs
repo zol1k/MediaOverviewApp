@@ -14,7 +14,7 @@ namespace FilmDBApp.Model
     {
         #region Fields
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly FileInfo _fileInfo;
+        private FileInfo _fileInfo;
         private readonly bool _isRoot;
 
         #endregion
@@ -23,17 +23,17 @@ namespace FilmDBApp.Model
 
         public string Name
         {
-            get
-            {
-                return _isRoot ? "Root" : _fileInfo.Name;
-            }
+            get => _fileInfo.Name;
         }
 
         public string PathToDirectory{ get => _fileInfo.FullName; }
         public CollectionOfFilms CollectionOfFilms { get; set; }
         public ObservableCollection<Film> ListOfFilms
         {
-            get => CollectionOfFilms.ListOfFilms;
+            get
+            {
+                return CollectionOfFilms.ListOfFilms;
+            } 
         }
 
         #endregion
@@ -42,9 +42,6 @@ namespace FilmDBApp.Model
         {
             _fileInfo = fileInfo;
             CollectionOfFilms = new CollectionOfFilms();
-
-            if (fileInfo.Directory == null) _isRoot = true;
-
             CollectFilms();
         }
 
@@ -61,6 +58,8 @@ namespace FilmDBApp.Model
         /// </summary>
         private void CollectFilms()
         {
+            CollectionOfFilms.ListOfFilms.Clear();
+
             foreach (var file in Directory.GetFiles(PathToDirectory))
             {
                 FileInfo fileInfo = new FileInfo(file);
@@ -69,28 +68,33 @@ namespace FilmDBApp.Model
                 if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
                 {
                     CollectionOfFilms.AddNewFilm(new Film(fileInfo, false)
-                    {
-                        DirectoryGenre = Name
-                    });
+                    );
                 }
             }
+
+
+            List<string> listOfGenreNames = CollectionOfGenres.ReturnListOfGenreNamesFromConfigFile();
 
             foreach (var file in Directory.GetDirectories(PathToDirectory))
             {
                 FileInfo fileInfo = new FileInfo(file);
 
-                //if (CollectionOfGenres.GenreNameList.Contains(fileInfo.Name))
-                    //continue;
+                if (listOfGenreNames.Contains(fileInfo.Name))
+                    continue;
                 //if current directory is not hidden, add it into film db
                 if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
                 {
-                    CollectionOfFilms.AddNewFilm(new Film(fileInfo, true)
-                    {
-                        DirectoryGenre = Name
-                    });
+                    CollectionOfFilms.AddNewFilm(new Film(fileInfo, true));
                 }
             }
         }
+
+        public void UpdateFileInfo(FileInfo generalFilmFolder)
+        {
+            _fileInfo = generalFilmFolder;
+            CollectFilms();
+        }
+
         #endregion
     }
 

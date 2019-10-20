@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.IO;
 using System.Net;
+using System.Security.Principal;
 using System.Text.RegularExpressions;
 using FilmDBApp.Model;
 using Newtonsoft.Json;
@@ -19,7 +20,10 @@ namespace FilmDBApp
         private string _fileName;
         private readonly FileInfo _filmFileInfo;
         public readonly bool IsDirectory;
-        public string DirectoryGenre { get; set; }
+        public string DirectoryGenre
+        {
+            get => Directory.GetParent(FilePath).Name;
+        }
         private WebClient webClient;
 
         #endregion

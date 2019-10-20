@@ -84,6 +84,7 @@ namespace FilmDBApp
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok && Directory.Exists(dialog.FileName))
             {
+                Model.UpdateGeneralFilmFolder(new FileInfo(dialog.FileName));
                 Model.Config.ChangeFilmsFolder(new FileInfo(dialog.FileName));
             }
             dialog.Dispose();

@@ -15,11 +15,12 @@ namespace FilmDBApp
     {
         #region Fields
 
-        private Genre _selectedGenre;
+        private IFilmCollection _selectedFilmCollection;
         private Genre _newGenreForSelectedFilm;
         private Film _selectedFilm;
         private readonly ApplicationModel _model;
-        private bool _fullListActive ;
+        private bool _fullListActive;
+        private bool _generalFilmFolderIsActive;
         private string _filmNameEnToChangeTextBoxValue;
         private string _filmNameCzskToChangeTextBoxValue;
         private string _filmYearToChangeTextBoxValue;
@@ -49,23 +50,17 @@ namespace FilmDBApp
             }
         }
 
-        public string Name
+        public IFilmCollection SelectedFilmCollection
         {
-            get => "Name";
-        }
-
-
-        public Genre SelectedGenre
-        {
-            get => _selectedGenre;
+            get => _selectedFilmCollection;
             set
             {
                 if (value != null)
                 {
-                    _selectedGenre = value;
-                    OnPropertyChanged("SelectedGenre");
-                    SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
-                    SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(_selectedGenre.ListOfFilms);
+                    _selectedFilmCollection = value;
+                    OnPropertyChanged("SelectedFilmCollection");
+                    SelectedFilm = SelectedFilmCollection.ListOfFilms.FirstOrDefault();
+                    SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(_selectedFilmCollection.ListOfFilms);
                     _fullListActive = false;
                 }
             }
@@ -159,12 +154,12 @@ namespace FilmDBApp
         {
             _model = model;
             
-            SelectedGenre = CollectionOfGenres.FirstOrDefault();
+            SelectedFilmCollection = CollectionOfGenres.FirstOrDefault();
             _fullListActive = false;
-            if (SelectedGenre != null)
+            if (SelectedFilmCollection != null)
             {
-                SelectedFilm = SelectedGenre.ListOfFilms.FirstOrDefault();
-                _selectedGenreFilmListView = CollectionViewSource.GetDefaultView(SelectedGenre.ListOfFilms);
+                SelectedFilm = SelectedFilmCollection.ListOfFilms.FirstOrDefault();
+                _selectedGenreFilmListView = CollectionViewSource.GetDefaultView(SelectedFilmCollection.ListOfFilms);
                 _selectedGenreFilmListView.Filter = x => Filter(x as Film);
             }
 
@@ -178,7 +173,7 @@ namespace FilmDBApp
 
         private bool Filter(Film film)
         {
-            var searchstring = (SearchString ?? string.Empty).ToLower();
+            string searchstring = (SearchString ?? string.Empty).ToLower();
 
             return film != null &&
                    ((film.FileName ?? string.Empty).ToLower().Contains(searchstring) ||
@@ -193,16 +188,14 @@ namespace FilmDBApp
         }
 
         private void MoveFilmFileButton_Click(object obj)
-        {
-            SelectedFilm.ChangeFileName(FilmNameEnToChangeTextBoxValue,FilmNameCzskToChangeTextBoxValue,FilmYearToChangeTextBoxValue);
-            Model.ChangeFilmGenre(SelectedFilm, SelectedGenre, NewGenreForSelectedFilm);
-
+        { 
+            Model.ChangeFilmGenre(SelectedFilm, SelectedFilmCollection, NewGenreForSelectedFilm);
         }
         private void DeleteFilmFileButton_Click(object film)
         {
             Film filmToDelete = (Film)film;
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want to delete "+ filmToDelete.FileName.ToUpper() + " film?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
-            SelectedGenre.ListOfFilms.Remove(filmToDelete);
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want to delete "+ filmToDelete.FileName.ToUpper() + " ?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            SelectedFilmCollection.ListOfFilms.Remove(filmToDelete);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 string pathToDelete = filmToDelete.FilmFileInfo.FullName;
@@ -231,6 +224,7 @@ namespace FilmDBApp
         }
         private void ShowFilmFolderFilmsButton_Click(object obj)
         {
+            SelectedFilmCollection = Model.GeneralFilmFolder;
             SelectedGenreFilmListView = SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(Model.GeneralFilmFolder.ListOfFilms);
             _fullListActive = false;
         }
