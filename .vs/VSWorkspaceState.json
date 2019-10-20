@@ -4,8 +4,10 @@
     "\\FilmDBApp",
     "\\FilmDBApp\\bin",
     "\\FilmDBApp\\bin\\Debug",
-    "\\FilmDBApp\\bin\\Debug\\Settings"
+    "\\FilmDBApp\\bin\\Debug\\Settings",
+    "\\FilmDBApp\\ViewModel",
+    "\\FilmDBApp\\Views"
   ],
-  "SelectedNode": "\\FilmDBApp\\FilmDBApp.csproj",
+  "SelectedNode": "\\FilmDBApp\\Views\\ApplicationView.xaml",
   "PreviewInSolutionExplorer": false
 }
