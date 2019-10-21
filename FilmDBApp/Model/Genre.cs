@@ -5,10 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FilmDBApp.Model;
+using MediaOverviewApp.Model;
 using Microsoft.WindowsAPICodePack.Shell.Interop;
 
-namespace FilmDBApp.Model
+namespace MediaOverviewApp.Model
 {
     public class Genre: ObservableObject, IComparable, IFilmCollection
     {

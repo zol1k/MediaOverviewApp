@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using FilmDBApp.Model;
+using MediaOverviewApp.Model;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
-namespace FilmDBApp
+namespace MediaOverviewApp
 {
     class SettingsViewModel : ObservableObject, IPageViewModel
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OfficeOpenXml;
 
-namespace FilmDBApp.Model
+namespace MediaOverviewApp.Model
 {
     class ExcelExport : IDisposable
     {

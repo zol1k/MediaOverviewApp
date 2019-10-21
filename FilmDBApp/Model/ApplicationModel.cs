@@ -9,10 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
-using FilmDBApp.Helpers;
+using MediaOverviewApp.Helpers;
 using Microsoft.WindowsAPICodePack.Dialogs;
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
-namespace FilmDBApp.Model
+namespace MediaOverviewApp.Model
 {
     class ApplicationModel : ObservableObject
     {

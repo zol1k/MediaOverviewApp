@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace FilmDBApp.Helpers
+namespace MediaOverviewApp.Helpers
 {
     /*
      * https://code.msdn.microsoft.com/windowsapps/How-to-add-a-hint-text-to-ed66a3c6

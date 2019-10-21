@@ -1,4 +1,4 @@
-﻿namespace FilmDBApp
+﻿namespace MediaOverviewApp
 {
     internal interface IPageViewModel
     {

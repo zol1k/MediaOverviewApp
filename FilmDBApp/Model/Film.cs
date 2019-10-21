@@ -4,11 +4,11 @@ using System.IO;
 using System.Net;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
-using FilmDBApp.Model;
+using MediaOverviewApp.Model;
 using Newtonsoft.Json;
 
 
-namespace FilmDBApp
+namespace MediaOverviewApp
 {
     public class Film : ObservableObject, IComparable, IDisposable
     {

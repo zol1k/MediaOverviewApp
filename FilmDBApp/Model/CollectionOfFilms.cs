@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using FilmDBApp.Helpers;
+using MediaOverviewApp.Helpers;
 
-namespace FilmDBApp.Model
+namespace MediaOverviewApp.Model
 {
     public class CollectionOfFilms:ObservableObject
     {

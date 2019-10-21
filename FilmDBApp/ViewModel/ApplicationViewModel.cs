@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using FilmDBApp.Model;
+using MediaOverviewApp.Model;
 
 
-namespace FilmDBApp
+namespace MediaOverviewApp
 {
     class ApplicationViewModel : ObservableObject
     {

@@ -1,8 +1,8 @@
-﻿<Window x:Class="FilmDBApp.ApplicationView"
+﻿<Window x:Class="MediaOverviewApp.ApplicationView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:FilmDBApp"
-        Title="Manage your film media files! - FilmDBApp" Height="733" Width="810" ResizeMode="NoResize">
+        xmlns:local="clr-namespace:MediaOverviewApp"
+        Title="Manage your film media files! - MediaOverviewApp" Height="733" Width="810" ResizeMode="NoResize">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type local:HomeViewModel}">

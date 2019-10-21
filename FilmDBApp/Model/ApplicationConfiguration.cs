@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 
-namespace FilmDBApp.Model
+namespace MediaOverviewApp.Model
 {
     class ApplicationConfiguration : ObservableObject
     {
@@ -16,9 +16,13 @@ namespace FilmDBApp.Model
         private readonly XDocument XDoc = XDocument.Load(settingsFilePath);
         private readonly XElement XGenresNode;
         private static readonly string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
+        private string rootApp = Path.GetPathRoot(System.Reflection.Assembly.GetEntryAssembly().Location);
 
         private FileInfo _generalFilmFolder;
         private FileInfo _generalSerialsFolder;
+
+        private List<XAttribute> configPathAttributes;
+
         #endregion
         #region Properties / Commands
         public FileInfo GeneralFilmFolder
@@ -48,6 +52,7 @@ namespace FilmDBApp.Model
         {
 
             XGenresNode = XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres");
+            ValidateDriveLetterOfPathsOnInit();
             ValidateConfigFileOnInit();
             GetFilmAndSerialFileInfoFromConfigFile();
         }
@@ -86,7 +91,7 @@ namespace FilmDBApp.Model
             var XDoc1 = XDocument.Load(settingsFilePath);
             foreach (XElement el in XDoc1.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
             {
-                genrePath = el.Attribute("PathToGenreFolder").Value;
+                genrePath = el.Attribute("PathToFolder").Value;
                 if (ActionSet.FileOrDirectoryExists(genrePath))
                 {
                     configGenrePathsList.Add(genrePath);
@@ -95,16 +100,48 @@ namespace FilmDBApp.Model
             return configGenrePathsList;
         }
 
+        public void ValidateDriveLetterOfPathsOnInit()
+        {
+            string path;
+            FileInfo fileInfo;
+            foreach (XElement el in XGenresNode.Elements())
+            {
+                XAttribute element = el.Attribute("PathToFolder");
+                path = element.Value;
+
+                if (!ActionSet.FileOrDirectoryExists(path))
+                {
+                    fileInfo = new FileInfo(path);
+                    string rootPath = Path.GetPathRoot(new FileInfo(path).FullName);
+                    string pathWithChangedRoot = fileInfo.FullName.Replace(rootPath, rootApp);
+
+                    if (ActionSet.FileOrDirectoryExists(pathWithChangedRoot))
+                    {
+                        element.Value = pathWithChangedRoot;
+                    }
+                }
+            }
+
+            SaveSettings();
+        }
+
+        private void CollectPathAttributesFromConfigFile()
+        {
+            configPathAttributes = new List<XAttribute>();
+            foreach (XElement el in XGenresNode.Elements())
+            {
+
+            }
+        }
+
         private void ValidateConfigFileOnInit()
         {
 
-
-
             List<string> configNotValidGenrePathsList = new List<string>();
             string genrePath;
-            foreach (XElement el in XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
+            foreach (XElement el in XGenresNode.Elements())
             {
-                genrePath = el.Attribute("PathToGenreFolder").Value;
+                genrePath = el.Attribute("PathToFolder").Value;
                 if (! ActionSet.FileOrDirectoryExists(genrePath))
                 {
                     configNotValidGenrePathsList.Add(genrePath);
@@ -117,6 +154,7 @@ namespace FilmDBApp.Model
             }
             
         }
+
 
         private void ShowMsgBoxWithNotValidPaths(List<string> configNotValidGenrePathsList)
         {
@@ -162,7 +200,7 @@ namespace FilmDBApp.Model
                 XGenresNode.Add(
                     new XElement("Genre",
                     new XAttribute("Name", genre.Name),
-                    new XAttribute("PathToGenreFolder", genre.PathToDirectory)
+                    new XAttribute("PathToFolder", genre.PathToDirectory)
                     )
                 );
             }

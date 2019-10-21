@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using FilmDBApp.Model;
+using MediaOverviewApp.Model;
 
-namespace FilmDBApp.Model
+namespace MediaOverviewApp.Model
 {
     static class ActionSet
     {

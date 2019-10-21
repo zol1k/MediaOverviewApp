@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FilmDBApp;
+using MediaOverviewApp;
 
-namespace FilmDBApp.Model
+namespace MediaOverviewApp.Model
 {
     public class ImdbEntity:ObservableObject
     {

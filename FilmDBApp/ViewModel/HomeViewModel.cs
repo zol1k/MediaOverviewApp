@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using FilmDBApp.Helpers;
-using FilmDBApp.Model;
+using MediaOverviewApp.Helpers;
+using MediaOverviewApp.Model;
 
-namespace FilmDBApp
+namespace MediaOverviewApp
 {
     internal class HomeViewModel : ObservableObject, IPageViewModel
     {
