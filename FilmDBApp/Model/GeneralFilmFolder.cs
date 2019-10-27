@@ -10,7 +10,7 @@ using Microsoft.WindowsAPICodePack.Shell.Interop;
 
 namespace MediaOverviewApp.Model
 {
-    public class GeneralFilmFolder: ObservableObject, IComparable, IFilmCollection
+    internal class GeneralFilmFolder: ObservableObject, IComparable, IFilmCollection
     {
         #region Fields
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -96,6 +96,13 @@ namespace MediaOverviewApp.Model
         }
 
         #endregion
+
+        public void ChangeDestinationFolder(FileInfo fileInfo, ApplicationConfiguration configuration)
+        {
+            _fileInfo = fileInfo;
+            configuration.ChangeFilmsFolder(fileInfo);
+            CollectFilms();
+        }
     }
 
 }

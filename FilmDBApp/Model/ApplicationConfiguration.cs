@@ -14,7 +14,9 @@ namespace MediaOverviewApp.Model
         #region Fields
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly XDocument XDoc = XDocument.Load(settingsFilePath);
-        private readonly XElement XGenresNode;
+        private readonly XElement XGeneralFilmsElement;
+        private readonly XElement XGeneralSerialsElement;
+        private readonly XElement XGenresElement;
         private static readonly string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
         private string rootApp = Path.GetPathRoot(System.Reflection.Assembly.GetEntryAssembly().Location);
 
@@ -51,7 +53,10 @@ namespace MediaOverviewApp.Model
         public ApplicationConfiguration()
         {
 
-            XGenresNode = XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres");
+            XGenresElement = XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres");
+            XGeneralFilmsElement = XDoc.Root.Element("settings").Element("FilmsSettings");
+            XGeneralSerialsElement = XDoc.Root.Element("settings").Element("SerialsSettings");
+            
             ValidateDriveLetterOfPathsOnInit();
             ValidateConfigFileOnInit();
             GetFilmAndSerialFileInfoFromConfigFile();
@@ -63,11 +68,9 @@ namespace MediaOverviewApp.Model
         /// </summary>
         private void GetFilmAndSerialFileInfoFromConfigFile()
         {
-            string filmsFolderPath = XDoc.Root.Element("settings").Element("FilmsSettings")
-                    .Attribute("PathToFolder").Value;
+            string filmsFolderPath = XGeneralFilmsElement.Attribute("PathToFolder").Value;
 
-            string serialsFolderPath = XDoc.Root.Element("settings").Element("SerialsSettings")
-                    .Attribute("PathToFolder").Value;
+            string serialsFolderPath = XGeneralSerialsElement.Attribute("PathToFolder").Value;
 
                 if (ActionSet.FileOrDirectoryExists(filmsFolderPath))
                 {
@@ -102,33 +105,42 @@ namespace MediaOverviewApp.Model
 
         public void ValidateDriveLetterOfPathsOnInit()
         {
-            string path;
-            FileInfo fileInfo;
-            foreach (XElement el in XGenresNode.Elements())
+            ValidateXElementPath(XGeneralFilmsElement);
+            ValidateXElementPath(XGeneralSerialsElement);
+
+            foreach (XElement el in XGenresElement.Elements())
             {
-                XAttribute element = el.Attribute("PathToFolder");
-                path = element.Value;
-
-                if (!ActionSet.FileOrDirectoryExists(path))
-                {
-                    fileInfo = new FileInfo(path);
-                    string rootPath = Path.GetPathRoot(new FileInfo(path).FullName);
-                    string pathWithChangedRoot = fileInfo.FullName.Replace(rootPath, rootApp);
-
-                    if (ActionSet.FileOrDirectoryExists(pathWithChangedRoot))
-                    {
-                        element.Value = pathWithChangedRoot;
-                    }
-                }
+                ValidateXElementPath(el);
             }
 
             SaveSettings();
         }
 
+        private void ValidateXElementPath(XElement el)
+        {
+            string path;
+            FileInfo fileInfo;
+
+            XAttribute element = el.Attribute("PathToFolder");
+            path = element.Value;
+
+            if (!ActionSet.FileOrDirectoryExists(path))
+            {
+                fileInfo = new FileInfo(path);
+                string rootPath = Path.GetPathRoot(new FileInfo(path).FullName);
+                string pathWithChangedRoot = fileInfo.FullName.Replace(rootPath, rootApp);
+
+                if (ActionSet.FileOrDirectoryExists(pathWithChangedRoot))
+                {
+                    element.Value = pathWithChangedRoot;
+                }
+            }
+        }
+
         private void CollectPathAttributesFromConfigFile()
         {
             configPathAttributes = new List<XAttribute>();
-            foreach (XElement el in XGenresNode.Elements())
+            foreach (XElement el in XGenresElement.Elements())
             {
 
             }
@@ -136,10 +148,9 @@ namespace MediaOverviewApp.Model
 
         private void ValidateConfigFileOnInit()
         {
-
             List<string> configNotValidGenrePathsList = new List<string>();
             string genrePath;
-            foreach (XElement el in XGenresNode.Elements())
+            foreach (XElement el in XGenresElement.Elements())
             {
                 genrePath = el.Attribute("PathToFolder").Value;
                 if (! ActionSet.FileOrDirectoryExists(genrePath))
@@ -152,7 +163,6 @@ namespace MediaOverviewApp.Model
             {
                 ShowMsgBoxWithNotValidPaths(configNotValidGenrePathsList);
             }
-            
         }
 
 
@@ -194,10 +204,10 @@ namespace MediaOverviewApp.Model
         /// </summary>
         public void GenresXmlUpdate(CollectionOfGenres collectionOfGenres)
         {
-            XGenresNode.RemoveAll();
+            XGenresElement.RemoveAll();
             foreach (var genre in collectionOfGenres.GenreList)
             {
-                XGenresNode.Add(
+                XGenresElement.Add(
                     new XElement("Genre",
                     new XAttribute("Name", genre.Name),
                     new XAttribute("PathToFolder", genre.PathToDirectory)
