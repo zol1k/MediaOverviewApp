@@ -12,18 +12,20 @@ namespace MediaOverviewApp.Model
     class ApplicationConfiguration : ObservableObject
     {
         #region Fields
-        static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        readonly XDocument XDoc = XDocument.Load(settingsFilePath);
-        readonly XElement XGeneralFilmsElement;
-        readonly XElement XGeneralSerialsElement;
-        readonly XElement XGenresElement;
-        static readonly string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
-        readonly string rootApp = Path.GetPathRoot(System.Reflection.Assembly.GetEntryAssembly().Location);
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly XDocument XDoc = XDocument.Load(settingsFilePath);
+        private readonly XElement XGeneralFilmsElement;
+        private readonly XElement XGeneralSerialsElement;
+        private readonly XElement XGenresElement;
+        private static readonly string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
+        private string rootApp = Path.GetPathRoot(System.Reflection.Assembly.GetEntryAssembly().Location);
 
-        FileInfo _generalFilmFolder;
-        FileInfo _generalSerialsFolder;
+        private FileInfo _generalFilmFolder;
+        private FileInfo _generalSerialsFolder;
+
+        private List<XAttribute> configPathAttributes;
+
         #endregion
-
         #region Properties / Commands
         public FileInfo GeneralFilmFolder
         {
@@ -134,7 +136,16 @@ namespace MediaOverviewApp.Model
                 }
             }
         }
-        
+
+        private void CollectPathAttributesFromConfigFile()
+        {
+            configPathAttributes = new List<XAttribute>();
+            foreach (XElement el in XGenresElement.Elements())
+            {
+
+            }
+        }
+
         private void ValidateConfigFileOnInit()
         {
             List<string> configNotValidGenrePathsList = new List<string>();
