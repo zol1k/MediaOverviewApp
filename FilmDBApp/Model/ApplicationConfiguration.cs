@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 
@@ -12,78 +10,35 @@ namespace MediaOverviewApp.Model
     class ApplicationConfiguration : ObservableObject
     {
         #region Fields
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly XDocument XDoc = XDocument.Load(settingsFilePath);
-        private readonly XElement XGeneralFilmsElement;
-        private readonly XElement XGeneralSerialsElement;
-        private readonly XElement XGenresElement;
-        private static readonly string settingsFilePath = AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
+
+        private static readonly log4net.ILog Log =
+            log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private XDocument Xdoc;
+        private static readonly string settingsFilePath =
+            AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
+
         private string rootApp = Path.GetPathRoot(System.Reflection.Assembly.GetEntryAssembly().Location);
 
-        private FileInfo _generalFilmFolder;
-        private FileInfo _generalSerialsFolder;
-
-        private List<XAttribute> configPathAttributes;
-
         #endregion
+
         #region Properties / Commands
-        public FileInfo GeneralFilmFolder
-        {
-            get => _generalFilmFolder;
-            set
-            {
-                _generalFilmFolder = value;
-                OnPropertyChanged("GeneralFilmFolder");
-            }
-        }
 
-        public FileInfo GeneralSerialsFolder
-        {
-            get => _generalSerialsFolder;
-            set
-            {
-                _generalSerialsFolder = value;
-                OnPropertyChanged("GeneralSerialsFolder");
-            }
-        }
+        public static XDocument LoadXDoc { get => XDocument.Load(settingsFilePath); }
+        public static FileInfo GeneralFilmFolder { get => new FileInfo(LoadXDoc.Root.Element("settings").Element("FilmsSettings").Attribute("PathToFolder").Value); }
+        public static FileInfo GeneralSerialsFolder { get => new FileInfo(LoadXDoc.Root.Element("settings").Element("SerialsSettings").Attribute("PathToFolder").Value); }
 
-        public List<string> GenrePaths { get => GetGenrePathsFromConfigFile(); }
         #endregion
-
         public ApplicationConfiguration()
         {
+            Xdoc = XDocument.Load(settingsFilePath);
 
-            XGenresElement = XDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres");
-            XGeneralFilmsElement = XDoc.Root.Element("settings").Element("FilmsSettings");
-            XGeneralSerialsElement = XDoc.Root.Element("settings").Element("SerialsSettings");
-            
             ValidateDriveLetterOfPathsOnInit();
+
             ValidateConfigFileOnInit();
-            GetFilmAndSerialFileInfoFromConfigFile();
         }
 
         #region Methods
-        /// <summary>
-        /// Get FILM / SERIAL folder path from configuration file 
-        /// </summary>
-        private void GetFilmAndSerialFileInfoFromConfigFile()
-        {
-            string filmsFolderPath = XGeneralFilmsElement.Attribute("PathToFolder").Value;
-
-            string serialsFolderPath = XGeneralSerialsElement.Attribute("PathToFolder").Value;
-
-                if (ActionSet.FileOrDirectoryExists(filmsFolderPath))
-                {
-                    GeneralFilmFolder = new FileInfo(filmsFolderPath);
-                }
-
-                if (ActionSet.FileOrDirectoryExists(serialsFolderPath))
-                {
-                    GeneralSerialsFolder = new FileInfo(serialsFolderPath);
-                }
-        }
-
-
         /// <summary>
         /// Parse config file and return List<string> with genre paths
         /// </summary>
@@ -91,8 +46,8 @@ namespace MediaOverviewApp.Model
         {
             List<string> configGenrePathsList = new List<string>();
             string genrePath;
-            var XDoc1 = XDocument.Load(settingsFilePath);
-            foreach (XElement el in XDoc1.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
+            //var XDoc1 = XDocument.Load(settingsFilePath);
+            foreach (XElement el in LoadXDoc.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
             {
                 genrePath = el.Attribute("PathToFolder").Value;
                 if (ActionSet.FileOrDirectoryExists(genrePath))
@@ -103,12 +58,12 @@ namespace MediaOverviewApp.Model
             return configGenrePathsList;
         }
 
-        public void ValidateDriveLetterOfPathsOnInit()
+        private void ValidateDriveLetterOfPathsOnInit()
         {
-            ValidateXElementPath(XGeneralFilmsElement);
-            ValidateXElementPath(XGeneralSerialsElement);
+            ValidateXElementPath(Xdoc.Root.Element("settings").Element("SerialsSettings"));
+            ValidateXElementPath(Xdoc.Root.Element("settings").Element("FilmsSettings"));
 
-            foreach (XElement el in XGenresElement.Elements())
+            foreach (XElement el in Xdoc.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
             {
                 ValidateXElementPath(el);
             }
@@ -133,27 +88,20 @@ namespace MediaOverviewApp.Model
                 if (ActionSet.FileOrDirectoryExists(pathWithChangedRoot))
                 {
                     element.Value = pathWithChangedRoot;
+                    SaveSettings();
                 }
             }
         }
 
-        private void CollectPathAttributesFromConfigFile()
-        {
-            configPathAttributes = new List<XAttribute>();
-            foreach (XElement el in XGenresElement.Elements())
-            {
-
-            }
-        }
 
         private void ValidateConfigFileOnInit()
         {
             List<string> configNotValidGenrePathsList = new List<string>();
             string genrePath;
-            foreach (XElement el in XGenresElement.Elements())
+            foreach (XElement el in Xdoc.Root.Element("settings").Element("FilmsSettings").Element("Genres").Elements())
             {
                 genrePath = el.Attribute("PathToFolder").Value;
-                if (! ActionSet.FileOrDirectoryExists(genrePath))
+                if (!ActionSet.FileOrDirectoryExists(genrePath))
                 {
                     configNotValidGenrePathsList.Add(genrePath);
                     Log.Error("Application Configuration - Could not find destination of " + genrePath + " path.");
@@ -185,8 +133,9 @@ namespace MediaOverviewApp.Model
         /// <param name="folder">fileInfo of general film folder</param>
         public void ChangeFilmsFolder(FileInfo folder)
         {
-            GeneralFilmFolder = folder;
-            FilmFolderXmlUpdate();
+            XAttribute xmlFilmssFolderPath = Xdoc.Root.Element("settings").Element("FilmsSettings").Attribute("PathToFolder");
+            xmlFilmssFolderPath.Value = (GeneralFilmFolder == null) ? "" : folder.FullName;
+            SaveSettings();
         }
 
         /// <summary>
@@ -195,8 +144,10 @@ namespace MediaOverviewApp.Model
         /// <param name="folder">fileInfo of general serial folder</param>
         public void ChangeSerialsFolder(FileInfo folder)
         {
-            GeneralSerialsFolder = folder;
-            SerialsFolderXmlUpdate();
+            XAttribute xmlSerialsFolderPath = Xdoc.Root.Element("settings").Element("SerialsSettings").Attribute("PathToFolder");
+            xmlSerialsFolderPath.Value = (GeneralSerialsFolder == null) ? "" : folder.FullName;
+            SaveSettings();
+            OnPropertyChanged("GeneralSerialsFolder");
         }
 
         /// <summary>
@@ -204,10 +155,11 @@ namespace MediaOverviewApp.Model
         /// </summary>
         public void GenresXmlUpdate(CollectionOfGenres collectionOfGenres)
         {
-            XGenresElement.RemoveAll();
+            XElement genres = Xdoc.Root.Element("settings").Element("FilmsSettings").Element("Genres");
+            genres.RemoveAll();
             foreach (var genre in collectionOfGenres.GenreList)
             {
-                XGenresElement.Add(
+                genres.Add(
                     new XElement("Genre",
                     new XAttribute("Name", genre.Name),
                     new XAttribute("PathToFolder", genre.PathToDirectory)
@@ -216,37 +168,13 @@ namespace MediaOverviewApp.Model
             }
             SaveSettings();
         }
-
-        /// <summary>
-        /// Update Element("settings").Element("FilmsSettings").Attribute("PathToFolder");
-        /// </summary>
-        private void FilmFolderXmlUpdate()
-        {
-            XAttribute xmlFilmsFolderPath = XDoc.Root.Element("settings").Element("FilmsSettings")
-                .Attribute("PathToFolder");
-
-            xmlFilmsFolderPath.Value = (GeneralFilmFolder == null) ? "" : GeneralFilmFolder.FullName;
-            SaveSettings();
-        }
-
-        /// <summary>
-        /// Update Element("settings").Element("SerialsSettings").Attribute("PathToFolder");
-        /// </summary>
-        private void SerialsFolderXmlUpdate()
-        {
-            XAttribute xmlSerialsFolderPath = XDoc.Root.Element("settings").Element("SerialsSettings")
-                .Attribute("PathToFolder");
-
-            xmlSerialsFolderPath.Value = (GeneralSerialsFolder == null) ? "" : GeneralSerialsFolder.FullName;
-            SaveSettings();
-        }
-
+        
         /// <summary>
         /// Save XML configuration file
         /// </summary>
         private void SaveSettings()
         {
-            XDoc.Save(settingsFilePath);
+            Xdoc.Save(settingsFilePath);
         }
         #endregion
     }

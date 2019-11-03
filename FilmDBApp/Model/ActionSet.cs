@@ -51,6 +51,7 @@ namespace MediaOverviewApp.Model
         /// </summary>
         public static void DeleteDirectory(string target_dir)
         {
+            
             string[] files = Directory.GetFiles(target_dir);
             string[] dirs = Directory.GetDirectories(target_dir);
 

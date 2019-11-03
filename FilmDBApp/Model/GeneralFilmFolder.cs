@@ -14,7 +14,6 @@ namespace MediaOverviewApp.Model
     {
         #region Fields
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private FileInfo _fileInfo;
         private readonly bool _isRoot;
 
         #endregion
@@ -23,24 +22,18 @@ namespace MediaOverviewApp.Model
 
         public string Name
         {
-            get => _fileInfo.Name;
+            get => FileInfo.Name;
         }
 
-        public string PathToDirectory{ get => _fileInfo.FullName; }
+        public FileInfo FileInfo { get => ApplicationConfiguration.GeneralFilmFolder; }
+        public string PathToDirectory{ get => FileInfo.FullName; }
         public CollectionOfFilms CollectionOfFilms { get; set; }
-        public ObservableCollection<Film> ListOfFilms
-        {
-            get
-            {
-                return CollectionOfFilms.ListOfFilms;
-            } 
-        }
+        public ObservableCollection<Film> ListOfFilms { get => CollectionOfFilms.ListOfFilms; }
 
         #endregion
 
-        public GeneralFilmFolder(FileInfo fileInfo)
+        public GeneralFilmFolder()
         {
-            _fileInfo = fileInfo;
             CollectionOfFilms = new CollectionOfFilms();
             CollectFilms();
         }
@@ -56,53 +49,44 @@ namespace MediaOverviewApp.Model
         /// <summary>
         /// Going throught paths of recieved genres, and fill its filmLists with CollectGenreFilms
         /// </summary>
-        private void CollectFilms()
+        public void CollectFilms()
         {
-            CollectionOfFilms.ListOfFilms.Clear();
-
-            foreach (var file in Directory.GetFiles(PathToDirectory))
+            if (ActionSet.FileOrDirectoryExists(PathToDirectory))
             {
-                FileInfo fileInfo = new FileInfo(file);
+                CollectionOfFilms.ListOfFilms.Clear();
 
-                //if current file is not hidden, add it into film db
-                if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
+                foreach (var file in Directory.GetFiles(PathToDirectory))
                 {
-                    CollectionOfFilms.AddNewFilm(new Film(fileInfo, false)
-                    );
+                    FileInfo fileInfo = new FileInfo(file);
+
+                    //if current file is not hidden, add it into film db
+                    if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
+                    {
+                        CollectionOfFilms.AddNewFilm(new Film(fileInfo, false)
+                        );
+                    }
+                }
+            
+
+                List<string> listOfGenreNames = CollectionOfGenres.ReturnListOfGenreNamesFromConfigFile();
+
+                foreach (var file in Directory.GetDirectories(PathToDirectory))
+                {
+                    FileInfo fileInfo = new FileInfo(file);
+
+                    if (listOfGenreNames.Contains(fileInfo.Name))
+                        continue;
+                    //if current directory is not hidden, add it into film db
+                    if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
+                    {
+                        CollectionOfFilms.AddNewFilm(new Film(fileInfo, true));
+                    }
                 }
             }
-
-
-            List<string> listOfGenreNames = CollectionOfGenres.ReturnListOfGenreNamesFromConfigFile();
-
-            foreach (var file in Directory.GetDirectories(PathToDirectory))
-            {
-                FileInfo fileInfo = new FileInfo(file);
-
-                if (listOfGenreNames.Contains(fileInfo.Name))
-                    continue;
-                //if current directory is not hidden, add it into film db
-                if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
-                {
-                    CollectionOfFilms.AddNewFilm(new Film(fileInfo, true));
-                }
-            }
-        }
-
-        public void UpdateFileInfo(FileInfo generalFilmFolder)
-        {
-            _fileInfo = generalFilmFolder;
-            CollectFilms();
         }
 
         #endregion
 
-        public void ChangeDestinationFolder(FileInfo fileInfo, ApplicationConfiguration configuration)
-        {
-            _fileInfo = fileInfo;
-            configuration.ChangeFilmsFolder(fileInfo);
-            CollectFilms();
-        }
     }
 
 }

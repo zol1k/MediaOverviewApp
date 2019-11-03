@@ -53,19 +53,27 @@ namespace MediaOverviewApp
             {
                 CommonOpenFileDialog dialog = new CommonOpenFileDialog
                 {
-                    InitialDirectory = _model.Config.GeneralFilmFolder != null ? _model.Config.GeneralFilmFolder.FullName : "C:\\Users",
+                    InitialDirectory = ApplicationConfiguration.GeneralFilmFolder != null ? ApplicationConfiguration.GeneralFilmFolder.FullName : "C:\\Users",
                     IsFolderPicker = true,
                     Multiselect = true
                 };
 
                 if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
                 {
-                    foreach (string filename in dialog.FileNames.ToArray())
-                        Model.CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(filename)));
+
+                    if (dialog.FileNames.Count() != 0)
+                    {
+                        foreach (string filename in dialog.FileNames.ToArray())
+                        {
+                            Model.CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(filename)));
+                        }
+
+                        Model.Config.GenresXmlUpdate(Model.CollectionOfGenres);
+
+                        Model.GeneralFilmFolder.CollectFilms();
+                    }
                 }
                 dialog.Dispose();
-
-                Model.Config.GenresXmlUpdate(Model.CollectionOfGenres);
             }
             catch (Exception ex)
             {
@@ -85,7 +93,7 @@ namespace MediaOverviewApp
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok && Directory.Exists(dialog.FileName))
             {
                 Model.UpdateGeneralFilmFolder(new FileInfo(dialog.FileName));
-                Model.GeneralFilmFolder.ChangeDestinationFolder(new FileInfo(dialog.FileName), Model.Config);
+                Model.GeneralFilmFolder.CollectFilms();
             }
             dialog.Dispose();
         }

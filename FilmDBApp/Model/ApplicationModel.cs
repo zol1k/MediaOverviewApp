@@ -45,8 +45,8 @@ namespace MediaOverviewApp.Model
         {
             _config = new ApplicationConfiguration();
             FillGenreCollectionByConfigurationFile();
-            if (Config.GeneralFilmFolder != null)
-                GeneralFilmFolder = new GeneralFilmFolder(Config.GeneralFilmFolder);
+            if (ApplicationConfiguration.GeneralFilmFolder != null)
+                GeneralFilmFolder = new GeneralFilmFolder();
         }
         #region Methods
         /// <summary>
@@ -67,8 +67,8 @@ namespace MediaOverviewApp.Model
 
         public void UpdateGeneralFilmFolder(FileInfo newFileInfo)
         {
-            if (GeneralFilmFolder != null)
-                GeneralFilmFolder.UpdateFileInfo(Config.GeneralFilmFolder);
+            Config.ChangeFilmsFolder(newFileInfo);
+            OnPropertyChanged("GeneralFilmFolder");
         }
         
         /// <summary>

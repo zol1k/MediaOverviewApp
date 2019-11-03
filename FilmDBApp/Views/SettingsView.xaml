@@ -35,7 +35,7 @@
             <Grid Margin="0,0,0,0">
                 <Label Content="Film node" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Label Content="Serial node" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,26,0,0"/>
-                <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,2,0,0" TextWrapping="Wrap" Text="{Binding Model.Config.GeneralFilmFolder.FullName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="261"/>
+                <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,2,0,0" TextWrapping="Wrap" Text="{Binding Model.GeneralFilmFolder.PathToDirectory, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="261"/>
                 <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="20" Margin="74,30,0,0" TextWrapping="Wrap" Text="{Binding Model.Config.GeneralSerialsFolder.FullName, Mode=OneWay}" VerticalAlignment="Top" Width="261"/>
                 <Button Content="..." Command="{Binding ChangeFilmsFolderFilePathCommand}" HorizontalAlignment="Left" Margin="340,2,0,0" VerticalAlignment="Top" Width="20"/>
                 <Button Content="..." Command="{Binding ChangeSerialsFolderFilePathCommand}" HorizontalAlignment="Left" Margin="340,30,0,0" VerticalAlignment="Top" Width="20"/>
