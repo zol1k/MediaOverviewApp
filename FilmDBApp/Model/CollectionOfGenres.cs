@@ -44,19 +44,13 @@ namespace MediaOverviewApp.Model
         /// </summary>
         /// <param name="genre">will be added into GenreList</param>
         public void AddNewGenre(Genre genre)
-        {
-            bool _ifListCointainstGenre = _genreList.Any(p => p.Name == genre.Name);
+        { 
+            _genreList.Add(genre);
+        }
 
-            if (!_ifListCointainstGenre)
-            {
-                _genreList.Add(genre);
-            }
-            else
-            {
-                string msg = genre.Name + " is already in genre list!";
-                Log.Debug(msg);
-                MessageBox.Show(msg);
-            }
+        public Boolean IsInList(string folderPath)
+        {
+            return _genreList.Any(p => p.PathToDirectory == folderPath);
         }
 
         /// <summary>
@@ -106,11 +100,11 @@ namespace MediaOverviewApp.Model
             List<string> list = GenreList.Select(o => o.Name).ToList();
             return list;
         }
-        public static List<string>ReturnListOfGenreNamesFromConfigFile()
+        public static List<string> ReturnListOfGenreNamesFromConfigFile()
         {
             List<string> genreNames = new List<string>();
 
-            foreach (var genrePath in ApplicationConfiguration.GetGenrePathsFromConfigFile())
+            foreach (var genrePath in XController.GetGenrePathsFromConfigFile())
             {
                 genreNames.Add(Path.GetFileName(genrePath));
             }

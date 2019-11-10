@@ -68,8 +68,8 @@ namespace MediaOverviewApp.Model
                 }
             
 
-                List<string> listOfPathsToIgnore = ApplicationConfiguration.GetGenrePathsFromConfigFile();
-                listOfPathsToIgnore.Add(ApplicationConfiguration.GeneralSerialFolder.FullName);
+                List<string> listOfPathsToIgnore = XController.GetGenrePathsFromConfigFile();
+                listOfPathsToIgnore.Add(XController.GeneralSerialFolderPath);
 
                 foreach (var file in Directory.GetDirectories(PathToDirectory))
                 {

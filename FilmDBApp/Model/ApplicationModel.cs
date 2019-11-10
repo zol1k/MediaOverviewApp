@@ -59,7 +59,7 @@ namespace MediaOverviewApp.Model
         {
             CollectionOfGenres = new CollectionOfGenres();
             
-            List<string> genrePaths = ApplicationConfiguration.GetGenrePathsFromConfigFile();
+            List<string> genrePaths = XController.GetGenrePathsFromConfigFile();
             CollectionOfGenres.ClearAll();
 
             foreach (string path in genrePaths)
@@ -70,12 +70,12 @@ namespace MediaOverviewApp.Model
 
         public void UpdateGeneralFilmFolder(FileInfo newFileInfo)
         {
-            Config.ChangeFilmsFolder(newFileInfo);
+            XController.ChangeFilmsFolder(newFileInfo);
             OnPropertyChanged("GeneralFilmFolder");
         }        
         public void UpdateGeneralSerialFolder(FileInfo newFileInfo)
         {
-            Config.ChangeSerialsFolder(newFileInfo);
+            XController.ChangeSerialsFolder(newFileInfo);
             OnPropertyChanged("GeneralSerialFolder");
         }
         

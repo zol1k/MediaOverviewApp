@@ -53,7 +53,7 @@ namespace MediaOverviewApp
             {
                 CommonOpenFileDialog dialog = new CommonOpenFileDialog
                 {
-                    InitialDirectory = ApplicationConfiguration.GeneralFilmFolder != null ? ApplicationConfiguration.GeneralFilmFolder.FullName : "C:\\Users",
+                    InitialDirectory = ApplicationConfiguration.GeneralFilmFolder != null ? ApplicationConfiguration.GeneralFilmFolder.FullName : ApplicationConfiguration.rootApp,
                     IsFolderPicker = true,
                     Multiselect = true
                 };
@@ -63,13 +63,32 @@ namespace MediaOverviewApp
 
                     if (dialog.FileNames.Count() != 0)
                     {
-                        foreach (string filename in dialog.FileNames.ToArray())
+                        List<string> alreadyAdded = new List<string>();
+                        foreach (string folderPath in dialog.FileNames.ToArray())
                         {
-                            Model.CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(filename)));
+                            if (Model.CollectionOfGenres.IsInList(folderPath))
+                            {
+                                alreadyAdded.Add(folderPath);
+                            }
+                            else
+                            {
+                                Model.CollectionOfGenres.AddNewGenre(new Genre(new FileInfo(folderPath)));
+                            }
                         }
 
-                        Model.Config.GenresXmlUpdate(Model.CollectionOfGenres);
+                        if (alreadyAdded.Count > 0)
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            sb.Append("Bellow genre(s) are already added.");
+                            sb.AppendLine();
+                            sb.AppendLine();
+                            sb.Append(String.Join(Environment.NewLine, alreadyAdded.ToArray()));
+                            sb.AppendLine();
+                            sb.AppendLine();
+                            MessageBox.Show(sb.ToString(), "Genres already in list.");
+                        }
 
+                        XController.UpdateGenres(Model.CollectionOfGenres);
                         Model.GeneralFilmFolder.CollectFilms();
                     }
                 }
@@ -85,7 +104,7 @@ namespace MediaOverviewApp
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog
             {
-                InitialDirectory = Model.Config.rootApp,
+                InitialDirectory = ApplicationConfiguration.rootApp,
                 IsFolderPicker = true,
                 Multiselect = false
             };
@@ -102,7 +121,7 @@ namespace MediaOverviewApp
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog
             {
-                InitialDirectory = Model.Config.rootApp,
+                InitialDirectory = ApplicationConfiguration.rootApp,
                 IsFolderPicker = true,
                 Multiselect = false
             };
@@ -127,7 +146,7 @@ namespace MediaOverviewApp
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     Model.CollectionOfGenres.RemoveGenreFromList(toBeDeletedList.ToList());
-                    Model.Config.GenresXmlUpdate(Model.CollectionOfGenres);
+                    XController.UpdateGenres(Model.CollectionOfGenres);
                 }
             }
         }
