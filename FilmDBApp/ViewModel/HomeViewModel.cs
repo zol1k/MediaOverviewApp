@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace MediaOverviewApp
             {
                 _searchString = value;
                 OnPropertyChanged("SearchString");
-                SelectedGenreFilmListView.Refresh();
+                MediaListToShow.Refresh();
             }
         }
 
@@ -60,7 +61,7 @@ namespace MediaOverviewApp
                     _selectedFilmCollection = value;
                     OnPropertyChanged("SelectedFilmCollection");
                     SelectedFilm = SelectedFilmCollection.ListOfFilms.FirstOrDefault();
-                    SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(_selectedFilmCollection.ListOfFilms);
+                    MediaListToShow = CollectionViewSource.GetDefaultView(_selectedFilmCollection.ListOfFilms);
                     _fullListActive = false;
                 }
             }
@@ -96,16 +97,16 @@ namespace MediaOverviewApp
             }
         }
 
-        private ICollectionView _selectedGenreFilmListView;
-        public ICollectionView SelectedGenreFilmListView
+        private ICollectionView _mediaListToShow;
+        public ICollectionView MediaListToShow
         {
             set
             {
-                _selectedGenreFilmListView = value;
-                _selectedGenreFilmListView.Filter = x => Filter(x as Film);
-                OnPropertyChanged("SelectedGenreFilmListView");
+                _mediaListToShow = value;
+                _mediaListToShow.Filter = x => Filter(x as Film);
+                OnPropertyChanged("MediaListToShow");
             }
-            get { return _selectedGenreFilmListView; }
+            get { return _mediaListToShow; }
         }
         public ApplicationModel Model { get => _model; }
 
@@ -146,7 +147,8 @@ namespace MediaOverviewApp
         public ICommand ExecuteFilmDeleteButtonCommand { get; }
         public ICommand ShowAllFilmsButtonCommand { get; }
         public ICommand ShowFilmFolderFilmsButtonCommand { get; }
-
+        public ICommand ExecuteOpenFolderButtonCommand { get; }
+        public ICommand ExecuteOpenWebLocationButtonCommand { get; }
         #endregion
 
 
@@ -159,8 +161,8 @@ namespace MediaOverviewApp
             if (SelectedFilmCollection != null)
             {
                 SelectedFilm = SelectedFilmCollection.ListOfFilms.FirstOrDefault();
-                _selectedGenreFilmListView = CollectionViewSource.GetDefaultView(SelectedFilmCollection.ListOfFilms);
-                _selectedGenreFilmListView.Filter = x => Filter(x as Film);
+                _mediaListToShow = CollectionViewSource.GetDefaultView(SelectedFilmCollection.ListOfFilms);
+                _mediaListToShow.Filter = x => Filter(x as Film);
             }
 
 
@@ -169,6 +171,8 @@ namespace MediaOverviewApp
             ExecuteFilmDeleteButtonCommand = new RelayCommand(DeleteFilmFileButton_Click);
             ExecuteFilmMoveButtonCommand = new RelayCommand(MoveFilmFileButton_Click);
             ExecuteFilmRenameButtonCommand = new RelayCommand(RenameFilmFileNameButton_Click);
+            ExecuteOpenFolderButtonCommand = new RelayCommand(OpenLocationFolderButton_Click);
+            ExecuteOpenWebLocationButtonCommand = new RelayCommand(OpenWebLocationButton_Click);
         }
 
         private bool Filter(Film film)
@@ -195,9 +199,11 @@ namespace MediaOverviewApp
         {
             Film filmToDelete = (Film)film;
             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want to delete "+ filmToDelete.FileName.ToUpper() + " ?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
-            SelectedFilmCollection.ListOfFilms.Remove(filmToDelete);
+            
             if (messageBoxResult == MessageBoxResult.Yes)
             {
+                SelectedFilmCollection.ListOfFilms.Remove(filmToDelete);
+
                 string pathToDelete = filmToDelete.FilmFileInfo.FullName;
                 if (filmToDelete.IsDirectory)
                 {
@@ -211,21 +217,42 @@ namespace MediaOverviewApp
 
                 if (_fullListActive)
                 {
-                    SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(Model.CollectionOfAllFilms);
+                    MediaListToShow = CollectionViewSource.GetDefaultView(Model.CollectionOfAllFilms);
                     _fullListActive = true;
                 }
             }
 
         }
+
+        private void OpenLocationFolderButton_Click(object film)
+        {
+            Film selectedFilm = (Film)film;
+            string path = selectedFilm.FilePath;
+            
+            Process.Start("explorer.exe", "/select, " + path);
+
+        }       
+        private void OpenWebLocationButton_Click(object film)
+        {
+            Film selectedFilm = (Film)film;
+
+            if (selectedFilm.ImdbInfo.ImdbID != null)
+            {
+                string website = "https://www.imdb.com/title/" + selectedFilm.ImdbInfo.ImdbID;
+                System.Diagnostics.Process.Start(website);
+            }
+
+        }
+
         private void ShowAllFilmsButton_Click(object obj)
         {
-            SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(Model.CollectionOfAllFilms);
+            MediaListToShow = CollectionViewSource.GetDefaultView(Model.CollectionOfAllFilms);
             _fullListActive = true;
         }
         private void ShowFilmFolderFilmsButton_Click(object obj)
         {
             SelectedFilmCollection = Model.GeneralFilmFolder;
-            SelectedGenreFilmListView = SelectedGenreFilmListView = CollectionViewSource.GetDefaultView(Model.GeneralFilmFolder.ListOfFilms);
+            MediaListToShow = MediaListToShow = CollectionViewSource.GetDefaultView(Model.GeneralFilmFolder.ListOfFilms);
             _fullListActive = false;
         }
 

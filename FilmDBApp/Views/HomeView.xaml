@@ -17,6 +17,9 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="20,0" />
         </Style>
+        <BitmapImage  x:Key="DeleteIcon" UriSource="/MediaOverviewApp;component/Images/delete.png" />
+        <BitmapImage  x:Key="OpenFolderIcon" UriSource="/MediaOverviewApp;component/Images/openFolder.png" />
+        <BitmapImage  x:Key="WebIcon" UriSource="/MediaOverviewApp;component/Images/web.png" />
     </UserControl.Resources>
 
     <DockPanel >
@@ -64,23 +67,37 @@
                         <DataGridTextColumn Header="Genre🤔" Binding ="{Binding Name}" Width="162" CanUserResize="False" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedGenreFilmListView}" HeadersVisibility="All" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" SelectedItem="{Binding SelectedFilm}" IsReadOnly="True" BorderThickness="0.5" GridLinesVisibility="None" AlternatingRowBackground="#7F9B9B9B" Opacity="0.9" Width="613" MaxHeight="400" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <DataGrid Grid.Column="1" ItemsSource="{Binding MediaListToShow}" HeadersVisibility="All" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" SelectedItem="{Binding SelectedFilm}" IsReadOnly="True" BorderThickness="0.5" GridLinesVisibility="None" AlternatingRowBackground="#7F9B9B9B" Opacity="0.9" Width="613" MaxHeight="400" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.3"/>
                     </DataGrid.Background>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" Width="200" />
-                        <DataGridTextColumn Header="Genre" Binding="{Binding DirectoryGenre}" Width="200" />
+                        <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" Width="330" />
+                        <DataGridTextColumn Header="Genre" Binding="{Binding DirectoryGenre}" Width="70" />
                         <DataGridTextColumn Header="Year" Binding="{Binding FilmYear}" Width="50" />
-                        <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension}" Width="40" />
-                        <DataGridTextColumn Header="Size" Binding="{Binding FileSize}" Width="50" CanUserResize="False" />
+                        <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension}" Width="30" />
+                        <DataGridTextColumn Header="Size" Binding="{Binding FileSize}" Width="40" CanUserResize="False" />
                         <DataGridTemplateColumn Header="Delete">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Delete"
-                                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
-                                              Path=DataContext.ExecuteFilmDeleteButtonCommand}"
-                                        CommandParameter="{Binding}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, 
+                                                  Path=DataContext.ExecuteFilmDeleteButtonCommand}"
+                                            CommandParameter="{Binding}">
+                                            <Image Height="15" Source="{StaticResource DeleteIcon}"/>
+                                        </Button>
+                                        <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, 
+                                                  Path=DataContext.ExecuteOpenFolderButtonCommand}"
+                                            CommandParameter="{Binding}">
+                                            <Image Height="15" Source="{StaticResource OpenFolderIcon}"/>
+                                        </Button>
+
+                                        <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, 
+                                                  Path=DataContext.ExecuteOpenWebLocationButtonCommand}"
+                                            CommandParameter="{Binding}">
+                                            <Image Height="15" Source="{StaticResource WebIcon}"/>
+                                        </Button>
+                                    </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -124,10 +141,13 @@
                             <Label Content="Country" HorizontalAlignment="Left" Margin="33,174,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                             <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="1,155,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Title}" VerticalAlignment="Top" Width="149" Grid.ColumnSpan="2"/>
                             <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="38,200,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Country}" VerticalAlignment="Top" Width="112" Grid.ColumnSpan="2"/>
-                            <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="66" Margin="0,246,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Genre}" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2"/>
+                            <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="0,246,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Genre}" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2"/>
                             <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="1,200,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Year}" VerticalAlignment="Top" Width="32"/>
-                            <Label Content="{Binding SelectedFilm.ImdbInfo.ImdbRating}" HorizontalAlignment="Center" Margin="20,10,-13,0" VerticalAlignment="Top" Width="59" Height="32" FontWeight="ExtraBold" FontSize="16" FontFamily="Tahoma" Foreground="Black" Grid.Column="1"/>
-                            <Image HorizontalAlignment="Left" Height="129" Margin="1,0,0,0" VerticalAlignment="Top" Width="103" Source="{Binding SelectedFilm.ImdbInfo.Poster}" Grid.ColumnSpan="2"/>
+                            <Label Content="{Binding SelectedFilm.ImdbInfo.ImdbRating}" Margin="29,108,0,0" VerticalAlignment="Top" Width="37" Height="26" FontWeight="ExtraBold" FontSize="16" HorizontalAlignment="Right" FontFamily="Tahoma" Foreground="Black" Panel.ZIndex="5" Grid.Column="1">
+                            </Label>
+                            <Image HorizontalAlignment="Left" Height="134" Margin="24,0,0,0" VerticalAlignment="Top" Width="104" Source="{Binding SelectedFilm.ImdbInfo.Poster}" Grid.ColumnSpan="2"/>
+                            <Label Content="Actors" HorizontalAlignment="Left" Margin="-4,265,0,0" VerticalAlignment="Top"/>
+                            <TextBox IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="0,291,0,0" TextWrapping="Wrap" Text="{Binding SelectedFilm.ImdbInfo.Actors}" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2"/>
                         </Grid>
                     </DockPanel>
                 </GroupBox>

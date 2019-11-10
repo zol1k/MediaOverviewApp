@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 
 namespace MediaOverviewApp.Model
@@ -18,11 +21,23 @@ namespace MediaOverviewApp.Model
             AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
 
         public static string rootApp = Path.GetPathRoot(System.Reflection.Assembly.GetEntryAssembly().Location);
+
+
+
         #endregion
 
         #region Properties / Commands
         public static FileInfo GeneralFilmFolder { get => new FileInfo(XController.GeneralFilmFolderPath); }
         public static FileInfo GeneralSerialFolder { get => new FileInfo(XController.GeneralSerialFolderPath); }
+
+        public static BitmapImage ImageSource
+        {
+            get
+            {
+                return new BitmapImage(new Uri("..\\Images\\Deleteicon.png", UriKind.Relative));
+            } 
+        }
+
         #endregion
 
         public ApplicationConfiguration()
