@@ -15,7 +15,7 @@ namespace MediaOverviewApp
     {
         #region Fields
 
-        private IFilmCollection _selectedFilmCollection;
+        private IMediaCollection _selectedFilmCollection;
         private Genre _newGenreForSelectedFilm;
         private Film _selectedFilm;
         private readonly ApplicationModel _model;
@@ -50,7 +50,7 @@ namespace MediaOverviewApp
             }
         }
 
-        public IFilmCollection SelectedFilmCollection
+        public IMediaCollection SelectedFilmCollection
         {
             get => _selectedFilmCollection;
             set

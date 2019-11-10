@@ -18,7 +18,7 @@ namespace MediaOverviewApp.Model
         private static readonly string settingsFilePath =
             AppDomain.CurrentDomain.BaseDirectory + "Settings\\Settings.xml";
 
-        private string rootApp = Path.GetPathRoot(System.Reflection.Assembly.GetEntryAssembly().Location);
+        public string rootApp = Path.GetPathRoot(System.Reflection.Assembly.GetEntryAssembly().Location);
 
         #endregion
 
@@ -26,7 +26,7 @@ namespace MediaOverviewApp.Model
 
         public static XDocument LoadXDoc { get => XDocument.Load(settingsFilePath); }
         public static FileInfo GeneralFilmFolder { get => new FileInfo(LoadXDoc.Root.Element("settings").Element("FilmsSettings").Attribute("PathToFolder").Value); }
-        public static FileInfo GeneralSerialsFolder { get => new FileInfo(LoadXDoc.Root.Element("settings").Element("SerialsSettings").Attribute("PathToFolder").Value); }
+        public static FileInfo GeneralSerialFolder { get => new FileInfo(LoadXDoc.Root.Element("settings").Element("SerialsSettings").Attribute("PathToFolder").Value); }
 
         #endregion
         public ApplicationConfiguration()
@@ -145,9 +145,8 @@ namespace MediaOverviewApp.Model
         public void ChangeSerialsFolder(FileInfo folder)
         {
             XAttribute xmlSerialsFolderPath = Xdoc.Root.Element("settings").Element("SerialsSettings").Attribute("PathToFolder");
-            xmlSerialsFolderPath.Value = (GeneralSerialsFolder == null) ? "" : folder.FullName;
+            xmlSerialsFolderPath.Value = (GeneralSerialFolder == null) ? "" : folder.FullName;
             SaveSettings();
-            OnPropertyChanged("GeneralSerialsFolder");
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ using Microsoft.WindowsAPICodePack.Shell.Interop;
 
 namespace MediaOverviewApp.Model
 {
-    public class Genre: ObservableObject, IComparable, IFilmCollection
+    public class Genre: ObservableObject, IComparable, IMediaCollection
     {
         #region Fields
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

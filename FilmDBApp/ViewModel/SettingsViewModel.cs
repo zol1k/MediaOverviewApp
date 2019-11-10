@@ -85,7 +85,7 @@ namespace MediaOverviewApp
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog
             {
-                InitialDirectory = "C:\\Users",
+                InitialDirectory = Model.Config.rootApp,
                 IsFolderPicker = true,
                 Multiselect = false
             };
@@ -102,14 +102,14 @@ namespace MediaOverviewApp
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog
             {
-                InitialDirectory = "C:\\Users",
+                InitialDirectory = Model.Config.rootApp,
                 IsFolderPicker = true,
                 Multiselect = false
             };
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok && Directory.Exists(dialog.FileName))
             {
-                Model.Config.ChangeSerialsFolder(new FileInfo(dialog.FileName));
+                Model.UpdateGeneralSerialFolder(new FileInfo(dialog.FileName));
             }
             dialog.Dispose();
         }

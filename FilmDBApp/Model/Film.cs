@@ -201,7 +201,7 @@ namespace MediaOverviewApp
             ParseFileName();
 
             RetrieveImdbInfo();
-
+            OnPropertyChanged("ImdbInfo");
         }
 
         /// <summary>

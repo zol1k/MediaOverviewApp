@@ -10,7 +10,7 @@ using Microsoft.WindowsAPICodePack.Shell.Interop;
 
 namespace MediaOverviewApp.Model
 {
-    internal class GeneralFilmFolder: ObservableObject, IComparable, IFilmCollection
+    internal class GeneralFilmFolder: ObservableObject, IComparable, IMediaCollection
     {
         #region Fields
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -68,13 +68,14 @@ namespace MediaOverviewApp.Model
                 }
             
 
-                List<string> listOfGenreNames = CollectionOfGenres.ReturnListOfGenreNamesFromConfigFile();
+                List<string> listOfPathsToIgnore = ApplicationConfiguration.GetGenrePathsFromConfigFile();
+                listOfPathsToIgnore.Add(ApplicationConfiguration.GeneralSerialFolder.FullName);
 
                 foreach (var file in Directory.GetDirectories(PathToDirectory))
                 {
                     FileInfo fileInfo = new FileInfo(file);
 
-                    if (listOfGenreNames.Contains(fileInfo.Name))
+                    if (listOfPathsToIgnore.Contains(fileInfo.FullName))
                         continue;
                     //if current directory is not hidden, add it into film db
                     if (!fileInfo.Attributes.HasFlag(FileAttributes.Hidden))

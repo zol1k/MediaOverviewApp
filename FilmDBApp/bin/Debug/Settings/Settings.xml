@@ -1,18 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <settings>
-    <FilmsSettings PathToFolder="C:\Users\Public">
+    <FilmsSettings PathToFolder="L:\">
       <Genres>
-        <Genre Name="1.animovane" PathToGenreFolder="L:\1. Films\1.animovane" />
-        <Genre Name="1.ceske" PathToGenreFolder="L:\1. Films\1.ceske" />
-        <Genre Name="1.drama-akcne" PathToGenreFolder="L:\1. Films\1.drama-akcne" />
-        <Genre Name="1.fantasy" PathToGenreFolder="L:\1. Films\1.fantasy" />
-        <Genre Name="1.horor" PathToGenreFolder="L:\1. Films\1.horor" />
-        <Genre Name="1.komedia" PathToGenreFolder="L:\1. Films\1.komedia" />
-        <Genre Name="1.komixovka" PathToGenreFolder="L:\1. Films\1.komixovka" />
-        <Genre Name="1.scifi" PathToGenreFolder="L:\1. Films\1.scifi" />
-        <Genre Name="1.thriller" PathToGenreFolder="L:\1. Films\1.thriller" />
-        <Genre Name="1.vojnove" PathToGenreFolder="L:\1. Films\1.vojnove" />
+        <Genre Name="1.animovane" PathToFolder="L:\1.animovane" />
+        <Genre Name="1.ceske" PathToFolder="L:\1.ceske" />
+        <Genre Name="1.drama-akcne" PathToFolder="L:\1.drama-akcne" />
+        <Genre Name="1.fantasy" PathToFolder="L:\1.fantasy" />
+        <Genre Name="1.historicke" PathToFolder="L:\1.historicke" />
+        <Genre Name="1.horor" PathToFolder="L:\1.horor" />
+        <Genre Name="1.komedia" PathToFolder="L:\1.komedia" />
+        <Genre Name="1.komixovka" PathToFolder="L:\1.komixovka" />
+        <Genre Name="1.krimi" PathToFolder="L:\1.krimi" />
+        <Genre Name="1.scifi" PathToFolder="L:\1.scifi" />
+        <Genre Name="1.thriller" PathToFolder="L:\1.thriller" />
+        <Genre Name="1.vojnove" PathToFolder="L:\1.vojnove" />
       </Genres>
     </FilmsSettings>
     <SerialsSettings PathToFolder="L:\1. Series"></SerialsSettings>

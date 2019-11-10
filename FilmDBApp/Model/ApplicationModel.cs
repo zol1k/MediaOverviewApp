@@ -35,6 +35,7 @@ namespace MediaOverviewApp.Model
         public ObservableCollection<Film> CollectionOfAllFilms { get => MergeFilmCollections(); }
 
         public GeneralFilmFolder GeneralFilmFolder { get; }
+        public GeneralSerialFolder GeneralSerialFolder { get; }
         public ApplicationConfiguration Config { get => _config; }
 
   
@@ -47,6 +48,8 @@ namespace MediaOverviewApp.Model
             FillGenreCollectionByConfigurationFile();
             if (ApplicationConfiguration.GeneralFilmFolder != null)
                 GeneralFilmFolder = new GeneralFilmFolder();
+            if (ApplicationConfiguration.GeneralSerialFolder != null)
+                GeneralSerialFolder = new GeneralSerialFolder();
         }
         #region Methods
         /// <summary>
@@ -69,6 +72,11 @@ namespace MediaOverviewApp.Model
         {
             Config.ChangeFilmsFolder(newFileInfo);
             OnPropertyChanged("GeneralFilmFolder");
+        }        
+        public void UpdateGeneralSerialFolder(FileInfo newFileInfo)
+        {
+            Config.ChangeSerialsFolder(newFileInfo);
+            OnPropertyChanged("GeneralSerialFolder");
         }
         
         /// <summary>
@@ -77,7 +85,7 @@ namespace MediaOverviewApp.Model
         /// <param name="filmToMove">Film to move into new genre</param>
         /// <param name="filmOldGenre">Old film genre</param>
         /// <param name="filmNewGenre">New film genre</param>
-        public void ChangeFilmGenre(Film filmToMove, IFilmCollection filmOldGenre, Genre filmNewGenre)
+        public void ChangeFilmGenre(Film filmToMove, IMediaCollection filmOldGenre, Genre filmNewGenre)
         {
             filmOldGenre.ListOfFilms.Remove(filmToMove);
             filmNewGenre.ListOfFilms.Add(filmToMove);
