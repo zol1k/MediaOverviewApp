@@ -20,6 +20,21 @@
         <BitmapImage  x:Key="DeleteIcon" UriSource="/MediaOverviewApp;component/Images/delete.png" />
         <BitmapImage  x:Key="OpenFolderIcon" UriSource="/MediaOverviewApp;component/Images/openFolder.png" />
         <BitmapImage  x:Key="WebIcon" UriSource="/MediaOverviewApp;component/Images/web.png" />
+        <Style x:Key="DataGridCellToolTip" TargetType="DataGridCell">
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <TextBlock FontSize="13" FontWeight="Bold" Text='{Binding FileName}' />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ColumnHeaderStyle1" TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#B3B3B3"/>
+        </Style>
+
+        
+
     </UserControl.Resources>
 
     <DockPanel >
@@ -58,26 +73,23 @@
                     <ColumnDefinition Width="621*"/>
                 </Grid.ColumnDefinitions>
 
-                <DataGrid Grid.Column="0" Opacity="0.8" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="230" Margin="10,0,0,0" VerticalAlignment="Top" Width="162" ItemsSource="{Binding CollectionOfGenres}" SelectedItem="{Binding SelectedFilmCollection}" IsReadOnly="True"
-                      GridLinesVisibility="None" MaxHeight="230" ScrollViewer.CanContentScroll="False" CanUserResizeColumns="False" CanUserResizeRows="False" HorizontalScrollBarVisibility="Hidden"  >
+                <DataGrid Grid.Column="0" Opacity="0.8" HorizontalAlignment="Left" Height="230" Margin="10,0,0,0" VerticalAlignment="Top" Width="162" ItemsSource="{Binding CollectionOfGenres}" SelectedItem="{Binding SelectedFilmCollection}" IsReadOnly="True"
+                      GridLinesVisibility="None" MaxHeight="230" ScrollViewer.CanContentScroll="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="False" HeadersVisibility="Column">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.3"/>
                     </DataGrid.Background>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Genre🤔" Binding ="{Binding Name}" Width="162" CanUserResize="False" />
+                        <DataGridTextColumn Header="Genre" Binding ="{Binding Name}" Width="160" CanUserResize="False" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <DataGrid Grid.Column="1" ItemsSource="{Binding MediaListToShow}" HeadersVisibility="All" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" SelectedItem="{Binding SelectedFilm}" IsReadOnly="True" BorderThickness="0.5" GridLinesVisibility="None" AlternatingRowBackground="#7F9B9B9B" Opacity="0.9" Width="613" MaxHeight="400" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                    <DataGrid.Background>
-                        <SolidColorBrush Color="#FFF0F0F0" Opacity="0.3"/>
-                    </DataGrid.Background>
+                <DataGrid ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}"  Grid.Column="1" CanUserResizeRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#282828" CanUserResizeColumns="false" ItemsSource="{Binding MediaListToShow}"  HeadersVisibility="Column" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" SelectedItem="{Binding SelectedFilm}" IsReadOnly="True" BorderThickness="0.5" Opacity="1" Width="613" MaxHeight="400" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" RowBackground="#FF181818" Foreground="White" >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" Width="330" />
-                        <DataGridTextColumn Header="Genre" Binding="{Binding DirectoryGenre}" Width="70" />
-                        <DataGridTextColumn Header="Year" Binding="{Binding FilmYear}" Width="50" />
-                        <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension}" Width="30" />
-                        <DataGridTextColumn Header="Size" Binding="{Binding FileSize}" Width="40" CanUserResize="False" />
-                        <DataGridTemplateColumn Header="Delete">
+                        <DataGridTextColumn Header="Name" Binding="{Binding FileName}" CellStyle="{StaticResource DataGridCellToolTip}" Width="316" />
+                        <DataGridTextColumn Header="Genre" Binding="{Binding DirectoryGenre}" CellStyle="{StaticResource DataGridCellToolTip}" Width="70" />
+                        <DataGridTextColumn Header="Year" Binding="{Binding FilmYear}" CellStyle="{StaticResource DataGridCellToolTip}" Width="40" />
+                        <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension}" CellStyle="{StaticResource DataGridCellToolTip}" Width="60" />
+                        <DataGridTextColumn Header="Size" Binding="{Binding FileSize}" Width="50" CellStyle="{StaticResource DataGridCellToolTip}" />
+                        <DataGridTemplateColumn Header="Actions">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -130,7 +142,7 @@
                 </GroupBox>
                 <GroupBox Grid.Column="0" Header="Film Information" Height="338" Margin="0,0,7,71" VerticalAlignment="bottom" HorizontalAlignment="Right" Width="162" BorderBrush="{x:Null}">
                     <DockPanel >
-                        <Grid Height="390" VerticalAlignment="Top">
+                        <Grid Height="315" VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="14*"/>
                                 <ColumnDefinition Width="11*"/>
